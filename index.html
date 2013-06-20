@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Open-lmis by OpenLMIS</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Open-lmis</h1>
+        <p class="header">openLMIS</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/OpenLMIS/open-lmis/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/OpenLMIS/open-lmis/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/OpenLMIS/open-lmis">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/OpenLMIS">OpenLMIS</a></p>
+
+
+      </header>
+      <section>
+        <h2>
+<a name="license-terms" class="anchor" href="#license-terms"><span class="octicon octicon-link"></span></a>License Terms</h2>
+
+<p>Copyright © 2013 VillageReach.  All Rights Reserved.  All of the Source Code Form in this repository is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed with this file, you can obtain one at  <a href="http://mozilla.org/MPL/2.0/">http://mozilla.org/MPL/2.0/</a>.</p>
+
+<h2>
+<a name="system-requirement" class="anchor" href="#system-requirement"><span class="octicon octicon-link"></span></a>System Requirement</h2>
+
+<ul>
+<li>JDK 7</li>
+<li>
+<p>Gradle 1.6</p>
+
+<h3>
+<a name="for-linux-users" class="anchor" href="#for-linux-users"><span class="octicon octicon-link"></span></a>For Linux users</h3>
+
+<p>Download the source binary directly from the gradle website.
+Copy the downloaded folder to /usr/bin. Add the path to gradle bin folder to your /etc/profile file
+export PATH="$PATH:/usr/bin/gradle-1.6/bin"</p>
+
+<h3>
+<a name="for-mac-users" class="anchor" href="#for-mac-users"><span class="octicon octicon-link"></span></a>For Mac users</h3>
+
+<ul>
+<li>Install HomeBrew</li>
+<li>Run <code>brew install gradle</code>
+</li>
+</ul>
+</li>
+<li><p>Git</p></li>
+<li><p>Postgresql 9</p></li>
+</ul><h2>
+<a name="intellij-idea-setup" class="anchor" href="#intellij-idea-setup"><span class="octicon octicon-link"></span></a>IntelliJ IDEA Setup</h2>
+
+<ol>
+<li>Run <code>gradle idea</code> to create the intellij project files</li>
+<li>Open the open-lmis.ipr file</li>
+</ol><h2>
+<a name="running-app-on-embedded-jetty-server" class="anchor" href="#running-app-on-embedded-jetty-server"><span class="octicon octicon-link"></span></a>Running App on embedded Jetty server</h2>
+
+<ol>
+<li>Clone the project repository using git.</li>
+<li><p>Setup <em>postgres</em> user with password as configured in <em>gradle.properties</em> file.</p></li>
+<li>
+<p>You can use <code>gradle clean setupdb seed build testseed run</code> to start the app.</p>
+
+<p>There are bunch of gradle tasks that you can see by running <code>gradle tasks</code></p>
+</li>
+</ol><ul>
+<li>
+<code>build</code> is to build the app.</li>
+<li>
+<code>setupdb</code> is to recreate the database and schema.</li>
+<li>
+<code>seed</code> is to seed in the reference data.</li>
+<li>
+<code>testseed</code> puts in some test data which can be used to browse through basic functionality in the system.</li>
+<li>
+<code>run</code> is to start the embedded jetty server.</li>
+</ul><p>Once run, you can access the home page at http://localhost:9091/</p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
