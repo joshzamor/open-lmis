@@ -38,36 +38,74 @@ Copyright © 2013 VillageReach</p>
 
 <p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
 
-<p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.</p>
+<p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.</p>
 
-<p>You should have received a copy of the GNU Affero General Public License along with this program.  If not, see <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>.  For additional information contact info@OpenLMIS.org. </p>
+<p>You should have received a copy of the GNU Affero General Public License along with this program.  If not, see <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>.  For additional information contact <a href="mailto:info@OpenLMIS.org">info@OpenLMIS.org</a>. </p>
 
 <h2>
 <a name="system-requirement" class="anchor" href="#system-requirement"><span class="octicon octicon-link"></span></a>System Requirement</h2>
 
 <ul>
 <li>JDK 7</li>
+<li>Postgresql 9</li>
+<li>Git</li>
 <li>
 <p>Gradle 1.6</p>
 
 <h3>
 <a name="for-linux-users" class="anchor" href="#for-linux-users"><span class="octicon octicon-link"></span></a>For Linux users</h3>
 
-<p>Download the source binary directly from the gradle website.
-Copy the downloaded folder to /usr/bin. Add the path to gradle bin folder to your /etc/profile file
-export PATH="$PATH:/usr/bin/gradle-1.6/bin"</p>
-
+<ul>
+<li>Download the source binary directly from the gradle website.
+Copy the downloaded folder to /usr/bin. </li>
+<li>Add the path to gradle bin folder to your /etc/profile file
+export PATH="$PATH:/usr/bin/gradle-1.6/bin"</li>
+</ul>
 <h3>
 <a name="for-mac-users" class="anchor" href="#for-mac-users"><span class="octicon octicon-link"></span></a>For Mac users</h3>
 
 <ul>
 <li>Install HomeBrew</li>
-<li>Run <code>brew install gradle</code>
+<li>Run <code>brew install gradle</code><br>
 </li>
 </ul>
 </li>
-<li><p>Git</p></li>
-<li><p>Postgresql 9</p></li>
+<li>
+<p>Node.js</p>
+
+<h3>
+<a name="for-linux-users-1" class="anchor" href="#for-linux-users-1"><span class="octicon octicon-link"></span></a>For Linux users</h3>
+
+<ul>
+<li>Install Nodejs as described <a href="https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#rhelcentosscientific-linux-6">here</a> based on your Linux flavour.</li>
+</ul>
+<h3>
+<a name="for-mac-users-1" class="anchor" href="#for-mac-users-1"><span class="octicon octicon-link"></span></a>For Mac users</h3>
+
+<ul>
+<li>Install Node,js <a href="http://nodejs.org/">directly</a> or using homebrew as described <a href="http://">link</a>
+</li>
+<li>Those who install Node.js using Homebrew should export the following (or include in <code>$HOME/.bash_profile</code> or <code>$HOME/.profile</code> or <code>$HOME/.bashrc</code> or <code>$HOME/.zshrc</code>, depending on your shell.
+
+<ul>
+<li><strong>export NODE_PATH="/usr/local/bin/node"</strong></li>
+<li>
+<strong>export PATH="/usr/local/share/npm/bin:$PATH"</strong><br>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Grunt.js (used for linting JS, LESS files, minifying JS files etc.)</p>
+
+<ul>
+<li>Install Grunt command-line runner by running (after installing Node.js as mentioned in aformentioned step) <code>npm install -g grunt-cli</code>
+</li>
+<li>Install project-specific grunt dependencies by navigating to <code>modules/openlmis-web</code> from project root directory and run <code>npm install</code> (one-time activity)</li>
+<li>Grunt tasks available can be found in <code>modules/openlmis-web/Gruntfile.js</code> </li>
+</ul>
+</li>
 </ul><h2>
 <a name="source-code-" class="anchor" href="#source-code-"><span class="octicon octicon-link"></span></a>Source code </h2>
 
@@ -92,8 +130,8 @@ export PATH="$PATH:/usr/bin/gradle-1.6/bin"</p>
 <p>You can use <code>gradle clean setupdb seed build testseed run</code> to start the app.</p>
 
 <p>There are bunch of gradle tasks that you can see by running <code>gradle tasks</code></p>
-</li>
-</ol><ul>
+
+<ul>
 <li>
 <code>build</code> is to build the app.</li>
 <li>
@@ -104,7 +142,9 @@ export PATH="$PATH:/usr/bin/gradle-1.6/bin"</p>
 <code>testseed</code> puts in some test data which can be used to browse through basic functionality in the system.</li>
 <li>
 <code>run</code> is to start the embedded jetty server.</li>
-</ul><p>Once run, you can access the home page at http://localhost:9091/</p>
+</ul>
+</li>
+</ol><p>Once run, you can access the home page at http://localhost:9091/</p>
 
 <h2>
 <a name="tech-stack" class="anchor" href="#tech-stack"><span class="octicon octicon-link"></span></a>Tech Stack</h2>
@@ -117,6 +157,8 @@ export PATH="$PATH:/usr/bin/gradle-1.6/bin"</p>
 <li>Mybatis</li>
 <li>Angularjs</li>
 <li>Jasmine</li>
+<li>Node.js</li>
+<li>Grunt.js</li>
 </ul>
       </section>
       <footer>
