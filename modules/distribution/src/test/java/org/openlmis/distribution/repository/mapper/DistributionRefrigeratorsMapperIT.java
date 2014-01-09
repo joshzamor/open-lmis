@@ -113,8 +113,10 @@ public class DistributionRefrigeratorsMapperIT {
     distribution = make(a(initiatedDistribution,
       with(deliveryZone, zone),
       with(period, processingPeriod),
-      with(DistributionBuilder.program, program)));
+      with(DistributionBuilder.program, program),
+      with(DistributionBuilder.createdBy, createdBy)));
     distributionMapper.insert(distribution);
+
 
     refrigerator = new Refrigerator("SAM", "SAM", "LG", facility.getId(), true);
     createdBy = 1L;
@@ -126,7 +128,7 @@ public class DistributionRefrigeratorsMapperIT {
     reading.setTemperature(98.6F);
     reading.setFunctioningCorrectly("Y");
 
-    facilityVisit = new FacilityVisit(distribution.getId(), facility.getId(), createdBy);
+    facilityVisit = new FacilityVisit(facility, distribution);
     facilityVisitMapper.insert(facilityVisit);
 
     reading.setFacilityVisitId(facilityVisit.getId());

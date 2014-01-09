@@ -106,7 +106,7 @@ public class VaccinationCoverageMapperIT {
 
     facilityMapper.insert(facility);
 
-    facilityVisit = new FacilityVisit(distribution.getId(), facility.getId(), 1L);
+    facilityVisit = new FacilityVisit(facility, distribution);
     facilityVisitMapper.insert(facilityVisit);
 
   }
