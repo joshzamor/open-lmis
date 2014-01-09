@@ -29,19 +29,22 @@ public class DistributionRefrigeratorsService {
   private DistributionRefrigeratorsRepository repository;
 
   @Autowired
+  private FacilityVisitService facilityVisitService;
+
+  @Autowired
   private RefrigeratorService refrigeratorService;
 
-  public void save(DistributionRefrigerators distributionRefrigerators) {
-    Long facilityId = distributionRefrigerators.getFacilityId();
-    if (repository.getBy(facilityId, distributionRefrigerators.getDistributionId()) != null) {
+  public void save(Long facilityId, DistributionRefrigerators distributionRefrigerators) {
+    List<RefrigeratorReading> readings = distributionRefrigerators.getReadings();
+    if (readings.size() == 0) {
+      refrigeratorService.disableAllFor(facilityId);
       return;
     }
-
-    repository.save(distributionRefrigerators);
     refrigeratorService.disableAllFor(facilityId);
+
     List<Refrigerator> refrigeratorsForFacility = refrigeratorService.getAllBy(facilityId);
 
-    for (RefrigeratorReading reading : distributionRefrigerators.getReadings()) {
+    for (RefrigeratorReading reading : readings) {
 
       final Refrigerator refrigerator = reading.getRefrigerator();
       Refrigerator existingRefrigerator = (Refrigerator) CollectionUtils.find(refrigeratorsForFacility, new Predicate() {
@@ -52,18 +55,18 @@ public class DistributionRefrigeratorsService {
       });
 
       refrigerator.setEnabled(true);
-      refrigerator.setModifiedBy(distributionRefrigerators.getCreatedBy());
       if (existingRefrigerator != null) {
         refrigerator.setId(existingRefrigerator.getId());
-        refrigerator.setModifiedBy(distributionRefrigerators.getCreatedBy());
       } else {
         refrigerator.setFacilityId(facilityId);
-        refrigerator.setCreatedBy(distributionRefrigerators.getCreatedBy());
       }
       refrigeratorService.save(refrigerator);
 
-      reading.setDistributionRefrigeratorsId(distributionRefrigerators.getId());
       repository.saveReading(reading);
     }
+  }
+
+  public DistributionRefrigerators getBy(Long facilityVisitId) {
+    return repository.getBy(facilityVisitId);
   }
 }

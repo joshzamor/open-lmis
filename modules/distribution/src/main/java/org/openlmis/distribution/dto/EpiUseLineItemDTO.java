@@ -30,7 +30,7 @@ import static org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion.NON_EMPT
 @EqualsAndHashCode(callSuper = false)
 public class EpiUseLineItemDTO extends BaseModel {
 
-  private Long epiUseId;
+  private Long facilityVisitId;
   private ProductGroup productGroup;
   private Reading stockAtFirstOfMonth;
   private Reading stockAtEndOfMonth;
@@ -40,13 +40,13 @@ public class EpiUseLineItemDTO extends BaseModel {
   private Reading expirationDate;
 
   public EpiUseLineItem transform() {
-    EpiUseLineItem epiUseLineItem = new EpiUseLineItem(this.epiUseId, this.productGroup,
-      stockAtFirstOfMonth.parsePositiveInt(),
-      stockAtEndOfMonth.parsePositiveInt(),
-      received.parsePositiveInt(),
-      loss.parsePositiveInt(),
-      distributed.parsePositiveInt(),
-      expirationDate.getEffectiveValue());
+    EpiUseLineItem epiUseLineItem = new EpiUseLineItem(this.facilityVisitId, this.productGroup,
+      this.stockAtFirstOfMonth.parsePositiveInt(),
+      this.stockAtEndOfMonth.parsePositiveInt(),
+      this.received.parsePositiveInt(),
+      this.loss.parsePositiveInt(),
+      this.distributed.parsePositiveInt(),
+      this.expirationDate.getEffectiveValue());
 
     epiUseLineItem.setId(this.id);
     epiUseLineItem.setModifiedBy(this.modifiedBy);

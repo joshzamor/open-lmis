@@ -19,8 +19,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FacilityVisitMapper {
 
-  @Insert({"INSERT INTO facility_visits (distributionId, facilityId, confirmedByName, confirmedByTitle, verifiedByName, verifiedByTitle, observations, createdBy)",
-    "VALUES (#{distributionId}, #{facilityId}, #{confirmedBy.name}, #{confirmedBy.title}, #{verifiedBy.name}, #{verifiedBy.title}, #{observations}, #{createdBy})"})
+  @Insert({"INSERT INTO facility_visits (distributionId, facilityId, confirmedByName, confirmedByTitle, verifiedByName, verifiedByTitle, observations, synced, createdBy)",
+    "VALUES (#{distributionId}, #{facilityId}, #{confirmedBy.name}, #{confirmedBy.title}, #{verifiedBy.name}, #{verifiedBy.title}, #{observations}, #{synced}, #{createdBy})"})
   @Options(useGeneratedKeys = true)
   public void insert(FacilityVisit facilityVisit);
 
@@ -31,6 +31,13 @@ public interface FacilityVisitMapper {
     @Result(property = "confirmedBy.name", column = "confirmedByName"),
     @Result(property = "confirmedBy.title", column = "confirmedByTitle")
   })
-  FacilityVisit getByDistributionAndFacility(@Param(value = "distributionId") Long distributionId,
-                                                  @Param(value = "facilityId") Long facilityId);
+  public FacilityVisit getBy(@Param(value = "facilityId") Long facilityId, @Param(value = "distributionId") Long distributionId);
+
+  @Update({"UPDATE facility_visits SET confirmedByName = #{confirmedBy.name}, confirmedByTitle = #{confirmedBy.title}, ",
+    "verifiedByName = #{verifiedBy.name}, verifiedByTitle = #{verifiedBy.title}, observations = #{observations}, synced = #{synced}, modifiedBy = #{modifiedBy}"})
+  public void update(FacilityVisit facilityVisit);
+
+
+  @Select({"SELECT * FROM facility_visits WHERE id = #{id}"})
+  public FacilityVisit getById(Long id);
 }

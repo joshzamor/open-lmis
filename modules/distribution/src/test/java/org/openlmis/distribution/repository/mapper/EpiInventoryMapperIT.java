@@ -14,13 +14,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
+import org.openlmis.core.builder.ProductBuilder;
 import org.openlmis.core.domain.*;
 import org.openlmis.core.query.QueryExecutor;
 import org.openlmis.core.repository.mapper.*;
 import org.openlmis.db.categories.IntegrationTests;
+import org.openlmis.distribution.builder.DistributionBuilder;
 import org.openlmis.distribution.domain.Distribution;
 import org.openlmis.distribution.domain.EpiInventory;
 import org.openlmis.distribution.domain.EpiInventoryLineItem;
+import org.openlmis.distribution.domain.FacilityVisit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -36,14 +39,16 @@ import java.util.List;
 import java.util.Map;
 
 import static com.natpryce.makeiteasy.MakeItEasy.*;
+import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.openlmis.core.builder.DeliveryZoneBuilder.defaultDeliveryZone;
 import static org.openlmis.core.builder.FacilityBuilder.defaultFacility;
 import static org.openlmis.core.builder.ProcessingPeriodBuilder.defaultProcessingPeriod;
 import static org.openlmis.core.builder.ProcessingPeriodBuilder.scheduleId;
 import static org.openlmis.core.builder.ProcessingScheduleBuilder.defaultProcessingSchedule;
+import static org.openlmis.core.builder.ProductBuilder.code;
+import static org.openlmis.core.builder.ProductBuilder.displayOrder;
 import static org.openlmis.core.builder.ProgramBuilder.defaultProgram;
 import static org.openlmis.distribution.builder.DistributionBuilder.*;
 
@@ -78,12 +83,24 @@ public class EpiInventoryMapperIT {
   @Autowired
   private QueryExecutor queryExecutor;
 
+  @Autowired
+  private FacilityVisitMapper facilityVisitMapper;
+
+  @Autowired
+  private ProductMapper productMapper;
+
+  @Autowired
+  private ProgramProductMapper programProductMapper;
   DeliveryZone zone;
   Program program1;
   ProcessingPeriod processingPeriod;
   Distribution distribution;
   Facility facility;
+
   private EpiInventory epiInventory;
+
+  private FacilityVisit facilityVisit;
+  private ProgramProduct programProduct;
 
   @Before
   public void setUp() throws Exception {
@@ -98,29 +115,28 @@ public class EpiInventoryMapperIT {
 
     processingPeriod = make(a(defaultProcessingPeriod, with(scheduleId, schedule.getId())));
     periodMapper.insert(processingPeriod);
+    Long createdBy = 1L;
 
     distribution = make(a(initiatedDistribution,
       with(deliveryZone, zone),
       with(period, processingPeriod),
-      with(program, program1)));
+      with(program, program1),
+      with(DistributionBuilder.createdBy, createdBy)));
     distributionMapper.insert(distribution);
 
     facility = make(a(defaultFacility));
     facilityMapper.insert(facility);
 
     epiInventory = new EpiInventory();
-    epiInventory.setFacilityId(facility.getId());
-    epiInventory.setDistributionId(distribution.getId());
-  }
+    facilityVisit = new FacilityVisit(facility, distribution);
+    facilityVisitMapper.insert(facilityVisit);
 
-  @Test
-  public void shouldSaveEpiInventory() throws Exception {
-    mapper.save(epiInventory);
 
-    try (ResultSet resultSet = queryExecutor.execute("SELECT * FROM epi_inventory WHERE id = ?", epiInventory.getId())) {
-      assertTrue(resultSet.next());
-      assertThat(resultSet.getLong("facilityId"), is(facility.getId()));
-    }
+    Product product = make(a(ProductBuilder.defaultProduct, with(displayOrder, 2)));
+    productMapper.insert(product);
+    programProduct = new ProgramProduct(program1, product, 10, true);
+    programProductMapper.insert(programProduct);
+
   }
 
   private List resultSetToList(ResultSet rs) throws SQLException {
@@ -134,32 +150,76 @@ public class EpiInventoryMapperIT {
       }
       list.add(row);
     }
-
     return list;
   }
 
   @Test
   public void shouldSaveEpiInventoryLineItems() throws Exception {
-    mapper.save(epiInventory);
 
     EpiInventoryLineItem lineItem = new EpiInventoryLineItem();
-    lineItem.setEpiInventoryId(epiInventory.getId());
+    lineItem.setFacilityVisitId(facilityVisit.getId());
+    lineItem.setProgramProductId(programProduct.getId());
     lineItem.setProductName("name name");
+    lineItem.setProductCode("code 1");
+    lineItem.setProductDisplayOrder(2);
     lineItem.setIdealQuantity(76);
+    lineItem.setCreatedBy(1L);
+
+    Product product1 = make(a(ProductBuilder.defaultProduct, with(code, "P11"), with(displayOrder, 2)));
+    productMapper.insert(product1);
+    ProgramProduct programProduct1 = new ProgramProduct(program1, product1, 10, true);
+    programProductMapper.insert(programProduct1);
 
     EpiInventoryLineItem lineItem2 = new EpiInventoryLineItem();
-    lineItem2.setEpiInventoryId(epiInventory.getId());
+    lineItem2.setFacilityVisitId(facilityVisit.getId());
+    lineItem2.setProgramProductId(programProduct1.getId());
     lineItem2.setProductName("name name");
+    lineItem2.setProductCode("code 2");
+    lineItem2.setProductDisplayOrder(1);
     lineItem2.setIdealQuantity(76);
+    lineItem2.setCreatedBy(1L);
 
     mapper.saveLineItem(lineItem);
     mapper.saveLineItem(lineItem2);
 
     List list;
-    try (ResultSet resultSet = queryExecutor.execute("SELECT * FROM epi_inventory_line_items WHERE epiInventoryId = ?", epiInventory.getId())) {
+    try (ResultSet resultSet = queryExecutor.execute("SELECT * FROM epi_inventory_line_items WHERE facilityVisitId = ?", facilityVisit.getId())) {
       list = resultSetToList(resultSet);
     }
 
     assertThat(list.size(), is(2));
+  }
+
+  @Test
+  public void shouldGetAllLineItemsByFacilityVisitId() {
+    EpiInventoryLineItem lineItem = new EpiInventoryLineItem();
+    lineItem.setFacilityVisitId(facilityVisit.getId());
+    lineItem.setProgramProductId(programProduct.getId());
+    lineItem.setProductName("name name");
+    lineItem.setProductCode("code 1");
+    lineItem.setProductDisplayOrder(2);
+    lineItem.setIdealQuantity(76);
+    lineItem.setCreatedBy(1L);
+
+    Product product1 = make(a(ProductBuilder.defaultProduct, with(code, "P11"), with(displayOrder, 2)));
+    productMapper.insert(product1);
+    ProgramProduct programProduct1 = new ProgramProduct(program1, product1, 10, true);
+    programProductMapper.insert(programProduct1);
+
+    EpiInventoryLineItem lineItem2 = new EpiInventoryLineItem();
+    lineItem2.setFacilityVisitId(facilityVisit.getId());
+    lineItem2.setProgramProductId(programProduct1.getId());
+    lineItem2.setProductName("name name");
+    lineItem2.setProductCode("code 2");
+    lineItem2.setProductDisplayOrder(1);
+    lineItem2.setIdealQuantity(76);
+    lineItem2.setCreatedBy(1L);
+
+    mapper.saveLineItem(lineItem);
+    mapper.saveLineItem(lineItem2);
+
+    List<EpiInventoryLineItem> lineItems = mapper.getLineItemsBy(facilityVisit.getId());
+
+    assertThat(lineItems, is(asList(lineItem2, lineItem)));
   }
 }

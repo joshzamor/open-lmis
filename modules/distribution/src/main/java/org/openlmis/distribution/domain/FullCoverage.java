@@ -8,36 +8,30 @@
  *  You should have received a copy of the GNU Affero General Public License along with this program.  If not, see http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org.
  */
 
-package org.openlmis.distribution.dto;
+package org.openlmis.distribution.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.openlmis.distribution.domain.VaccinationFullCoverage;
-
-import static org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion.NON_EMPTY;
+import org.openlmis.core.domain.BaseModel;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@JsonSerialize(include = NON_EMPTY)
-@JsonIgnoreProperties(ignoreUnknown = true)
 @EqualsAndHashCode(callSuper = false)
-public class VaccinationFullCoverageDTO {
+@AllArgsConstructor
+public class FullCoverage extends BaseModel {
 
-  private Reading femaleHealthCenterReading;
-  private Reading femaleMobileBrigadeReading;
-  private Reading maleHealthCenterReading;
-  private Reading maleMobileBrigadeReading;
+  private Long facilityVisitId;
+  private Integer femaleHealthCenterReading;
+  private Integer femaleMobileBrigadeReading;
+  private Integer maleHealthCenterReading;
+  private Integer maleMobileBrigadeReading;
 
-  public VaccinationFullCoverage transform() {
-    return new VaccinationFullCoverage(femaleHealthCenterReading.parsePositiveInt(),
-      femaleMobileBrigadeReading.parsePositiveInt(),
-      maleHealthCenterReading.parsePositiveInt(),
-      maleMobileBrigadeReading.parsePositiveInt()
-    );
+  public FullCoverage(Integer femaleHealthCenterReading, Integer femaleMobileBrigadeReading, Integer maleHealthCenterReading, Integer maleMobileBrigadeReading) {
+    this.femaleHealthCenterReading = femaleHealthCenterReading;
+    this.femaleMobileBrigadeReading = femaleMobileBrigadeReading;
+    this.maleHealthCenterReading = maleHealthCenterReading;
+    this.maleMobileBrigadeReading = maleMobileBrigadeReading;
   }
 }

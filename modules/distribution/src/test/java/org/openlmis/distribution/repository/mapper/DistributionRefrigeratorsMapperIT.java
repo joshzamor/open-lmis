@@ -20,7 +20,7 @@ import org.openlmis.core.repository.mapper.*;
 import org.openlmis.db.categories.IntegrationTests;
 import org.openlmis.distribution.builder.DistributionBuilder;
 import org.openlmis.distribution.domain.Distribution;
-import org.openlmis.distribution.domain.DistributionRefrigerators;
+import org.openlmis.distribution.domain.FacilityVisit;
 import org.openlmis.distribution.domain.RefrigeratorProblem;
 import org.openlmis.distribution.domain.RefrigeratorReading;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import static com.natpryce.makeiteasy.MakeItEasy.*;
-import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
@@ -75,16 +75,23 @@ public class DistributionRefrigeratorsMapperIT {
   private ProcessingScheduleMapper scheduleMapper;
 
   @Autowired
-  private RefrigeratorMapper refrigeratorMapper;
-
-  @Autowired
   private QueryExecutor queryExecutor;
 
+  @Autowired
+  private FacilityVisitMapper facilityVisitMapper;
+
+  @Autowired
+  private RefrigeratorMapper refrigeratorMapper;
   DeliveryZone zone;
   Program program;
   ProcessingPeriod processingPeriod;
   Facility facility;
   Distribution distribution;
+
+  private Refrigerator refrigerator;
+  private Long createdBy;
+  private RefrigeratorReading reading;
+  private FacilityVisit facilityVisit;
 
   @Before
   public void setUp() throws Exception {
@@ -106,39 +113,34 @@ public class DistributionRefrigeratorsMapperIT {
     distribution = make(a(initiatedDistribution,
       with(deliveryZone, zone),
       with(period, processingPeriod),
-      with(DistributionBuilder.program, program)));
+      with(DistributionBuilder.program, program),
+      with(DistributionBuilder.createdBy, createdBy)));
     distributionMapper.insert(distribution);
-  }
 
-  @Test
-  public void shouldInsertDistributionRefrigerators() throws SQLException {
-    RefrigeratorReading reading = new RefrigeratorReading();
-    DistributionRefrigerators distributionRefrigerators = new DistributionRefrigerators(facility, distribution, asList(reading));
 
-    mapper.insert(distributionRefrigerators);
+    refrigerator = new Refrigerator("SAM", "SAM", "LG", facility.getId(), true);
+    createdBy = 1L;
+    refrigerator.setCreatedBy(createdBy);
+    refrigerator.setModifiedBy(createdBy);
+    refrigeratorMapper.insert(refrigerator);
 
-    ResultSet resultSet = queryExecutor.execute("SELECT * FROM distribution_refrigerators WHERE id = " + distributionRefrigerators.getId());
-    assertTrue(resultSet.next());
-    assertThat(resultSet.getLong("facilityId"), is(facility.getId()));
+    reading = new RefrigeratorReading(refrigerator);
+    reading.setTemperature(98.6F);
+    reading.setFunctioningCorrectly("Y");
+
+    facilityVisit = new FacilityVisit(facility, distribution);
+    facilityVisitMapper.insert(facilityVisit);
+
+    reading.setFacilityVisitId(facilityVisit.getId());
+
   }
 
   @Test
   public void shouldInsertReadingForADistributionRefrigerator() throws SQLException {
-    Refrigerator refrigerator = new Refrigerator("SAM", "SAM", "LG", facility.getId(), true);
-    refrigerator.setCreatedBy(1L);
-    refrigerator.setModifiedBy(1L);
-    RefrigeratorReading reading = new RefrigeratorReading(refrigerator);
-    reading.setTemperature(98.6F);
-    reading.setFunctioningCorrectly("Y");
-    DistributionRefrigerators distributionRefrigerators = new DistributionRefrigerators(facility, distribution, asList(reading));
 
-    refrigeratorMapper.insert(refrigerator);
-    mapper.insert(distributionRefrigerators);
-
-    reading.setDistributionRefrigeratorsId(distributionRefrigerators.getId());
     mapper.insertReading(reading);
 
-    ResultSet resultSet = queryExecutor.execute("SELECT * FROM refrigerator_readings WHERE distributionRefrigeratorsId = " + distributionRefrigerators.getId());
+    ResultSet resultSet = queryExecutor.execute("SELECT * FROM refrigerator_readings WHERE facilityVisitId = " + facilityVisit.getId());
     assertTrue(resultSet.next());
     assertThat(resultSet.getFloat("temperature"), is(reading.getTemperature()));
     assertThat(resultSet.getString("refrigeratorSerialNumber"), is(reading.getRefrigerator().getSerialNumber()));
@@ -148,59 +150,25 @@ public class DistributionRefrigeratorsMapperIT {
 
   @Test
   public void shouldInsertRefrigeratorProblems() throws Exception {
-    Refrigerator refrigerator = new Refrigerator("SAM", "SAM", "LG", facility.getId(), true);
-    refrigerator.setCreatedBy(1L);
-    refrigerator.setModifiedBy(1L);
-    RefrigeratorReading reading = new RefrigeratorReading(refrigerator);
-    reading.setTemperature(98.6F);
-    reading.setFunctioningCorrectly("Y");
-    DistributionRefrigerators distributionRefrigerators = new DistributionRefrigerators(facility, distribution, asList(reading));
 
-    refrigeratorMapper.insert(refrigerator);
-    mapper.insert(distributionRefrigerators);
-
-    reading.setDistributionRefrigeratorsId(distributionRefrigerators.getId());
     mapper.insertReading(reading);
 
     RefrigeratorProblem problem = new RefrigeratorProblem(reading.getId(), true, false, true, false, true, false, "No Problem");
-    mapper.insertProblems(problem);
+    mapper.insertProblem(problem);
 
     ResultSet resultSet = queryExecutor.execute("SELECT * FROM refrigerator_problems WHERE readingId = " + reading.getId());
     assertTrue(resultSet.next());
     assertThat(resultSet.getBoolean("gasLeakage"), is(problem.getGasLeakage()));
   }
 
-  @Test
-  public void shouldGetDistributionRefrigeratorsByFacilityIdAndDistributionId() throws Exception {
-    RefrigeratorReading reading = new RefrigeratorReading();
-    DistributionRefrigerators distributionRefrigerators = new DistributionRefrigerators(facility, distribution, asList(reading));
-
-    mapper.insert(distributionRefrigerators);
-
-    DistributionRefrigerators savedDistributionRefrigerators = mapper.getBy(distributionRefrigerators.getFacilityId(), distributionRefrigerators.getDistributionId());
-
-    assertThat(savedDistributionRefrigerators.getFacilityId(), is(distributionRefrigerators.getFacilityId()));
-    assertThat(savedDistributionRefrigerators.getDistributionId(), is(distributionRefrigerators.getDistributionId()));
-  }
 
   @Test
   public void shouldInsertDefaultValuesForNullProblemsExceptNotes() throws SQLException {
-    Refrigerator refrigerator = new Refrigerator("SAM", "SAM", "LG", facility.getId(), true);
-    refrigerator.setCreatedBy(1L);
-    refrigerator.setModifiedBy(1L);
-    RefrigeratorReading reading = new RefrigeratorReading(refrigerator);
-    reading.setTemperature(98.6F);
-    reading.setFunctioningCorrectly("Y");
-    DistributionRefrigerators distributionRefrigerators = new DistributionRefrigerators(facility, distribution, asList(reading));
 
-    refrigeratorMapper.insert(refrigerator);
-    mapper.insert(distributionRefrigerators);
-
-    reading.setDistributionRefrigeratorsId(distributionRefrigerators.getId());
     mapper.insertReading(reading);
 
     RefrigeratorProblem problem = new RefrigeratorProblem(reading.getId(), true, null, true, false, true, null, null);
-    mapper.insertProblems(problem);
+    mapper.insertProblem(problem);
 
     ResultSet resultSet = queryExecutor.execute("SELECT * FROM refrigerator_problems WHERE readingId = " + reading.getId());
     assertTrue(resultSet.next());
@@ -208,5 +176,57 @@ public class DistributionRefrigeratorsMapperIT {
     assertThat(resultSet.getBoolean("burnerProblem"), is(false));
     assertThat(resultSet.getBoolean("other"), is(false));
     assertThat(resultSet.getString("otherProblemExplanation"), is(nullValue()));
+  }
+
+
+  @Test
+  public void shouldGetRefrigeratorReadingsByFacilityVisitId() {
+    mapper.insertReading(reading);
+
+    RefrigeratorProblem expectedRefrigeratorProblem = new RefrigeratorProblem(reading.getId(), true, true, true, true, false, false, null);
+    mapper.insertProblem(expectedRefrigeratorProblem);
+
+
+    Refrigerator refrigerator2 = new Refrigerator("SAM2", "SAM2", "LG2", facility.getId(), true);
+    refrigerator2.setCreatedBy(createdBy);
+    refrigerator2.setModifiedBy(createdBy);
+    refrigeratorMapper.insert(refrigerator2);
+
+    RefrigeratorReading reading2 = new RefrigeratorReading(refrigerator2);
+    reading2.setTemperature(98.6F);
+    reading2.setFunctioningCorrectly("Y");
+    reading2.setFacilityVisitId(facilityVisit.getId());
+
+    mapper.insertReading(reading2);
+
+    List<RefrigeratorReading> refrigeratorReadings = mapper.getBy(facilityVisit.getId());
+
+
+    assertForRefrigerator(refrigeratorReadings.get(0).getRefrigerator(), refrigerator);
+    assertForRefrigerator(refrigeratorReadings.get(1).getRefrigerator(), refrigerator2);
+    assertThat(refrigeratorReadings.get(0).getId(), is(reading.getId()));
+    assertThat(refrigeratorReadings.get(1).getId(), is(reading2.getId()));
+
+    assertThat(refrigeratorReadings.get(0).getProblem(), is(expectedRefrigeratorProblem));
+    assertThat(refrigeratorReadings.get(1).getProblem(), is(nullValue()));
+  }
+
+  private void assertForRefrigerator(Refrigerator actualRefrigerator, Refrigerator expectedRefrigerator) {
+    assertThat(actualRefrigerator.getId(), is(expectedRefrigerator.getId()));
+    assertThat(actualRefrigerator.getModel(), is(expectedRefrigerator.getModel()));
+    assertThat(actualRefrigerator.getBrand(), is(expectedRefrigerator.getBrand()));
+    assertThat(actualRefrigerator.getSerialNumber(), is(expectedRefrigerator.getSerialNumber()));
+  }
+
+  @Test
+  public void shouldGetRefrigeratorProblemsByReadingId() {
+    mapper.insertReading(reading);
+
+    RefrigeratorProblem expectedRefrigeratorProblem = new RefrigeratorProblem(reading.getId(), true, true, true, true, false, false, null);
+    mapper.insertProblem(expectedRefrigeratorProblem);
+
+    RefrigeratorProblem actualRefrigeratorProblem = mapper.getProblemByReadingId(reading.getId());
+
+    assertThat(actualRefrigeratorProblem, is(expectedRefrigeratorProblem));
   }
 }

@@ -13,11 +13,22 @@ public class FacilityVisitService {
   FacilityVisitRepository repository;
 
   public boolean save(FacilityVisit facilityVisit) {
-    if (repository.get(facilityVisit) != null) {
-      return false;
+    FacilityVisit savedVisit = repository.get(facilityVisit);
+    if (savedVisit == null) {
+      repository.insert(facilityVisit);
+    } else if (!savedVisit.getSynced()) {
+      facilityVisit.setSynced(true);
+      repository.update(facilityVisit);
+      return true;
     }
-    repository.insert(facilityVisit);
-    return true;
+    return false;
   }
 
+  public FacilityVisit getById(Long facilityVisitId) {
+    return repository.getById(facilityVisitId);
+  }
+
+  public FacilityVisit getBy(Long facilityId, Long distributionId) {
+    return repository.getBy(facilityId, distributionId);
+  }
 }

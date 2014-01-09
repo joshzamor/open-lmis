@@ -19,8 +19,8 @@ import org.openlmis.core.query.QueryExecutor;
 import org.openlmis.core.repository.mapper.*;
 import org.openlmis.db.categories.IntegrationTests;
 import org.openlmis.distribution.domain.Distribution;
-import org.openlmis.distribution.domain.EpiUse;
 import org.openlmis.distribution.domain.EpiUseLineItem;
+import org.openlmis.distribution.domain.FacilityVisit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -28,11 +28,11 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
+import java.util.List;
 
 import static com.natpryce.makeiteasy.MakeItEasy.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.openlmis.core.builder.DeliveryZoneBuilder.defaultDeliveryZone;
 import static org.openlmis.core.builder.FacilityBuilder.defaultFacility;
 import static org.openlmis.core.builder.ProcessingPeriodBuilder.defaultProcessingPeriod;
@@ -75,11 +75,16 @@ public class EpiUseMapperIT {
   @Autowired
   private FacilityMapper facilityMapper;
 
+  @Autowired
+  private FacilityVisitMapper facilityVisitMapper;
+
   DeliveryZone zone;
   Program program1;
   ProcessingPeriod processingPeriod;
   Distribution distribution;
   Facility facility;
+  FacilityVisit facilityVisit;
+  ProductGroup productGroup;
 
   @Before
   public void setUp() throws Exception {
@@ -103,38 +108,22 @@ public class EpiUseMapperIT {
     distributionMapper.insert(distribution);
 
     facilityMapper.insert(facility);
-  }
 
-  @Test
-  public void shouldSaveEpiUse() throws Exception {
-    EpiUse epiUse = new EpiUse(facility.getId(), distribution.getId(), null);
-    mapper.insert(epiUse);
+    productGroup = new ProductGroup("PG1", "Product Group 1");
+    productGroupMapper.insert(productGroup);
 
-    ResultSet resultSet = queryExecutor.execute("SELECT * FROM epi_use WHERE id = " + epiUse.getId());
-    assertTrue(resultSet.next());
-    assertThat(resultSet.getLong("id"), is(epiUse.getId()));
-  }
 
-  @Test
-  public void shouldReturnEpiUse() throws Exception {
-    EpiUse epiUse = new EpiUse(facility.getId(), distribution.getId(), null);
-    mapper.insert(epiUse);
+    Long createdBy = 1L;
 
-    EpiUse epiUseFromDB = mapper.getById(epiUse);
+    facilityVisit = new FacilityVisit(facility, distribution);
+    facilityVisitMapper.insert(facilityVisit);
 
-    assertThat(epiUse, is(epiUseFromDB));
   }
 
   @Test
   public void shouldSaveEpiUseLineItem() throws Exception {
-    ProductGroup productGroup = new ProductGroup("PG1", "Product Group 1");
-    productGroupMapper.insert(productGroup);
 
-    EpiUse epiUse = new EpiUse(facility.getId(), distribution.getId(), null);
-    mapper.insert(epiUse);
-
-    EpiUseLineItem epiUseLineItem = new EpiUseLineItem(productGroup, 1L);
-    epiUseLineItem.setEpiUseId(epiUse.getId());
+    EpiUseLineItem epiUseLineItem = new EpiUseLineItem(facilityVisit.getId(), productGroup, facilityVisit.getCreatedBy());
     epiUseLineItem.setProductGroup(productGroup);
     mapper.insertLineItem(epiUseLineItem);
 
@@ -145,33 +134,21 @@ public class EpiUseMapperIT {
 
   @Test
   public void shouldReturnEpiUseLineItem() throws Exception {
-    ProductGroup productGroup = new ProductGroup("PG1", "Product Group 1");
-    productGroupMapper.insert(productGroup);
 
-    EpiUse epiUse = new EpiUse(facility.getId(), distribution.getId(), null);
-    mapper.insert(epiUse);
-
-    EpiUseLineItem epiUseLineItem = new EpiUseLineItem(productGroup, 1L);
-    epiUseLineItem.setEpiUseId(epiUse.getId());
-    epiUseLineItem.setProductGroup(productGroup);
+    EpiUseLineItem epiUseLineItem = new EpiUseLineItem(facilityVisit.getId(), productGroup, facilityVisit.getCreatedBy());
     mapper.insertLineItem(epiUseLineItem);
 
     EpiUseLineItem epiUseLineItemFromDB = mapper.getLineItemById(epiUseLineItem);
 
-    assertThat(epiUseLineItem.getEpiUseId(), is(epiUseLineItemFromDB.getEpiUseId()));
-    assertThat(epiUseLineItem.getProductGroup().getName(), is(epiUseLineItemFromDB.getProductGroup().getName()));
-    assertThat(epiUseLineItem.getProductGroup().getId(), is(epiUseLineItemFromDB.getProductGroup().getId()));
+    assertThat(epiUseLineItemFromDB.getFacilityVisitId(), is(epiUseLineItem.getFacilityVisitId()));
+    assertThat(epiUseLineItemFromDB.getProductGroup().getName(), is(epiUseLineItem.getProductGroup().getName()));
+    assertThat(epiUseLineItemFromDB.getProductGroup().getId(), is(epiUseLineItem.getProductGroup().getId()));
   }
 
   @Test
   public void shouldUpdateEpiUseLineItem() throws Exception {
-    ProductGroup productGroup = new ProductGroup("PG1", "Product Group 1");
-    productGroupMapper.insert(productGroup);
-    EpiUse epiUse = new EpiUse(facility.getId(), distribution.getId(), null);
-    mapper.insert(epiUse);
-    EpiUseLineItem epiUseLineItem = new EpiUseLineItem(productGroup, 1L);
-    epiUseLineItem.setEpiUseId(epiUse.getId());
-    epiUseLineItem.setProductGroup(productGroup);
+
+    EpiUseLineItem epiUseLineItem = new EpiUseLineItem(facilityVisit.getId(), productGroup, facilityVisit.getCreatedBy());
     mapper.insertLineItem(epiUseLineItem);
 
     epiUseLineItem.setReceived(10);
@@ -190,6 +167,23 @@ public class EpiUseMapperIT {
     assertThat(epiUseLineItem.getStockAtEndOfMonth(), is(epiUseLineItemFromDB.getStockAtEndOfMonth()));
     assertThat(epiUseLineItem.getStockAtFirstOfMonth(), is(epiUseLineItemFromDB.getStockAtFirstOfMonth()));
     assertThat(epiUseLineItem.getExpirationDate(), is(epiUseLineItemFromDB.getExpirationDate()));
+  }
+
+  @Test
+  public void shouldGetEpiUseLineItemsByFacilityVisitId() {
+
+    EpiUseLineItem epiUseLineItem1 = new EpiUseLineItem(facilityVisit.getId(), productGroup, facilityVisit.getCreatedBy());
+    mapper.insertLineItem(epiUseLineItem1);
+
+    ProductGroup productGroup2 = new ProductGroup("PG0", "Product Group 0");
+    productGroupMapper.insert(productGroup2);
+    EpiUseLineItem epiUseLineItem2 = new EpiUseLineItem(facilityVisit.getId(), productGroup2, facilityVisit.getCreatedBy());
+    mapper.insertLineItem(epiUseLineItem2);
+
+    List<EpiUseLineItem> epiUseLineItems = mapper.getBy(facilityVisit.getId());
+
+    assertThat(epiUseLineItems.get(0).getProductGroup().getName(), is(productGroup2.getName()));
+    assertThat(epiUseLineItems.get(1).getProductGroup().getName(), is(productGroup.getName()));
   }
 
 }

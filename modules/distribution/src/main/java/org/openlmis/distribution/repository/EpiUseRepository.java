@@ -16,6 +16,8 @@ import org.openlmis.distribution.repository.mapper.EpiUseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class EpiUseRepository {
 
@@ -30,7 +32,8 @@ public class EpiUseRepository {
     mapper.updateLineItem(epiUseLineItem);
   }
 
-  public void insert(EpiUse epiUse) {
-    mapper.insert(epiUse);
+  public EpiUse getBy(Long facilityVisitId) {
+    List<EpiUseLineItem> epiUseLineItems = mapper.getBy(facilityVisitId);
+    return new EpiUse(epiUseLineItems);
   }
 }

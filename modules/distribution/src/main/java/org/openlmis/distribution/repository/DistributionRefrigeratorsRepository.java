@@ -23,9 +23,6 @@ public class DistributionRefrigeratorsRepository {
   @Autowired
   private DistributionRefrigeratorsMapper mapper;
 
-  public void save(DistributionRefrigerators distributionRefrigerators) {
-    mapper.insert(distributionRefrigerators);
-  }
 
   public void saveReading(RefrigeratorReading reading) {
     mapper.insertReading(reading);
@@ -33,11 +30,11 @@ public class DistributionRefrigeratorsRepository {
     RefrigeratorProblem problem = reading.getProblem();
     if (problem != null) {
       problem.setReadingId(reading.getId());
-      mapper.insertProblems(problem);
+      mapper.insertProblem(problem);
     }
   }
 
-  public DistributionRefrigerators getBy(Long facilityId, Long distributionId) {
-    return mapper.getBy(facilityId, distributionId);
+  public DistributionRefrigerators getBy(Long facilityVisitId) {
+    return new DistributionRefrigerators(mapper.getBy(facilityVisitId));
   }
 }

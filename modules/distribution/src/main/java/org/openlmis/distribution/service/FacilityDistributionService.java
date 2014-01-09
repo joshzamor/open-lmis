@@ -17,9 +17,7 @@ import org.openlmis.core.domain.Facility;
 import org.openlmis.core.domain.Refrigerator;
 import org.openlmis.core.service.FacilityService;
 import org.openlmis.core.service.RefrigeratorService;
-import org.openlmis.distribution.domain.Distribution;
-import org.openlmis.distribution.domain.FacilityDistribution;
-import org.openlmis.distribution.domain.RefrigeratorReading;
+import org.openlmis.distribution.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -84,16 +82,47 @@ public class FacilityDistributionService {
       }
     });
 
-    FacilityDistribution facilityDistribution = new FacilityDistribution(facility, distribution, refrigeratorReadings);
+    FacilityVisit facilityVisit = new FacilityVisit(facility, distribution);
+    facilityVisitService.save(facilityVisit);
+    FacilityDistribution facilityDistribution = new FacilityDistribution(facilityVisit, facility, distribution, refrigeratorReadings);
     epiUseService.save(facilityDistribution.getEpiUse());
     epiInventoryService.save(facilityDistribution.getEpiInventory());
     return facilityDistribution;
   }
 
+
   public boolean save(FacilityDistribution facilityDistribution) {
-    epiUseService.save(facilityDistribution.getEpiUse());
-    distributionRefrigeratorsService.save(facilityDistribution.getRefrigerators());
-    vaccinationCoverageService.save(facilityDistribution.getCoverage());
-    return facilityVisitService.save(facilityDistribution.getFacilityVisit());
+    boolean synced = facilityVisitService.save(facilityDistribution.getFacilityVisit());
+    if (synced) {
+      epiUseService.save(facilityDistribution.getEpiUse());
+      distributionRefrigeratorsService.save(facilityDistribution.getFacilityVisit().getFacilityId(), facilityDistribution.getRefrigerators());
+      vaccinationCoverageService.save(facilityDistribution.getCoverage());
+    }
+    return synced;
+  }
+
+  public Map<Long, FacilityDistribution> get(Distribution distribution) {
+    Long deliveryZoneId = distribution.getDeliveryZone().getId();
+    Long programId = distribution.getProgram().getId();
+
+    Map<Long, FacilityDistribution> facilityDistributions = new HashMap<>();
+
+    List<Facility> facilities = facilityService.getAllForDeliveryZoneAndProgram(deliveryZoneId, programId);
+    for (Facility facility : facilities) {
+      facilityDistributions.put(facility.getId(), getDistributionData(facility, distribution));
+    }
+
+    return facilityDistributions;
+
+  }
+
+  private FacilityDistribution getDistributionData(Facility facility, Distribution distribution) {
+    FacilityVisit facilityVisit = facilityVisitService.getBy(facility.getId(), distribution.getId());
+    EpiUse epiUse = epiUseService.getBy(facilityVisit.getId());
+    DistributionRefrigerators refrigerators = distributionRefrigeratorsService.getBy(facilityVisit.getId());
+    EpiInventory epiInventory = epiInventoryService.getBy(facilityVisit.getId());
+    VaccinationCoverage coverage = vaccinationCoverageService.getBy(facilityVisit.getId());
+
+    return new FacilityDistribution(facilityVisit, epiUse, refrigerators, epiInventory, coverage);
   }
 }

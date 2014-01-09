@@ -35,23 +35,26 @@ import static org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion.NON_EMPT
 @EqualsAndHashCode(callSuper = false)
 public class DistributionRefrigeratorsDTO extends BaseModel {
 
-  Long facilityId;
-  Long distributionId;
+  Long facilityVisitId;
   List<RefrigeratorReadingDTO> readings;
 
   public DistributionRefrigerators transform() {
     List<RefrigeratorReading> refrigeratorReadings = new ArrayList<>();
+    final Long createdBy = this.createdBy;
+    final Long modifiedBy = this.modifiedBy;
     if (readings != null) {
       refrigeratorReadings = (List) collect(readings, new Transformer() {
         @Override
         public Object transform(Object o) {
-          RefrigeratorReading reading = ((RefrigeratorReadingDTO) o).transform();
+          RefrigeratorReadingDTO readingDTO = (RefrigeratorReadingDTO) o;
+          readingDTO.setCreatedBy(createdBy);
+          readingDTO.setModifiedBy(modifiedBy);
+          RefrigeratorReading reading = readingDTO.transform();
           return reading;
         }
       });
     }
-    DistributionRefrigerators distributionRefrigerators = new DistributionRefrigerators(facilityId, distributionId, refrigeratorReadings);
-    distributionRefrigerators.setCreatedBy(this.createdBy);
-    return distributionRefrigerators;
+
+    return new DistributionRefrigerators(refrigeratorReadings);
   }
 }

@@ -33,6 +33,7 @@ public class RefrigeratorReadingDTO extends BaseModel {
 
   Refrigerator refrigerator;
   //Readings
+  Long facilityVisitId;
   Reading temperature;
   Reading functioningCorrectly;
   Reading lowAlarmEvents;
@@ -42,6 +43,8 @@ public class RefrigeratorReadingDTO extends BaseModel {
   String notes;
 
   public RefrigeratorReading transform() {
+    refrigerator.setModifiedBy(this.modifiedBy);
+    refrigerator.setCreatedBy(this.createdBy);
     refrigerator.validate();
     if ("Y".equalsIgnoreCase(problemSinceLastTime.getEffectiveValue())) {
       problems.validate();
@@ -49,13 +52,16 @@ public class RefrigeratorReadingDTO extends BaseModel {
       problems = null;
     }
 
-    return new RefrigeratorReading(refrigerator, null,
-      temperature.parseFloat(),
-      functioningCorrectly.getEffectiveValue(),
-      lowAlarmEvents.parsePositiveInt(),
-      highAlarmEvents.parsePositiveInt(),
-      problemSinceLastTime.getEffectiveValue(),
-      problems,
-      notes);
+    RefrigeratorReading reading = new RefrigeratorReading(this.refrigerator, this.facilityVisitId,
+      this.temperature.parseFloat(),
+      this.functioningCorrectly.getEffectiveValue(),
+      this.lowAlarmEvents.parsePositiveInt(),
+      this.highAlarmEvents.parsePositiveInt(),
+      this.problemSinceLastTime.getEffectiveValue(),
+      this.problems,
+      this.notes);
+    reading.setCreatedBy(this.createdBy);
+    reading.setModifiedBy(this.modifiedBy);
+    return reading;
   }
 }
