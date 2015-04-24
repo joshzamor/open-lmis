@@ -15,8 +15,12 @@ function CreateEquipmentInventoryController($scope, $location, $routeParams, Equ
   $scope.max_year = new Date().getFullYear();
   $scope.submitted = false;
   $scope.showError = false;
+  $scope.equipmentTypes = [];
   Equipments.get(function (data) {
     $scope.equipments = data.equipments;
+    for (var i = 0; i < data.equipments.length; i++) {
+      $scope.equipmentTypes[data.equipments[i].equipmentTypeId] = data.equipments[i].equipmentType;
+    }
   });
 
   if ($routeParams.id === undefined) {
@@ -42,6 +46,7 @@ function CreateEquipmentInventoryController($scope, $location, $routeParams, Equ
       $scope.equipment.dateLastAssessed = $scope.equipment.dateLastAssessedString ;
       $scope.equipment.dateDecommissioned = $scope.equipment.dateDecommissionedString;
       $scope.equipment.serviceContractEndDate = $scope.equipment.serviceContractEndDateString;
+      $scope.equipment.equipmentTypeId = $scope.equipment.equipment.equipmentTypeId;
       Facility.get({ id: $scope.equipment.facilityId }, function(data){
         $scope.facility = data.facility;
       });
@@ -55,6 +60,18 @@ function CreateEquipmentInventoryController($scope, $location, $routeParams, Equ
   Donors.get(function(data){
     $scope.donors = data.donors;
   });
+
+  $scope.updateManuModel = function () {
+    var arr = $scope.equipments;
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i].id.toString() === $scope.equipment.equipmentId) {
+        var manuModelArray = arr[i].name.split(" / ");
+        $scope.equipment.manufacturerName = manuModelArray[0];
+        $scope.equipment.model = manuModelArray[1];
+        break;
+      }
+    }
+  };
 
   $scope.saveEquipment = function () {
     $scope.error = '';
