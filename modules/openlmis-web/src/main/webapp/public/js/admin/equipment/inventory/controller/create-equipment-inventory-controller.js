@@ -42,7 +42,7 @@ function CreateEquipmentInventoryController($scope, $location, $routeParams, Equ
     EquipmentInventory.get({
       id: $routeParams.id
     }, function (data) {
-      $scope.equipment = data.inventory;
+      $scope.equipment = angular.copy(data.inventory);
       $scope.equipment.dateLastAssessed = $scope.equipment.dateLastAssessedString ;
       $scope.equipment.dateDecommissioned = $scope.equipment.dateDecommissionedString;
       $scope.equipment.serviceContractEndDate = $scope.equipment.serviceContractEndDateString;
