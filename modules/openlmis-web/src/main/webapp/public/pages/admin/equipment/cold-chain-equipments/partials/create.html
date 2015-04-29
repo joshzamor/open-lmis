@@ -1,0 +1,308 @@
+<!--
+  ~ This program was produced for the U.S. Agency for International Development. It was prepared by the USAID | DELIVER PROJECT, Task Order 4. It is part of a project which utilizes code originally licensed under the terms of the Mozilla Public License (MPL) v2 and therefore is licensed under MPL v2 or later.
+  ~
+  ~ This program is free software: you can redistribute it and/or modify it under the terms of the Mozilla Public License as published by the Mozilla Foundation, either version 2 of the License, or (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the Mozilla Public License for more details.
+  ~
+  ~ You should have received a copy of the Mozilla Public License along with this program. If not, see http://www.mozilla.org/MPL/
+  -->
+
+<div xmlns="http://www.w3.org/1999/html">
+  <h2>
+    <span>{{(equipment.id === undefined)?'New': 'Edit'}} <span openlmis-message="label.equipment.equipment"></span></span>
+  </h2>
+  <form ng-submit="saveEquipment()" id="equipmentForm" name="equipmentForm">
+    <div>
+      <!--row -->
+      <div class="form-row clearfix">
+        <!-- Equipment Type/ Designation-->
+        <div class="span8">
+          <label for="type">
+            <span >Designation</span>
+            <span class="label-required">*</span>
+          </label>
+
+          <div class="form-field">
+            <select ng-model="equipment.type" id="type">
+              <option ng-repeat="type in equipmentTypes" ng-selected="type.id == equipment.type" value="{{type.id}}">{{type.name}}</option>
+            </select>
+            <span class="field-error" ng-show="equipmentForm.type.$error.required && showError" openlmis-message="missing.value"></span>
+          </div>
+        </div>
+
+        <!--Name -->
+        <div class="span8">
+          <label for="name">
+            <span >Name</span>
+            <span class="label-required">*</span>
+          </label>
+
+          <div class="form-field">
+            <input ng-model="equipment.name" name="name" id="name" type="text" maxlength="50" ng-required="true" />
+            <span class="field-error" ng-show="equipmentForm.name.$error.required && showError" openlmis-message="missing.value"></span>
+          </div>
+        </div>
+      </div>
+      <!-- Row--->
+      <div class="form-row clearfix">
+        <!-- Brand -->
+        <div class="span8">
+          <label for="brand">
+            <span >Brand</span>
+            <span class="label-required">*</span>
+          </label>
+
+          <div class="form-field">
+            <input ng-model="equipment.brand" name="brand" id="brand" type="text" maxlength="50" ng-required="true" />
+            <span class="field-error" ng-show="equipmentForm.brand.$error.required && showError" openlmis-message="missing.value"></span>
+          </div>
+        </div>
+        <!--Model -->
+        <div class="span8">
+          <label for="model">
+            <span >Model</span>
+            <span class="label-required">*</span>
+          </label>
+
+          <div class="form-field">
+            <input ng-model="equipment.model" name="model" id="model" type="text" maxlength="50" ng-required="true" />
+            <span class="field-error" ng-show="equipmentForm.model.$error.required && showError" openlmis-message="missing.value"></span>
+          </div>
+        </div>
+      </div>
+
+      <!--Row -->
+      <div class="form-row clearfix">
+      <!-- Code -->
+        <div class="span8">
+          <label for="code">
+            <span >Code</span>
+            <span class="label-required">*</span>
+          </label>
+
+          <div class="form-field">
+            <input ng-model="equipment.code" name="code" id="code" type="text" maxlength="50" />
+            <span class="field-error" ng-show="equipmentForm.code.$error.required && showError" openlmis-message="missing.value"></span>
+          </div>
+        </div>
+        <!-- pqs code-->
+        <div class="span8">
+          <label for="pqscode">
+            <span >PQS Code</span>
+            <span class="label-required">*</span>
+          </label>
+
+          <div class="form-field">
+            <input ng-model="equipment.pqsCode" name="pqscode" id="pqscode" type="text" maxlength="50" />
+            <span class="field-error" ng-show="equipmentForm.pqscode.$error.required && showError" openlmis-message="missing.value"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row -->
+      <div class="form-row clearfix">
+        <!-- Refrigerator Capacity-->
+        <div class="span8">
+          <label for="refrigerator-capacity">
+            <span>Refrigerator Capacity</span>
+            <span class="label-required"></span>
+          </label>
+
+          <div class="form-field">
+            <input ng-model="equipment.refrigeratorCapacity" name="refrigerator-capacity" id="refrigerator-capacity" type="text" maxlength="50" />
+            <span class="field-error" ng-show="equipmentForm.pqscode.$error.required && showError" openlmis-message="missing.value"></span>
+          </div>
+        </div>
+
+        <!-- freezer -->
+        <div class="span8">
+          <label for="freezer-capacity">
+            <span >Freezer Capacity</span>
+            <span class="label-required"></span>
+          </label>
+
+          <div class="form-field">
+            <input ng-model="equipment.freezerCapacity" id="freezer-capacity" type="text" maxlength="200" />
+            <span class="field-error" ng-show="equipmentForm.freezer-capacity.$error.required && showError" openlmis-message="missing.value"></span>
+          </div>
+        </div>
+      </div>
+
+
+    <!-- Row -->
+    <div class="form-row clearfix">
+      <!-- Type refrigerant -->
+      <div class="span8">
+        <label for="refrigerant">
+          <span >Refrigerant</span>
+          <span class="label-required"></span>
+        </label>
+
+        <div class="form-field">
+          <input ng-model="equipment.refrigerant" id="refrigerant" type="text" maxlength="200"  />
+          <span class="field-error" ng-show="equipmentForm.refrigerant.$error.required && showError" openlmis-message="missing.value"></span>
+        </div>
+      </div>
+      <!-- Temperature Zone -->
+      <div class="span8">
+        <label for="temperature-zone">
+          <span >Temperature Zone</span>
+          <span class="label-required"></span>
+        </label>
+
+        <div class="form-field">
+          <input ng-model="equipment.temperatureZone" name="temperature-zone" id="temperature-zone" type="text"  />
+          <span class="field-error" ng-show="equipmentForm.energy-consumption.$error.required && showError" openlmis-message="missing.value"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row -->
+    <div class="form-row clearfix">
+      <!-- Energy Source -->
+      <div class="span8">
+        <label for="energy-source">
+          <span >Energy Source</span>
+          <span class="label-required"></span>
+        </label>
+
+        <div class="form-field">
+          <select ng-model="equipment.energySource" id="energy-source">
+            <option ng-repeat="source in energySources" ng-selected="source.id == equipment.energySource" value="{{source.id}}">{{source.name}}</option>
+          </select>
+          <span class="field-error" ng-show="equipmentForm.energy-source.$error.required && showError" openlmis-message="missing.value"></span>
+        </div>
+      </div>
+      <!-- Energy Consumption-->
+      <div class="span8">
+        <label for="energy-consumption">
+          <span >Energy Consumption (kW/h)</span>
+          <span class="label-required"></span>
+        </label>
+
+        <div class="form-field">
+          <input ng-model="equipment.energyConsumption" name="energy-consumption" id="energy-consumption" type="text"  />
+          <span class="field-error" ng-show="equipmentForm.energy-consumption.$error.required && showError" openlmis-message="missing.value"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row -->
+    <div class="form-row clearfix">
+      <!-- Max Temperature -->
+      <div class="span8">
+        <label for="max-temperature">
+          <span >Maximum Temperature</span>
+          <span class="label-required"></span>
+        </label>
+
+        <div class="form-field">
+          <input ng-model="equipment.maxTemperature" id="max-temperature" type="text" maxlength="200"  />
+          <span class="field-error" ng-show="equipmentForm.max-temperature.$error.required && showError" openlmis-message="missing.value"></span>
+        </div>
+      </div>
+      <!-- Min Temperature-->
+      <div class="span8">
+        <label for="min-temperature">
+          <span >Minimum Temperature</span>
+          <span class="label-required"></span>
+        </label>
+
+        <div class="form-field">
+          <input ng-model="equipment.minTemperature" name="min-temperature" id="min-temperature" type="text"  />
+          <span class="field-error" ng-show="equipmentForm.min-temperature.$error.required && showError" openlmis-message="missing.value"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row -->
+    <div class="form-row clearfix">
+      <!-- Hold Over Time -->
+      <div class="span8">
+        <label for="holdover-time">
+          <span >Holdover Time</span>
+          <span class="label-required"></span>
+        </label>
+
+        <div class="form-field">
+          <input ng-model="equipment.holdoverTime" id="holdover-time" type="text" maxlength="200"  />
+          <span class="field-error" ng-show="equipmentForm.holdover-time.$error.required && showError" openlmis-message="missing.value"></span>
+        </div>
+      </div>
+      <!-- Dimension-->
+      <div class="span8">
+        <label for="dimension">
+          <span >Dimension</span>
+          <span class="label-required"></span>
+        </label>
+
+        <div class="form-field">
+          <input ng-model="equipment.dimension" name="dimension" id="dimension" type="text"  />
+          <span class="field-error" ng-show="equipmentForm.min-dimension.$error.required && showError" openlmis-message="missing.value"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row -->
+    <div class="form-row clearfix">
+      <!-- Price -->
+      <div class="span8">
+        <label for="price">
+          <span >Price</span>
+          <span class="label-required"></span>
+        </label>
+
+        <div class="form-field">
+          <input ng-model="equipment.price" id="price" type="text"  />
+          <span class="field-error" ng-show="equipmentForm.price.$error.required && showError" openlmis-message="missing.value"></span>
+        </div>
+      </div>
+      <!-- Dimension-->
+      <div class="span8">
+        <label for="donor">
+          <span >Donor</span>
+          <span class="label-required"></span>
+        </label>
+
+        <div class="form-field">
+          <input ng-model="equipment.donor" name="donor" id="donor" type="text"  />
+          <span class="field-error" ng-show="equipmentForm.donor.$error.required && showError" openlmis-message="missing.value"></span>
+        </div>
+      </div>
+    </div>
+    <!-- Row -->
+    <div class="form-row clearfix">
+      <!-- Status-->
+      <div class="span8">
+        <label for="status">
+          <span >Status</span>
+          <span class="label-required"></span>
+        </label>
+
+        <div class="form-field">
+          <select ng-model="equipment.status" id="status">
+            <option ng-repeat="status in pqsStatus" ng-selected="status.id == equipment.status" value="{{status.id}}">{{status.name}}</option>
+          </select>
+          <span class="field-error" ng-show="equipmentForm.status.$error.required && showError" openlmis-message="missing.value"></span>
+        </div>
+      </div>
+      <!-- Dimension-->
+      <div class="span8">
+
+      </div>
+    </div>
+
+    </div>
+    <div form-toolbar id="action_buttons" class="action-buttons">
+      <div class="form-cell button-row">
+        <input id="saveButton" type="submit" id="save-button" ng-disabled="equipmentForm.$invalid" class="btn btn-primary save-button" openlmis-message="button.save" />
+        <input id="cancelButton" type="button" class="btn btn-cancel cancel-button" openlmis-message="button.cancel" ng-click="cancelCreateEquipment()" />
+      </div>
+
+      <div class="toolbar-error" id="saveErrorMsgDiv" ng-bind="error" ng-show="error" />
+      <div class="toolbar-success" id="saveSuccessMsgDiv" openlmis-message="message" ng-show="message"></div>
+    </div>
+
+  </form>
+</div>

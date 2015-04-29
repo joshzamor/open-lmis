@@ -433,6 +433,9 @@
                             <a href="/public/pages/admin/equipment/type/index.html"
                                 openlmis-message="link.manage.equipment.type"></a>
                         </li>
+                      <li ng-show="hasPermission('MANAGE_EQUIPMENT_SETTINGS')">
+                        <a href="/public/pages/admin/equipment/cold-chain-equipments/index.html">CC Equipments</a>
+                      </li>
                         <li ng-show="hasPermission('MANAGE_EQUIPMENT_SETTINGS')">
                             <a href="/public/pages/admin/equipment/manage/index.html"
                                openlmis-message="link.manage.equipment.list"></a>
