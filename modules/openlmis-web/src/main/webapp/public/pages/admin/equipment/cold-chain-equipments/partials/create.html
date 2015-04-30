@@ -10,7 +10,7 @@
 
 <div xmlns="http://www.w3.org/1999/html">
   <h2>
-    <span>{{(equipment.id === undefined)?'New': 'Edit'}} <span openlmis-message="label.equipment.equipment"></span></span>
+    <span>{{(equipment.id === undefined)?'New': 'Edit'}} <span>Cold Chain Equipment</span></span>
   </h2>
   <form ng-submit="saveEquipment()" id="equipmentForm" name="equipmentForm">
     <div>
@@ -39,7 +39,7 @@
           </label>
 
           <div class="form-field">
-            <input ng-model="equipment.name" name="name" id="name" type="text" maxlength="50" ng-required="true" />
+            <input readonly="true" ng-model="equipment.name" name="name" id="name" type="text" maxlength="50" ng-required="true" ng-value="equipment.brand" />
             <span class="field-error" ng-show="equipmentForm.name.$error.required && showError" openlmis-message="missing.value"></span>
           </div>
         </div>
@@ -266,7 +266,9 @@
         </label>
 
         <div class="form-field">
-          <input ng-model="equipment.donor" name="donor" id="donor" type="text"  />
+          <select ng-model="equipment.donor" id="donor">
+            <option ng-repeat="donor in donors" ng-selected="donor.id == equipment.donor" value="{{donor.id}}">{{donor.name}}</option>
+          </select>
           <span class="field-error" ng-show="equipmentForm.donor.$error.required && showError" openlmis-message="missing.value"></span>
         </div>
       </div>
