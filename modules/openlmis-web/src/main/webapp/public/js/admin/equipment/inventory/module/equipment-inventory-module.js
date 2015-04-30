@@ -12,8 +12,8 @@ angular.module('equipment-inventory', ['openlmis','ui.bootstrap.modal', 'ui.boot
   $routeProvider.
       when('/', {controller: EquipmentInventoryController, templateUrl: 'partials/list.html'}).
       when('/:from/:facility/:program', {controller: EquipmentInventoryController, templateUrl: 'partials/list.html'}).
-      when('/create/:from/:facility/:program', {controller: CreateEquipmentInventoryController, templateUrl: 'partials/create.html'}).
-      when('/edit/:from/:facility/:program/:id', {controller: CreateEquipmentInventoryController, templateUrl: 'partials/create.html'}).
+      when('/create/:from/:facility/:equipmentType', {controller: CreateEquipmentInventoryController, templateUrl: 'partials/create.html'}).
+      when('/edit/:from/:facility/:equipmentType/:id', {controller: CreateEquipmentInventoryController, templateUrl: 'partials/create.html'}).
       when('/log/:id', {controller: LogController, templateUrl: 'partials/log.html'}).
       when('/request/:id', {controller: CreateServiceRequestController, templateUrl: 'partials/request.html'}).
       otherwise({redirectTo: '/'});

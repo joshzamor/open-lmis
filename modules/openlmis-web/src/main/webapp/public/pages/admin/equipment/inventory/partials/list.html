@@ -24,9 +24,9 @@
 
   <div class="row-fluid">
     <div class="span2 form-inline">
-      <input id="myFacilityRnr" type="radio" ng-model="selectedType" value="0" ng-checked="selectedType==0" ng-change="loadFacilityData(selectedType);" />&nbsp;
+      <input id="myFacilityRnr" type="radio" ng-model="selectedType" value="0" ng-checked="selectedType==0" ng-change="loadFacilityData(selectedType);" style="vertical-align: top;" />&nbsp;
       <label for="myFacilityRnr">
-        <strong openlmis-message="label.myFacility"></strong>
+        <strong openlmis-message="label.myFacility"></strong><br/>({{myFacility.code}} - {{myFacility.name}})
       </label>
     </div>
     <div class="span4 form-inline">
@@ -36,73 +36,69 @@
       </label>
     </div>
   </div>
-  <br>
-  <div ng-show="selectedType == 0">
-    <div class="row-fluid">
-      <div class="span12">
-        <label openlmis-message="label.program"></label>
-      </div>
-    </div>
-    <div class="row-fluid">
-      <select ui-select2 placeholder="{{ programOptionMessage() }}" id="programListMyFacility" class="span3" ng-model="selectedProgram.id" ng-change="loadEquipments()">
-        <option value=""></option>
-        <option ng-repeat="program in programs | orderBy: 'name'" value="{{ program.id }}">{{ program.name }}
-        </option>
-      </select>
-    </div>
-    <br/>
+  <br/>
 
-    <div class="row-fluid">
-      <div class="span12">
-        <label openlmis-message="label.requisition.facilityName"></label>
-      </div>
-    </div>
-    <div class="row-fluid">
-      <input type="text" class="span3" ng-model="facilityDisplayName" readonly="readonly" />
-    </div>
-    <br/>
-  </div>
-
-  <div ng-show="selectedType == 1">
-    <div class="row-fluid">
-      <div class="span12">
-        <label openlmis-message="label.program"></label>
-      </div>
-    </div>
-    <div class="row-fluid">
-      <select ui-select2 placeholder="{{ programOptionMessage() }}" class="span3" id="programListSupervisedFacility" ng-change="loadFacilitiesForProgram();" ng-model="selectedProgram.id">
-        <option value=""></option>
-        <option ng-repeat="program in programs | orderBy: 'name'" value="{{ program.id }}">{{ program.name }}
-        </option>
-      </select>
-    </div>
-    <br/>
-
-    <div class="row-fluid">
-      <div class="span12">
-        <label openlmis-message="label.requisition.facilityName"></label>
-      </div>
-    </div>
-    <div class="row-fluid">
-      <select ui-select2 placeholder="{{ facilityOptionMessage() }}" class="span3" id="facilityList" ng-change="loadEquipments()" ng-model="selectedFacilityId">
-        <option value=""></option>
-        <option ng-repeat="facility in facilities | orderBy : 'name'" value="{{ facility.id }}">{{ facility.code }} - {{ facility.name }}
-        </option>
-      </select>
+  <div class="row-fluid">
+    <div class="span12">
+      <label>Equipment Type</label>
     </div>
   </div>
+  <div class="row-fluid">
+    <select ui-select2 class="span3" ng-model="equipmentTypeId" id="equipmentType" name="equipmentType" ng-change="loadEquipments()">
+      <option ng-repeat="equipmentType in equipmentTypes" value="{{equipmentType.id}}">
+        {{equipmentType.name}}
+      </option>
+    </select>
+  </div>
+  <br/>
 
 
 
-  <div ng-show="selectedFacilityId != undefined && selectedProgram != undefined">
-    <a ng-show="selectedFacilityId && selectedProgram.id" id="add-new-equipment-type" ng-href="#/create/{{selectedType}}/{{selectedFacilityId}}/{{selectedProgram.id}}" class="pull-right btn btn-primary" openlmis-message="button.add.new"></a>
+  <div ng-show="equipmentTypeId != undefined">
+    <a ng-show="myFacility" id="add-new-equipment-type" ng-href="#/create/{{selectedType}}/{{myFacility.id}}/{{equipmentTypeId}}" class="btn btn-primary" openlmis-message="button.add.new"></a>
+    <a ng-show="myFacility == undefined" id="add-new-equipment-type" ng-href="#/create/{{selectedType}}/0/{{equipmentTypeId}}" class="btn btn-primary" openlmis-message="button.add.new"></a>
 
 
     <div ng-show="inventory.length == 0">
       <span openlmis-message="label.equipment.none.found"></span>
     </div>
-    <table ng-show="inventory.length > 0" class="table table-bordered">
-      <thead>
+    <div ng-show="inventory.length > 0">
+      <table ng-show="equipmentTypeId == 3" class="table table-bordered">
+        <thead>
+        <tr class="gradient-header">
+          <th class="col-row-number">#</th>
+          <th openlmis-message="label.equipment.equipment"></th>
+          <th openlmis-message="label.equipment.manufacturer"></th>
+          <th openlmis-message="label.equipment.model"></th>
+          <th>Fridge / Freezer Capacity</th>
+          <th openlmis-message="label.equipment.status"></th>
+          <th openlmis-message="label.equipment.energy.source"></th>
+          <th openlmis-message="label.equipment.year.of.installation"></th>
+          <th>Age</th>
+          <th>Replacement Year</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in inventory">
+          <td>{{$index + 1}}</td>
+          <td>
+            <a ng-show="myFacility" ng-href="#/edit/{{selectedType}}/{{myFacility.id}}/{{equipmentTypeId}}/{{item.id}}">{{item.equipment.name}}</a>
+            <a ng-show="myFacility == undefined" ng-href="#/edit/{{selectedType}}/0/{{equipmentTypeId}}/{{item.id}}">{{item.equipment.name}}</a>
+          </td>
+          <td>{{item.manufacturerName}}</td>
+          <td>{{item.model}}</td>
+          <td>{{item.equipment.fridgeCapacity ? item.equipment.fridgeCapacity : 0}} / {{item.equipment.freezerCapacity ? item.equipment.freezerCapacity : 0}}</td>
+          <td>{{getStatusName(item.operationalStatusId)}}</td>
+          <td>{{item.energySource}}</td>
+          <td>{{item.yearOfInstallation}}</td>
+          <td>{{getAge(item.yearOfInstallation)}}</td>
+          <td>{{item.yearOfInstallation+10}}</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <table ng-show="equipmentTypeId != 3" class="table table-bordered">
+        <thead>
         <tr class="gradient-header">
           <th class="col-row-number">#</th>
           <th openlmis-message="label.equipment.equipment"></th>
@@ -111,11 +107,14 @@
           <th openlmis-message="label.equipment.source.of.fund"></th>
           <th openlmis-message="label.equipment.actions"></th>
         </tr>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         <tr ng-repeat="item in inventory">
           <td>{{$index + 1}}</td>
-          <td><a ng-href="#/edit/{{selectedType}}/{{item.facilityId}}/{{item.programId}}/{{item.id}}">{{item.equipment.name}}</a></td>
+          <td>
+            <a ng-show="myFacility" ng-href="#/edit/{{selectedType}}/{{myFacility.id}}/{{equipmentTypeId}}/{{item.id}}">{{item.equipment.name}}</a>
+            <a ng-show="myFacility == undefined" ng-href="#/edit/{{selectedType}}/0/{{equipmentTypeId}}/{{item.id}}">{{item.equipment.name}}</a>
+          </td>
           <td>{{item.manufacturerName}}</td>
           <td>{{item.model}}</td>
           <td>{{item.sourceOfFund}}</td>
@@ -129,8 +128,9 @@
             </a>
           </td>
         </tr>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </div>
