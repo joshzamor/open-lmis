@@ -10,6 +10,6 @@
 
 function ManageColdChainEquipmentController($scope, $routeParams, $location, Equipments) {
 
-  $scope.equipments=[{id:1,name:"concord/concord1",designation:"Refrigerator",brand:"Concord",model:"Concord1",code:"CR",pqsCode:"domestic",refrigeratorCapacity:20,freezerCapacity:8},{id:2,name:"Biplex/Biplex Rural",designation:"Refrigerator&Freezer",brand:"Biplex",model:"Biplex Rural",code:"CR",pqsCode:"domestic",refrigeratorCapacity:55,freezerCapacity:36}];
+  $scope.equipments=[{id:1,name:"concord/concord1",designation:"Refrigerator",brand:"Concord",model:"Concord1",code:"CR",pqsCode:"domestic",refrigeratorCapacity:20,freezerCapacity:8,temperatureZone:"HZ",donor:"WHO",price:"$3,400"},{id:2,name:"Biplex/Biplex Rural",designation:"Refrigerator&Freezer",brand:"Biplex",model:"Biplex Rural",code:"CR",pqsCode:"domestic",refrigeratorCapacity:55,freezerCapacity:36,temperatureZone:"HZ",donor:"WHO",price:"$2,300"}];
 
 }

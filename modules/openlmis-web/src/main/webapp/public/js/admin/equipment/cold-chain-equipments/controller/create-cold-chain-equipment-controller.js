@@ -29,19 +29,8 @@ function CreateColdChainEquipmentController($scope, $routeParams, $location, Equ
   }
 
   $scope.saveEquipment = function () {
-
-    var onSuccess = function(data){
-      $scope.$parent.message = messageService.get(data.success);
-      $location.path('');
-    };
-
-    var onError = function(data){
-      $scope.showError = true;
-      $scope.error = messageService.get(data.data.error);
-    };
-
     if(!$scope.equipmentForm.$invalid){
-      SaveEquipment.save($scope.equipment, onSuccess, onError);
+      $location.path('');
     }
 
   };
