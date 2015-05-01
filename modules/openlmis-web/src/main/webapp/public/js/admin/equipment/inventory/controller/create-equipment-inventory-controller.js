@@ -27,7 +27,7 @@ function CreateEquipmentInventoryController($scope, $location, $routeParams, Equ
       $scope.equipmentTypes[data.equipments[i].equipmentTypeId] = data.equipments[i].equipmentType;
 
       // Create manu/model object array
-      if (data.equipments[i].equipmentTypeId === 3) { // Only create for CCE
+      if (data.equipments[i].equipmentTypeId === 36) { // Only create for CCE
         var manuModelArray = data.equipments[i].name.split(" / ");
         var manu = manuModelArray[0];
         var model = manuModelArray[1];
@@ -92,13 +92,17 @@ function CreateEquipmentInventoryController($scope, $location, $routeParams, Equ
   if ($routeParams.id === undefined) { // Add New
     $scope.screenType = "create";
     $scope.equipment = {};
-    $scope.equipment.equipmentTypeId = $routeParams.equipmentType;
+    $scope.equipment.equipmentTypeId = parseInt($routeParams.equipmentType);
+    $scope.equipment.programId = 82; // TODO: remove this once we get the real program id
 
     // set default of checkboxes so the submission does not become null and hence an error.
     $scope.equipment.replacementRecommended = false;
     $scope.equipment.hasServiceContract = false;
     $scope.equipment.dateLastAssessed = Date.now();
     $scope.equipment.isActive = true;
+
+    // Set CCE defaults
+    $scope.equipment.yearOfInstallation = new Date().getFullYear();
 
   } else { // Edit
     $scope.screenType = "edit";
@@ -107,6 +111,7 @@ function CreateEquipmentInventoryController($scope, $location, $routeParams, Equ
     }, function (data) {
       $scope.equipment = data.inventory;
       $scope.equipment.equipmentTypeId = $routeParams.equipmentType;
+      $scope.equipment.programId = 82; // TODO: remove this once we get the real program id
 
       $scope.equipment.dateLastAssessed = $scope.equipment.dateLastAssessedString ;
       $scope.equipment.dateDecommissioned = $scope.equipment.dateDecommissionedString;

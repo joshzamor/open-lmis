@@ -63,7 +63,7 @@
       <span openlmis-message="label.equipment.none.found"></span>
     </div>
     <div ng-show="inventory.length > 0">
-      <table ng-show="equipmentTypeId == 3" class="table table-bordered">
+      <table ng-show="equipmentTypeId == 36" class="table table-bordered">
         <thead>
         <tr class="gradient-header">
           <th class="col-row-number">#</th>
@@ -79,7 +79,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="item in inventory">
+        <tr ng-repeat="item in inventory | filter: { equipment.equipmentType.code: 'CCE' } | orderBy: 'yearOfInstallation'">
           <td>{{$index + 1}}</td>
           <td>
             <a ng-show="myFacility" ng-href="#/edit/{{selectedType}}/{{myFacility.id}}/{{equipmentTypeId}}/{{item.id}}">{{item.equipment.name}}</a>
@@ -97,7 +97,7 @@
         </tbody>
       </table>
 
-      <table ng-show="equipmentTypeId != 3" class="table table-bordered">
+      <table ng-show="equipmentTypeId != 36" class="table table-bordered">
         <thead>
         <tr class="gradient-header">
           <th class="col-row-number">#</th>
@@ -109,7 +109,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="item in inventory">
+        <tr ng-repeat="item in inventory | filter: { equipment.equipmentType.code: '!CCE' }">
           <td>{{$index + 1}}</td>
           <td>
             <a ng-show="myFacility" ng-href="#/edit/{{selectedType}}/{{myFacility.id}}/{{equipmentTypeId}}/{{item.id}}">{{item.equipment.name}}</a>
