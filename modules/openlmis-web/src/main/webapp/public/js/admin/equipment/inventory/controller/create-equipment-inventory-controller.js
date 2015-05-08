@@ -92,7 +92,7 @@ function CreateEquipmentInventoryController($scope, $location, $routeParams, Equ
   if ($routeParams.id === undefined) { // Add New
     $scope.screenType = "create";
     $scope.equipment = {};
-    $scope.equipment.equipmentTypeId = parseInt($routeParams.equipmentType);
+    $scope.equipment.equipmentTypeId = parseInt($routeParams.equipmentType, 10);
     $scope.equipment.programId = 82; // TODO: remove this once we get the real program id
 
     // set default of checkboxes so the submission does not become null and hence an error.
