@@ -7,13 +7,20 @@
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
  * You should have received a copy of the GNU Affero General Public License along with this program.  If not, see http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org. 
  */
+package org.openlmis.vaccine.domain.smt;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.openlmis.core.domain.BaseModel;
 
 
-
-include "modules:core", "modules:authentication",
-        "modules:openlmis-web", "modules:db","modules:upload",
-        "modules:requisition","modules:email","modules:sms","test-modules:functional-tests","test-modules:service-tests",
-        "test-modules:test-core","modules:report", "modules:migration", "modules:distribution",
-        "modules:requisition","modules:email","modules:rest-api","test-modules:webservice-test",
-        "modules:shipment","test-modules:functional-tests","test-modules:test-core","modules:migration",
-        "modules:reporting","modules:odk-api", "modules:equipment","modules:help","modules:vaccine","modules:stock"
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+@Deprecated
+public class VaccinationType extends BaseModel {
+    String name;
+}

@@ -38,7 +38,7 @@ public interface ManufacturerMapper {
             "            name, website, contactperson, primaryphone, email, description,  " +
             "            specialization, geographiccoverage, registrationdate, createdby, createddate) " +
             "    VALUES ( " +
-            " #{name}, " +
+            "#{name}, " +
             " #{website}, " +
             " #{contactPerson}, " +
             " #{primaryPhone}, " +

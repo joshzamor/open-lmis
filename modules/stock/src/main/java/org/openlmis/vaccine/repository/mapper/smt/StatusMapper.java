@@ -1,4 +1,5 @@
 
+
 package org.openlmis.vaccine.repository.mapper.smt;
 
 import org.apache.ibatis.annotations.*;

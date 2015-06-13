@@ -8,12 +8,34 @@
  * You should have received a copy of the GNU Affero General Public License along with this program.  If not, see http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org. 
  */
 
+apply plugin: 'cobertura'
+
+dependencies {
+
+    compile  project(':modules:core')
+
+   
+    testCompile project(path: ':modules:core', configuration: 'testFixtures')
 
 
-include "modules:core", "modules:authentication",
-        "modules:openlmis-web", "modules:db","modules:upload",
-        "modules:requisition","modules:email","modules:sms","test-modules:functional-tests","test-modules:service-tests",
-        "test-modules:test-core","modules:report", "modules:migration", "modules:distribution",
-        "modules:requisition","modules:email","modules:rest-api","test-modules:webservice-test",
-        "modules:shipment","test-modules:functional-tests","test-modules:test-core","modules:migration",
-        "modules:reporting","modules:odk-api", "modules:equipment","modules:help","modules:vaccine","modules:stock"
+    configurations {
+        testFixtures {
+            extendsFrom testRuntime
+        }
+    }
+
+    task testJar(type: Jar) {
+        from sourceSets.test.output
+        classifier = 'test'
+    }
+
+    artifacts {
+        testFixtures testJar
+    }
+}
+
+cobertura {
+    coverageFormats << 'xml'
+    coverageIgnoreTrivial = true
+
+}
