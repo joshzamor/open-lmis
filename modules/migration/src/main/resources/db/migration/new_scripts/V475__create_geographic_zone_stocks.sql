@@ -7,13 +7,12 @@
 -- This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
 -- You should have received a copy of the GNU Affero General Public License along with this program.  If not, see http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org. 
 --
-
-CREATE TABLE package_contents (
+DROP TABLE IF EXISTS geographic_zone_stocks;
+CREATE TABLE geographic_zone_stocks (
   id              SERIAL PRIMARY KEY,
-  level           VARCHAR(50) NULL,
-  package_id      VARCHAR(50) NULL,
-  number_of_boxes INTEGER,
+  expire_date     DATE,
   lot_number      INTEGER,
-  delivery_status VARCHAR(50),
-  vaccine_id INTEGER REFERENCES vaccines (id)
+  number_of_doses INTEGER,
+  vaccine_id INTEGER REFERENCES vaccines (id),
+  geographic_zone_id INTEGER REFERENCES geographic_zones (id)
 );

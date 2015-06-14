@@ -7,19 +7,19 @@
 -- This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
 -- You should have received a copy of the GNU Affero General Public License along with this program.  If not, see http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org. 
 --
-
+DROP TABLE IF EXISTS geographic_zone_arrival_package CASCADE;
 CREATE TABLE geographic_zone_arrival_package (
   id                  SERIAL PRIMARY KEY,
-  sscc                VARCHAR(50) NULL,
-  package_number      VARCHAR(50) NULL,
+  sscc                VARCHAR(255) NULL,
+  package_number      VARCHAR(255) NULL,
   lot_number          INTEGER NOT NULL,
   number_as_expected  INTEGER NOT NULL,
-  GTIN                VARCHAR(50) NOT NULL,
+  GTIN                VARCHAR(255) NOT NULL,
   number_recieved     INTEGER NOT NULL,
   number_expected     INTEGER,
   physical_damage     VARCHAR(200),
-  vvm_status          VARCHAR(10),
-  problems            VARCHAR(200),
+  vvm_status          VARCHAR(255),
+  problems            VARCHAR(255),
   receiving_user      INTEGER REFERENCES users (id),
   geographic_zone_id INTEGER REFERENCES geographic_zones (id)
 );

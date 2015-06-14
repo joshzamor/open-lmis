@@ -7,10 +7,17 @@
 -- This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
 -- You should have received a copy of the GNU Affero General Public License along with this program.  If not, see http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org. 
 --
-
-CREATE TABLE diluent (
+DROP TABLE IF EXISTS geographic_zone_package CASCADE;
+CREATE TABLE geographic_zone_package (
   id                  SERIAL PRIMARY KEY,
-  diluent_name        VARCHAR(50) NOT NULL,
-  unit_per_box        INTEGER NOT NULL,
-  vaccine_id INTEGER REFERENCES vaccines (id)
+  package_number      VARCHAR(50) NOT NULL,
+  number_of_packages   INTEGER NOT NULL,
+  date_sent           DATE,
+  date_recieved       DATE,
+  comments            VARCHAR(200),
+  recieved_status     VARCHAR(50),
+  sending_user      INTEGER REFERENCES users (id),
+  receiving_user      INTEGER REFERENCES users (id),
+  facility_id INTEGER REFERENCES facilities (id),
+  geographic_zone_id INTEGER REFERENCES geographic_zones (id)
 );

@@ -8,13 +8,10 @@
 -- You should have received a copy of the GNU Affero General Public License along with this program.  If not, see http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org. 
 --
 
-CREATE TABLE manufacture_package (
-  id                SERIAL PRIMARY KEY,
-  sscc              VARCHAR(50) NULL,
-  manufacture_date  DATE,
-  expire_date       DATE,
-  lot_number        INTEGER,
-  number_of_doses   INTEGER,
-  delivery_status   VARCHAR(200),
+DROP TABLE IF EXISTS diluent CASCADE;
+CREATE TABLE diluent (
+  id                  SERIAL PRIMARY KEY,
+  name        VARCHAR(50) NOT NULL,
+  unit_per_box        INTEGER NOT NULL,
   vaccine_id INTEGER REFERENCES vaccines (id)
 );

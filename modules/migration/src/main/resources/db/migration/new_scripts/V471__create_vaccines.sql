@@ -8,11 +8,18 @@
 -- You should have received a copy of the GNU Affero General Public License along with this program.  If not, see http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org. 
 --
 
-CREATE TABLE geographic_zone_stocks (
-  id              SERIAL PRIMARY KEY,
-  expire_date     DATE,
-  lot_number      INTEGER,
-  number_of_doses INTEGER,
-  vaccine_id INTEGER REFERENCES vaccines (id),
-  geographic_zone_id INTEGER REFERENCES geographic_zones (id)
+DROP TABLE IF EXISTS vaccines CASCADE;
+CREATE TABLE vaccines (
+  id                    SERIAL PRIMARY KEY,
+  name                  VARCHAR(50) NULL,
+  packaging             VARCHAR(50) NULL,
+  GTIN                  VARCHAR(50) NOT NULL,
+  doses_per_vial        INTEGER NOT NULL,
+  expire_warning_period DATE,
+  type                  VARCHAR(200),
+  wastage               VARCHAR(10),
+  schedule              VARCHAR(200),
+  status                VARCHAR(50),
+  geographic_zone_id INTEGER REFERENCES geographic_zones (id),
+  manufacture_id INTEGER REFERENCES manufacturers (id)
 );
