@@ -20,9 +20,9 @@ var vaccine = angular.module('vaccine', ['openlmis', 'ngTable','ui.bootstrap','n
 });
 vaccine.controller("VaccineModule",function($scope,$http){
 	alert("here");
-	$http.get('/stock').
+	$http.get('/stock/vaccine/all').
 	  success(function(data, status, headers, config) {
-		  console.log("Good:" + data);
+		  console.log("Good:" + JSON.stringify(data));
 	  }).
 	  error(function(data) {
 	    console.log("Error:" + data);
