@@ -8,7 +8,7 @@
 -- You should have received a copy of the GNU Affero General Public License along with this program.  If not, see http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org. 
 --
 
-DROP TABLE IF EXISTS vaccines;
+DROP TABLE IF EXISTS vaccines CASCADE;
 CREATE TABLE vaccines (
   id                    SERIAL PRIMARY KEY,
   name                  VARCHAR(50) NULL,

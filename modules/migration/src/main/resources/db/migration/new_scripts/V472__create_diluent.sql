@@ -8,9 +8,10 @@
 -- You should have received a copy of the GNU Affero General Public License along with this program.  If not, see http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org. 
 --
 
+DROP TABLE IF EXISTS diluent CASCADE;
 CREATE TABLE diluent (
   id                  SERIAL PRIMARY KEY,
-  diluent_name        VARCHAR(50) NOT NULL,
+  name        VARCHAR(50) NOT NULL,
   unit_per_box        INTEGER NOT NULL,
   vaccine_id INTEGER REFERENCES vaccines (id)
 );

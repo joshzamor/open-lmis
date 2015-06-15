@@ -76,6 +76,7 @@
     <import resource="classpath:/applicationContext-equipment.xml" />
     <import resource="classpath:/applicationContext-help.xml" />
     <import resource="classpath:/applicationContext-vaccine.xml" />
+    <import resource="classpath:/applicationContext-stock.xml" />
     <bean id="userAuthenticationProvider" class="org.openlmis.authentication.web.UserAuthenticationProvider"/>
 
     <bean id="multipartResolver"
