@@ -15,11 +15,12 @@ CREATE TABLE vaccines (
   packaging             VARCHAR(50) NULL,
   GTIN                  VARCHAR(50) NOT NULL,
   doses_per_vial        INTEGER NOT NULL,
-  expire_warning_period DATE,
+  vials_per_box        INTEGER NOT NULL,
+  expire_warning_period INTEGER NOT NULL,
   type                  VARCHAR(200),
-  wastage               VARCHAR(10),
-  schedule              VARCHAR(200),
-  status                VARCHAR(50),
-  geographic_zone_id INTEGER REFERENCES geographic_zones (id),
-  manufacture_id INTEGER REFERENCES manufacturers (id)
+  wastage               VARCHAR(20),
+  schedule              INTEGER NOT NULL,
+  status                VARCHAR(20) NULL,
+  country_name          VARCHAR(50) NOT NULL,
+  manufacturer_id INTEGER REFERENCES manufacturers (id)
 );
