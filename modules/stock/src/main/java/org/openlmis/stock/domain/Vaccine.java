@@ -21,11 +21,12 @@ public class Vaccine extends BaseModel{
     String packaging;
     String gtin;
     Integer doses_per_vial;
-    Date expire_warning_period;
+    Integer vials_per_box;
+    Integer expire_warning_period;
     String type;
-    String wastage;
-    String schedule;
-    String status;
-    Integer geographic_zone_id;
+    Float wastage;
+    Integer schedule;
+    Integer status;
+    String country_name;
     Integer manufacture_id;
 }
