@@ -170,6 +170,7 @@ dependencies {
             project(':modules:odk-api'),
             project(':modules:equipment'),
             project(':modules:vaccine'),
+            project(':modules:stock'),
             project(':modules:help')
 
 
