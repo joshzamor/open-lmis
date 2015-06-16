@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Created by Morley on 6/14/2015.
@@ -26,7 +28,7 @@ public class DiluentController {
     @Autowired
     private DiluentService service;
 
-    @RequestMapping(value="get/{id}")
+    @RequestMapping(value="{id}", method = GET)
     public ResponseEntity<OpenLmisResponse> get(@PathVariable Long id) {
         return OpenLmisResponse.response("diluent", service.getById(id));
     }

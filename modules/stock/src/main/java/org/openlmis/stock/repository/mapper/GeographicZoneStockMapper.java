@@ -13,15 +13,15 @@ import java.util.List;
 
 @Repository
 public interface GeographicZoneStockMapper {
-    @Select("select * from geographic_zone_stock")
+    @Select("select * from geographic_zone_stocks")
     List<GeographicZoneStock> getAll();
 
-    @Insert("insert into geographic_zone_stock (expire_date, lot_number, number_of_doses, vaccine_id, geographic_zone_id) values " +
+    @Insert("insert into geographic_zone_stocks (expire_date, lot_number, number_of_doses, vaccine_id, geographic_zone_id) values " +
             "(#{expire_date}, #{lot_number}, #{number_of_doses}, #{vaccine_id}, #{geographic_zone_id})")
     @Options(flushCache = true, useGeneratedKeys = true)
     Integer insert(GeographicZoneStock geographicZoneStock);
 
-    @Update("update geographic_zone_stock " +
+    @Update("update geographic_zone_stocks " +
             "set " +
             " expire_date = #{expire_date}, " +
             " lot_number = #{lot_number}," +
@@ -31,6 +31,6 @@ public interface GeographicZoneStockMapper {
             "where id = #{id}")
     void update(GeographicZoneStock geographicZoneStock);
 
-    @Select("select * from geographic_zone_stock where id = #{id}")
+    @Select("select * from geographic_zone_stocks where id = #{id}")
     GeographicZoneStock getById(@Param("id") Long id);
 }

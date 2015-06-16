@@ -32,7 +32,7 @@ public class StockController {
         return OpenLmisResponse.response("stock", service.getById(id));
     }
 
-    @RequestMapping(value="all")
+    @RequestMapping(value="")
     public ResponseEntity<OpenLmisResponse> getAll() {
         return OpenLmisResponse.response("stocks", service.getAll());
     }
