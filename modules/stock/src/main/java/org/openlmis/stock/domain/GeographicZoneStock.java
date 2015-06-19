@@ -16,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class GeographicZoneStock  extends BaseModel {
+public class GeographicZoneStock  extends StockModel{
 
     Long id;
     Date expire_date;
@@ -24,4 +24,9 @@ public class GeographicZoneStock  extends BaseModel {
     Integer number_of_doses;
     Integer vaccine_id;
     Integer geographic_zone_id;
+
+    @Override
+    public String getTableName() {
+        return "geographic_zone_stocks";
+    }
 }

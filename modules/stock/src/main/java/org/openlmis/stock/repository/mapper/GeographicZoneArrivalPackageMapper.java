@@ -1,8 +1,10 @@
 package org.openlmis.stock.repository.mapper;
 
 import org.apache.ibatis.annotations.*;
+import org.openlmis.core.domain.GeographicZone;
 import org.openlmis.stock.domain.GeographicZoneArrivalPackage;
 import org.openlmis.stock.domain.GeographicZonePackage;
+import org.openlmis.stock.domain.Vaccine;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,9 +14,13 @@ import java.util.List;
  */
 
 @Repository
-public interface GeographicZoneArrivalPackageMapper {
+public interface GeographicZoneArrivalPackageMapper extends HasGeographicZone,StockMapper<GeographicZoneArrivalPackage>{
 
     @Select("select * from geographic_zone_stock")
+    @Results(value = {
+            @Result(property = "geographic_zone", javaType = GeographicZone.class, column = "geographic_zone_id",
+                    one = @One(select = "getGeographicZoneById"))
+    })
     List<GeographicZoneArrivalPackage> getAll();
 
     @Insert("insert into geographic_zone_stock (sscc, package_number, lot_number, number_as_expected, gtin, number_recieved, number_expected, physical_damage, vvm_status, problems, receiving_user, geographic_zone_id) values " +
@@ -40,5 +46,12 @@ public interface GeographicZoneArrivalPackageMapper {
     void update(GeographicZoneArrivalPackage geographicZoneArrivalPackage);
 
     @Select("select * from geographic_zone_stock where id = #{id}")
+    @Results(value = {
+            @Result(property = "geographic_zone", javaType = GeographicZone.class, column = "geographic_zone_id",
+                    one = @One(select = "getGeographicZoneById"))
+    })
     GeographicZoneArrivalPackage getById(@Param("id") Long id);
+
+    @Delete("delete from package_contents where id = #{id}")
+    void deleteById(@Param("id") Long id);
 }

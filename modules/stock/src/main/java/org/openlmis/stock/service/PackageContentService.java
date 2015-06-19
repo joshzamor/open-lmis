@@ -4,6 +4,7 @@ import org.openlmis.stock.domain.Diluent;
 import org.openlmis.stock.domain.PackageContent;
 import org.openlmis.stock.repository.DiluentRepository;
 import org.openlmis.stock.repository.PackageContentRepository;
+import org.openlmis.stock.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.List;
  */
 
 @Service
-public class PackageContentService {
+public class PackageContentService extends StockService<PackageContent>{
 
     @Autowired
     private PackageContentRepository repository;
@@ -33,5 +34,12 @@ public class PackageContentService {
 
     public PackageContent getById(Long id){
         return repository.getById(id);
+    }
+
+    public void deleteById(Long id){repository.deleteById(id);}
+
+    @Override
+    public StockRepository getRepository() {
+        return repository;
     }
 }

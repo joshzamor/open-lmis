@@ -9,24 +9,22 @@ import org.openlmis.core.domain.BaseModel;
 import java.util.Date;
 
 /**
- * Created by Morley on 6/14/2015.
+ * Created by Morley on 6/16/2015.
  */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class PackageContent  extends StockModel {
+public class Manufacturer  extends BaseModel {
 
     Long id;
-    String level;
-    Long package_id;
-    Integer number_of_boxes;
-    Integer lot_number;
-    String delivery_status;
-    Vaccine vaccine;
-
-    @Override
-    public String getTableName() {
-        return "package_contents";
-    }
+    String name;
+    String website;
+    String primaryphone;
+    String email;
+    String description;
+    String specialization;
+    String geographiccoverage;
+    Date registrationdate;
 }

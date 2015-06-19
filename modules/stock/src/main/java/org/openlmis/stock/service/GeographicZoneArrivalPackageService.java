@@ -4,6 +4,7 @@ import org.openlmis.stock.domain.GeographicZoneArrivalPackage;
 import org.openlmis.stock.domain.PackageContent;
 import org.openlmis.stock.repository.GeographicZoneArrivalPackageRepository;
 import org.openlmis.stock.repository.PackageContentRepository;
+import org.openlmis.stock.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.List;
  */
 
 @Service
-public class GeographicZoneArrivalPackageService {
+public class GeographicZoneArrivalPackageService extends StockService<GeographicZoneArrivalPackage>{
 
     @Autowired
     private GeographicZoneArrivalPackageRepository repository;
@@ -33,5 +34,10 @@ public class GeographicZoneArrivalPackageService {
 
     public GeographicZoneArrivalPackage getById(Long id){
         return repository.getById(id);
+    }
+
+    @Override
+    public StockRepository getRepository() {
+        return repository;
     }
 }

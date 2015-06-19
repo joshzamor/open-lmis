@@ -16,13 +16,18 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class ManufacturePackage extends BaseModel {
+public class ManufacturePackage  extends StockModel {
     Long id;
     String sscc;
     Date manufacture_date;
     Date expire_date;
-    Integer lot_numbe;
+    Integer lot_number;
     Integer number_of_doses;
     String delivery_status;
     Integer vaccine_id;
+
+    @Override
+    public String getTableName() {
+        return "manufacture_packages";
+    }
 }

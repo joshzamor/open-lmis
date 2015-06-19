@@ -14,10 +14,15 @@ import org.openlmis.core.domain.BaseModel;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Diluent  extends BaseModel {
+public class Diluent extends StockModel{
 
     Long id;
     String name;
     Integer unit_per_box;
     Integer vaccine_id;
+
+    @Override
+    public String getTableName() {
+        return "diluents";
+    }
 }

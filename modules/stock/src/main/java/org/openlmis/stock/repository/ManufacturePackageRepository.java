@@ -4,6 +4,7 @@ import org.openlmis.stock.domain.GeographicZoneStock;
 import org.openlmis.stock.domain.ManufacturePackage;
 import org.openlmis.stock.repository.mapper.GeographicZoneStockMapper;
 import org.openlmis.stock.repository.mapper.ManufacturePackageMapper;
+import org.openlmis.stock.repository.mapper.StockMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,7 @@ import java.util.List;
  */
 
 @Component
-public class ManufacturePackageRepository {
+public class ManufacturePackageRepository extends StockRepository<ManufacturePackage>{
 
     @Autowired
     private ManufacturePackageMapper mapper;
@@ -33,5 +34,10 @@ public class ManufacturePackageRepository {
 
     public ManufacturePackage getById(Long id) {
         return mapper.getById(id);
+    }
+
+    @Override
+    public StockMapper getStockMapper() {
+        return mapper;
     }
 }

@@ -5,6 +5,7 @@ import org.openlmis.stock.domain.GeographicZoneStock;
 import org.openlmis.stock.domain.PackageContent;
 import org.openlmis.stock.service.GeographicZoneStockService;
 import org.openlmis.stock.service.PackageContentService;
+import org.openlmis.stock.service.StockService;
 import org.openlmis.web.response.OpenLmisResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @Controller
 @RequestMapping(value = "/stock")
-public class StockController {
+public class StockController extends StockBaseController<GeographicZoneStock>{
 
     @Autowired
     private GeographicZoneStockService service;
@@ -45,5 +46,10 @@ public class StockController {
             return OpenLmisResponse.error(e, BAD_REQUEST);
         }
         return OpenLmisResponse.response("stock", service.getById(geographicZoneStock.getId()));
+    }
+
+    @Override
+    public StockService getService() {
+        return service;
     }
 }

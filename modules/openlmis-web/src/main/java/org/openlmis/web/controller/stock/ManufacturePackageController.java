@@ -4,6 +4,7 @@ import org.openlmis.core.exception.DataException;
 import org.openlmis.stock.domain.ManufacturePackage;
 import org.openlmis.stock.domain.Vaccine;
 import org.openlmis.stock.service.ManufacturePackageService;
+import org.openlmis.stock.service.StockService;
 import org.openlmis.stock.service.VaccineService;
 import org.openlmis.web.response.OpenLmisResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
  */
 @Controller
 @RequestMapping(value = "/stock/manufacture/package")
-public class ManufacturePackageController {
+public class ManufacturePackageController extends StockBaseController<ManufacturePackage>{
 
     @Autowired
     private ManufacturePackageService service;
@@ -43,6 +44,11 @@ public class ManufacturePackageController {
             return OpenLmisResponse.error(e, BAD_REQUEST);
         }
         return OpenLmisResponse.response("manufacturePackage", service.getById(manufacturePackage.getId()));
+    }
+
+    @Override
+    public StockService getService() {
+        return service;
     }
 
 

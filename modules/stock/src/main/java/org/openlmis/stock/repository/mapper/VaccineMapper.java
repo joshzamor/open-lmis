@@ -1,6 +1,7 @@
 package org.openlmis.stock.repository.mapper;
 
 import org.apache.ibatis.annotations.*;
+import org.openlmis.stock.domain.Manufacturer;
 import org.openlmis.stock.domain.Vaccine;
 import org.springframework.stereotype.Repository;
 
@@ -11,10 +12,18 @@ import java.util.List;
  * Created by Morley on 6/14/2015.
  */
 @Repository
-public interface VaccineMapper {
+public interface VaccineMapper extends StockMapper<Vaccine>{
 
     @Select("select * from vaccines")
-    List<Vaccine> getAll();
+    //@SelectProvider(type=ModelProviders.class, method="selectAll")
+    @Results(value = {
+            @Result(property = "manufacturer", javaType = Manufacturer.class, column = "manufacturer_id",
+                    one = @One(select = "getManufacturerById"))
+    })
+    List<Vaccine> getAll(Vaccine vaccine);
+
+    @Select("SELECT * FROM manufacturers WHERE id = #{manufacturerId}")
+    Manufacturer getManufacturerById(Long manufacturerId);
 
     @Insert("insert into vaccines (name, packaging, gtin, doses_per_vial,vials_per_box, expire_warning_period, type,wastage,schedule,status,country_name,manufacture_id) values " +
             "(#{name}, #{packaging}, #{gtin}, #{doses_per_vial},#{vials_per_box} #{expire_warning_period}, #{type}, #{wastage}, #{schedule}, #{status}, #{country_name}, #{manufacture_id})")
@@ -34,10 +43,26 @@ public interface VaccineMapper {
             " schedule = #{schedule} " +
             " status = #{status} " +
             " country_name = #{country_name} " +
-            " manufacture_id = #{manufacture_id} " +
+            " manufacturer_id = #{manufacturer_id} " +
             "where id = #{id}")
     void update(Vaccine vaccine);
 
-    @Select("select * from vaccines where id = #{id}")
-    Vaccine getById(@Param("id") Long id);
+    //@Select("select * from vaccines where id = #{id}")
+    @SelectProvider(type=ModelProviders.class, method="selectById")
+    @Results(value = {
+            @Result(property = "manufacturer", javaType = Manufacturer.class, column = "manufacturer_id",
+                    one = @One(select = "getManufacturerById"))
+    })
+    Vaccine getById(@Param("id") Long id,Vaccine vaccine);
+
+    /*@Delete("delete from vaccines where id = #{id}")
+    void deleteById(@Param("id") Long id);
+
+    @SelectProvider(type=ModelProviders.class, method="filterModal")
+    List<Vaccine> filter(@Param("filter") String filter);
+    @Select("select * from vaccines where {filter}")
+    List<Vaccine> filter(@Param("filter") String filter);*/
+
+    /*@Select("select * from vaccines where {filter}")
+    List<Vaccine> filter(@Param("filter") String filter);*/
 }

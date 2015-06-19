@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 @Repository
-public interface DiluentMapper {
+public interface DiluentMapper  extends HasVaccineMapper,StockMapper<Diluent>{
     @Select("select * from diluent")
     List<Diluent> getAll();
 
@@ -30,4 +30,7 @@ public interface DiluentMapper {
 
     @Select("select * from diluent where id = #{id}")
     Diluent getById(@Param("id") Long id);
+
+    @Select("delete from diluent where id = #{id}")
+    void deleteById(@Param("id") Long id);
 }
