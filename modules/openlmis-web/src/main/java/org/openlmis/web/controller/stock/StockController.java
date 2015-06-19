@@ -28,7 +28,7 @@ public class StockController extends StockBaseController<GeographicZoneStock>{
     private GeographicZoneStockService service;
 
 
-    @RequestMapping(value="get/{id}")
+    /*@RequestMapping(value="get/{id}")
     public ResponseEntity<OpenLmisResponse> get(@PathVariable Long id) {
         return OpenLmisResponse.response("stock", service.getById(id));
     }
@@ -46,7 +46,7 @@ public class StockController extends StockBaseController<GeographicZoneStock>{
             return OpenLmisResponse.error(e, BAD_REQUEST);
         }
         return OpenLmisResponse.response("stock", service.getById(geographicZoneStock.getId()));
-    }
+    }*/
 
     @Override
     public StockService getService() {

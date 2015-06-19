@@ -35,11 +35,11 @@ public abstract class StockModel extends BaseModel {
         }
         return map;
     }
-    public Object getColumnValue(String columnName){
+    public String getColumnValue(String columnName){
         try{
             Field field = getClass().getField(columnName);
             field.setAccessible(true);
-            return field.get(this);
+            return field.get(this).toString();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (NoSuchFieldException e) {

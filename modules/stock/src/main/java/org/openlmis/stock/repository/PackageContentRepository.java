@@ -22,26 +22,6 @@ public class PackageContentRepository extends StockRepository<PackageContent>{
     @Autowired
     private PackageContentMapper mapper;
 
-    public void update(PackageContent packageContent){
-        mapper.update(packageContent);
-    }
-
-    public void insert(PackageContent packageContent){
-        mapper.insert(packageContent);
-    }
-
-    public List<PackageContent> getAll(){
-        return mapper.getAll();
-    }
-
-    public PackageContent getById(Long id) {
-        return mapper.getById(id);
-    }
-
-    public void deleteById(Long id) {
-        mapper.deleteById(id);
-    }
-
     @Override
     public StockMapper getStockMapper() {
         return mapper;

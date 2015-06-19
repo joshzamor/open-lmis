@@ -31,7 +31,7 @@ public class PackageContentController extends StockBaseController<PackageContent
     private PackageContentService service;
 
 
-    @RequestMapping(value="get/{id}")
+    /*@RequestMapping(value="get/{id}")
     @Results(value = {
             @Result(property = "vaccine", javaType = Vaccine.class, column = "vaccine_id",
                     one = @One(select = "getVaccineById"))
@@ -59,11 +59,6 @@ public class PackageContentController extends StockBaseController<PackageContent
         return OpenLmisResponse.response("packageContent", service.getById(packageContent.getId()));
     }
 
-    @Override
-    public StockService getService() {
-        return service;
-    }
-
     @RequestMapping(value="{id}", method = DELETE)
     public ResponseEntity<OpenLmisResponse> delete(@PathVariable Long id) {
         try {
@@ -72,5 +67,10 @@ public class PackageContentController extends StockBaseController<PackageContent
             return OpenLmisResponse.error(e, BAD_REQUEST);
         }
         return OpenLmisResponse.response("status", "success");
+    }*/
+
+    @Override
+    public StockService getService() {
+        return service;
     }
 }

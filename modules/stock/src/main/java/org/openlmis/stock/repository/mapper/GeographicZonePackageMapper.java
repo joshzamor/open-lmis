@@ -49,6 +49,4 @@ public interface GeographicZonePackageMapper extends HasGeographicZone,StockMapp
     })
     GeographicZonePackage getById(@Param("id") Long id);
 
-    @Select("delete from geographic_zone_package where id = #{id}")
-    void deleteById(@Param("id") Long id);
 }

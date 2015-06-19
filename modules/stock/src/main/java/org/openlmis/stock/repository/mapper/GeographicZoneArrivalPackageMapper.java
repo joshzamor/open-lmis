@@ -16,19 +16,19 @@ import java.util.List;
 @Repository
 public interface GeographicZoneArrivalPackageMapper extends HasGeographicZone,StockMapper<GeographicZoneArrivalPackage>{
 
-    @Select("select * from geographic_zone_stock")
+    @Select("select * from geographic_zone_arrival_package")
     @Results(value = {
             @Result(property = "geographic_zone", javaType = GeographicZone.class, column = "geographic_zone_id",
                     one = @One(select = "getGeographicZoneById"))
     })
     List<GeographicZoneArrivalPackage> getAll();
 
-    @Insert("insert into geographic_zone_stock (sscc, package_number, lot_number, number_as_expected, gtin, number_recieved, number_expected, physical_damage, vvm_status, problems, receiving_user, geographic_zone_id) values " +
+    @Insert("insert into geographic_zone_arrival_package (sscc, package_number, lot_number, number_as_expected, gtin, number_recieved, number_expected, physical_damage, vvm_status, problems, receiving_user, geographic_zone_id) values " +
             "(#{sscc}, #{package_number}, #{lot_number}, #{number_as_expected}, #{gtin}, #{number_recieved}, #{number_expected}, #{physical_damage}, #{vvm_status}, #{problems}, #{receiving_user}, #{geographic_zone_id})")
     @Options(flushCache = true, useGeneratedKeys = true)
     Integer insert(GeographicZoneArrivalPackage geographicZoneArrivalPackage);
 
-    @Update("update geographic_zone_stock " +
+    @Update("update geographic_zone_arrival_package " +
             "set " +
             " sscc = #{sscc}, " +
             " package_number = #{package_number}," +
@@ -45,13 +45,11 @@ public interface GeographicZoneArrivalPackageMapper extends HasGeographicZone,St
             "where id = #{id}")
     void update(GeographicZoneArrivalPackage geographicZoneArrivalPackage);
 
-    @Select("select * from geographic_zone_stock where id = #{id}")
+    @Select("select * from geographic_zone_arrival_package where id = #{id}")
     @Results(value = {
             @Result(property = "geographic_zone", javaType = GeographicZone.class, column = "geographic_zone_id",
                     one = @One(select = "getGeographicZoneById"))
     })
     GeographicZoneArrivalPackage getById(@Param("id") Long id);
 
-    @Delete("delete from package_contents where id = #{id}")
-    void deleteById(@Param("id") Long id);
 }

@@ -26,8 +26,9 @@ public class ManufacturePackage  extends StockModel {
     String delivery_status;
     Integer vaccine_id;
 
+    Vaccine vaccine;
     @Override
     public String getTableName() {
-        return "manufacture_packages";
+        return "manufacture_package";
     }
 }

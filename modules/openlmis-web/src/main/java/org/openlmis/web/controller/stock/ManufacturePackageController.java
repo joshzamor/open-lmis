@@ -26,7 +26,7 @@ public class ManufacturePackageController extends StockBaseController<Manufactur
     @Autowired
     private ManufacturePackageService service;
 
-    @RequestMapping(value="get/{id}")
+    /*@RequestMapping(value="get/{id}")
     public ResponseEntity<OpenLmisResponse> get(@PathVariable Long id) {
         return OpenLmisResponse.response("manufacturePackage", service.getById(id));
     }
@@ -44,7 +44,7 @@ public class ManufacturePackageController extends StockBaseController<Manufactur
             return OpenLmisResponse.error(e, BAD_REQUEST);
         }
         return OpenLmisResponse.response("manufacturePackage", service.getById(manufacturePackage.getId()));
-    }
+    }*/
 
     @Override
     public StockService getService() {

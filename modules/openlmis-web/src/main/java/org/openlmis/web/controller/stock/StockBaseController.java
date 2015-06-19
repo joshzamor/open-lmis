@@ -72,7 +72,13 @@ public abstract class StockBaseController<T extends StockModel> {
                 = pt.getActualTypeArguments()[0].toString().split("\\s")[1];
         // Instantiate the Parameter and initialize it.
         T parameter = (T) Class.forName(parameterClassName).newInstance();
-        return parameter.getTableName();
+        String table = parameter.getTableName();
+        if(table.endsWith("s")){
+            return table;
+        }else
+        {
+            return table + "s";
+        }
     }
     private String getTableNameSingle() throws Exception{
         String table = getTableName();

@@ -20,22 +20,6 @@ public class GeographicZoneStockRepository extends StockRepository<GeographicZon
     @Autowired
     private GeographicZoneStockMapper mapper;
 
-    public void update(GeographicZoneStock geographicZoneStock){
-        mapper.update(geographicZoneStock);
-    }
-
-    public void insert(GeographicZoneStock geographicZoneStock){
-        mapper.insert(geographicZoneStock);
-    }
-
-    public List<GeographicZoneStock> getAll(){
-        return mapper.getAll();
-    }
-
-    public GeographicZoneStock getById(Long id) {
-        return mapper.getById(id);
-    }
-
     @Override
     public StockMapper getStockMapper() {
         return mapper;

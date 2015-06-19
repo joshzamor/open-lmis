@@ -23,6 +23,6 @@ public class Diluent extends StockModel{
 
     @Override
     public String getTableName() {
-        return "diluents";
+        return "diluent";
     }
 }

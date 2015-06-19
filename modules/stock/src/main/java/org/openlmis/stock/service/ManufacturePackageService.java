@@ -18,7 +18,7 @@ public class ManufacturePackageService extends StockService<ManufacturePackage>{
     @Autowired
     private ManufacturePackageRepository repository;
 
-    public List<ManufacturePackage> getAll(){
+    /*public List<ManufacturePackage> getAll(){
         return repository.getAll();
     }
 
@@ -32,7 +32,7 @@ public class ManufacturePackageService extends StockService<ManufacturePackage>{
 
     public ManufacturePackage getById(Long id){
         return repository.getById(id);
-    }
+    }*/
 
     @Override
     public StockRepository getRepository() {

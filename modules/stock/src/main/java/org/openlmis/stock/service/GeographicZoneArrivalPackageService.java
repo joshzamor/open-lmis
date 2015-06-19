@@ -20,22 +20,6 @@ public class GeographicZoneArrivalPackageService extends StockService<Geographic
     @Autowired
     private GeographicZoneArrivalPackageRepository repository;
 
-    public List<GeographicZoneArrivalPackage> getAll(){
-        return repository.getAll();
-    }
-
-    public void save(GeographicZoneArrivalPackage geographicZoneArrivalPackage){
-        if(geographicZoneArrivalPackage.getId() == null){
-            repository.insert(geographicZoneArrivalPackage);
-        }else {
-            repository.update(geographicZoneArrivalPackage);
-        }
-    }
-
-    public GeographicZoneArrivalPackage getById(Long id){
-        return repository.getById(id);
-    }
-
     @Override
     public StockRepository getRepository() {
         return repository;

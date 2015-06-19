@@ -20,7 +20,7 @@ public class PackageContentService extends StockService<PackageContent>{
     @Autowired
     private PackageContentRepository repository;
 
-    public List<PackageContent> getAll(){
+    /*public List<PackageContent> getAll(){
         return repository.getAll();
     }
 
@@ -36,7 +36,7 @@ public class PackageContentService extends StockService<PackageContent>{
         return repository.getById(id);
     }
 
-    public void deleteById(Long id){repository.deleteById(id);}
+    public void deleteById(Long id){repository.deleteById(id);}*/
 
     @Override
     public StockRepository getRepository() {

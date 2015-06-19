@@ -22,18 +22,19 @@ public interface ManufacturePackageMapper extends HasVaccineMapper,StockMapper<M
     })
     List<ManufacturePackage> getAll();
 
-    @Insert("insert into manufacture_package (level, package_id, number_of_boxes, lot_number, delivery_status, vaccine_id) values " +
-            "(#{level}, #{package_id}, #{number_of_boxes},#{lot_number},#{delivery_status},#{vaccine_id})")
+    @Insert("insert into manufacture_package (sscc, manufacture_date, expire_date, lot_number, number_of_doses,delivery_status, vaccine_id) values " +
+            "(#{sscc}, #{manufacture_date}, #{expire_date},#{lot_number},#{number_of_doses},#{delivery_status},#{vaccine_id})")
     @Options(flushCache = true, useGeneratedKeys = true)
     Integer insert(ManufacturePackage manufacturePackage);
 
     @Update("update manufacture_package " +
             "set " +
-            " name = #{level}, " +
-            " package_id = #{package_id}," +
-            " number_of_boxes = #{number_of_boxes}, " +
+            " sscc = #{sscc}, " +
+            " manufacture_date = #{manufacture_date}," +
+            " expire_date = #{expire_date}, " +
             " lot_number = #{lot_number}, " +
-            " delivery_status = #{delivery_status}, " +
+            " lot_number = #{lot_number}, " +
+            " number_of_doses = #{number_of_doses}, " +
             " vaccine_id = #{vaccine_id}, " +
             "where id = #{id}")
     void update(ManufacturePackage manufacturePackage);
@@ -45,6 +46,4 @@ public interface ManufacturePackageMapper extends HasVaccineMapper,StockMapper<M
     })
     ManufacturePackage getById(@Param("id") Long id);
 
-    @Delete("delete from manufacture_package where id = #{id}")
-    void deleteById(@Param("id") Long id);
 }

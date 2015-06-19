@@ -29,7 +29,7 @@ public class DiluentController  extends StockBaseController<Diluent>{
     @Autowired
     private DiluentService service;
 
-    @RequestMapping(value="{id}", method = GET)
+    /*@RequestMapping(value="{id}", method = GET)
     public ResponseEntity<OpenLmisResponse> get(@PathVariable Long id) {
         return OpenLmisResponse.response("diluent", service.getById(id));
     }
@@ -47,7 +47,7 @@ public class DiluentController  extends StockBaseController<Diluent>{
             return OpenLmisResponse.error(e, BAD_REQUEST);
         }
         return OpenLmisResponse.response("diluent", service.getById(diluent.getId()));
-    }
+    }*/
 
     @Override
     public StockService getService() {

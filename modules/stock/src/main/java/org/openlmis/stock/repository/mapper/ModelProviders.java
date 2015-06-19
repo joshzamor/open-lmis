@@ -32,7 +32,7 @@ public class ModelProviders {
                     } else if (req[1].endsWith("lt")) {
                         request += "<";
                     }
-                    request += req[2];
+                    request += "\'" +req[2]+"\'";
                     WHERE(request);
                 }else if(thisEntry.getValue() instanceof StockModel){
                     if(!isSpecified) {
@@ -107,7 +107,7 @@ public class ModelProviders {
                     for(Map.Entry<String, Object> columnEntry : stockModel.getColumns().entrySet())
                     {
                         if(columnEntry.getKey().equals(thisEntry.getKey())){
-                            VALUES(thisEntry.getKey(), "${id}, ${firstName}");
+                            VALUES(thisEntry.getKey(), stockModel.getColumnValue(columnEntry.getKey()));
                         }
 
                     }

@@ -20,7 +20,7 @@ public class GeographicZoneStockService extends StockService<GeographicZoneStock
     @Autowired
     private GeographicZoneStockRepository repository;
 
-    public List<GeographicZoneStock> getAll(){
+    /*public List<GeographicZoneStock> getAll(){
         return repository.getAll();
     }
 
@@ -34,7 +34,7 @@ public class GeographicZoneStockService extends StockService<GeographicZoneStock
 
     public GeographicZoneStock getById(Long id){
         return repository.getById(id);
-    }
+    }*/
 
     @Override
     public StockRepository getRepository() {

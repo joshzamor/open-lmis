@@ -26,7 +26,7 @@ public class PackageArrivalController extends StockBaseController<GeographicZone
     private GeographicZoneArrivalPackageService service;
 
 
-    @RequestMapping(value="{id}")
+    /*@RequestMapping(value="{id}")
     public ResponseEntity<OpenLmisResponse> getArrival(@PathVariable Long id) {
         return OpenLmisResponse.response("arrivalPackage", service.getById(id));
     }
@@ -44,7 +44,7 @@ public class PackageArrivalController extends StockBaseController<GeographicZone
             return OpenLmisResponse.error(e, BAD_REQUEST);
         }
         return OpenLmisResponse.response("arrivalPackage", service.getById(geographicZoneArrivalPackage.getId()));
-    }
+    }*/
 
     @Override
     public StockService getService() {

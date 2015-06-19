@@ -48,6 +48,4 @@ public interface GeographicZoneStockMapper  extends HasVaccineMapper,HasGeograph
 
     GeographicZoneStock getById(@Param("id") Long id);
 
-    @Select("delete from geographic_zone_stocks where id = #{id}")
-    void deleteById(@Param("id") Long id);
 }

@@ -20,22 +20,6 @@ public class GeographicZonePackageRepository extends StockRepository<GeographicZ
     @Autowired
     private GeographicZonePackageMapper mapper;
 
-    public void update(GeographicZonePackage geographicZonePackage){
-        mapper.update(geographicZonePackage);
-    }
-
-    public void insert(GeographicZonePackage geographicZonePackage){
-        mapper.insert(geographicZonePackage);
-    }
-
-    public List<GeographicZonePackage> getAll(){
-        return mapper.getAll();
-    }
-
-    public GeographicZonePackage getById(Long id) {
-        return mapper.getById(id);
-    }
-
     @Override
     public StockMapper getStockMapper() {
         return mapper;

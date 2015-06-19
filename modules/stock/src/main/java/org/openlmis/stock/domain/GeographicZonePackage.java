@@ -31,6 +31,6 @@ public class GeographicZonePackage extends StockModel{
 
     @Override
     public String getTableName() {
-        return "geographic_zone_packages";
+        return "geographic_zone_package";
     }
 }

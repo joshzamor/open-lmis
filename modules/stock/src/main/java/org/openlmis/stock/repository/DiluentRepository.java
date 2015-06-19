@@ -20,22 +20,6 @@ public class DiluentRepository extends StockRepository<Diluent>{
     @Autowired
     private DiluentMapper mapper;
 
-    public void update(Diluent diluent){
-        mapper.update(diluent);
-    }
-
-    public void insert(Diluent diluent){
-        mapper.insert(diluent);
-    }
-
-    public List<Diluent> getAll(){
-        return mapper.getAll();
-    }
-
-    public Diluent getById(Long id) {
-        return mapper.getById(id);
-    }
-
     @Override
     public StockMapper getStockMapper() {
         return mapper;

@@ -27,6 +27,6 @@ public class GeographicZoneStock  extends StockModel{
 
     @Override
     public String getTableName() {
-        return "geographic_zone_stocks";
+        return "geographic_zone_stock";
     }
 }

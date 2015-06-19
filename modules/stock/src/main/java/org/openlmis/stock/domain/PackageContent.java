@@ -23,6 +23,7 @@ public class PackageContent  extends StockModel {
     Integer number_of_boxes;
     Integer lot_number;
     String delivery_status;
+    Long vaccine_id;
     Vaccine vaccine;
 
     @Override

@@ -20,22 +20,6 @@ public class ManufacturePackageRepository extends StockRepository<ManufacturePac
     @Autowired
     private ManufacturePackageMapper mapper;
 
-    public void update(ManufacturePackage manufacturePackage){
-        mapper.update(manufacturePackage);
-    }
-
-    public void insert(ManufacturePackage manufacturePackage){
-        mapper.insert(manufacturePackage);
-    }
-
-    public List<ManufacturePackage> getAll(){
-        return mapper.getAll();
-    }
-
-    public ManufacturePackage getById(Long id) {
-        return mapper.getById(id);
-    }
-
     @Override
     public StockMapper getStockMapper() {
         return mapper;

@@ -19,22 +19,6 @@ public class DiluentService extends StockService<Diluent>{
     @Autowired
     private DiluentRepository repository;
 
-    public List<Diluent> getAll(){
-        return repository.getAll();
-    }
-
-    public void save(Diluent diluent){
-        if(diluent.getId() == null){
-            repository.insert(diluent);
-        }else {
-            repository.update(diluent);
-        }
-    }
-
-    public Diluent getById(Long id){
-        return repository.getById(id);
-    }
-
     @Override
     public StockRepository getRepository() {
         return repository;

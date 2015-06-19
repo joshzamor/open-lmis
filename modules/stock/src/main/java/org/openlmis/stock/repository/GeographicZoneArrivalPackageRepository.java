@@ -20,22 +20,6 @@ public class GeographicZoneArrivalPackageRepository extends StockRepository<Geog
     @Autowired
     private GeographicZoneArrivalPackageMapper mapper;
 
-    public void update(GeographicZoneArrivalPackage geographicZoneArrivalPackage){
-        mapper.update(geographicZoneArrivalPackage);
-    }
-
-    public void insert(GeographicZoneArrivalPackage geographicZoneArrivalPackage){
-        mapper.insert(geographicZoneArrivalPackage);
-    }
-
-    public List<GeographicZoneArrivalPackage> getAll(){
-        return mapper.getAll();
-    }
-
-    public GeographicZoneArrivalPackage getById(Long id) {
-        return mapper.getById(id);
-    }
-
     @Override
     public StockMapper getStockMapper() {
         return mapper;

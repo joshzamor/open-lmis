@@ -35,7 +35,7 @@ public interface PackageContentMapper extends HasVaccineMapper,StockMapper<Packa
             " number_of_boxes = #{number_of_boxes}, " +
             " lot_number = #{lot_number}, " +
             " delivery_status = #{delivery_status}, " +
-            " vaccine_id = #{vaccine_id}, " +
+            " vaccine_id = #{vaccine_id} " +
             "where id = #{id}")
     void update(PackageContent packageContent);
 
