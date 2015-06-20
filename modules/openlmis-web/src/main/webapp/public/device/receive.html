@@ -1,0 +1,45 @@
+<!--
+  ~ This program is part of the OpenLMIS logistics management information system platform software.
+  ~
+  ~ This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+  ~  
+  ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
+  ~ You should have received a copy of the GNU Affero General Public License along with this program.  If not, see http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org. 
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <!--<script src="js/queryScript.js"></script>-->
+</head>
+<body>
+<h1 style="background-color:#E6E6FA;">Electronic Logistics Management Information System( ELMIS )</h1>
+<div class="contents">
+    <form>
+        <fieldset>
+            <legend>Scan the SSCC</legend>
+            <input type="text" name="shipment_id" id="shipment_id" /> &nbsp;&nbsp;&nbsp;
+            <input type="button" value="Scan"  id="scan_sscc"/>
+        </fieldset>
+    </form>
+    <h4 id="message"></h4>
+</div>
+<script>
+    $(document).ready(function(){
+        $("#shipment_id").focus();
+        $( "#shipment_id" ).keyup(function( event ) {
+            $.get("/stock/manufacture/package?filter=sscc:eq:232342",function(data){
+                alert(JSON.stringify(data));
+                console.log(JSON.stringify(data));
+            })
+        }).keydown(function( event ) {
+
+        });
+
+
+    });
+</script>
+
+</body>
+</html>
