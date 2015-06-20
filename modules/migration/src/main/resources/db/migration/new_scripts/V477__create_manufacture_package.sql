@@ -10,11 +10,12 @@
 DROP TABLE IF EXISTS manufacture_package;
 CREATE TABLE manufacture_package (
   id                SERIAL PRIMARY KEY,
-  sscc              VARCHAR(50) NULL,
+  shipment_id       VARCHAR(30) ,
   manufacture_date  DATE,
   expire_date       DATE,
   lot_number        INTEGER,
   number_of_doses   INTEGER,
-  delivery_status   VARCHAR(200),
+  delivery_status   VARCHAR(20),
+  purchasing_order_number VARCHAR(30),
   vaccine_id INTEGER REFERENCES vaccines (id)
 );
