@@ -1,10 +1,9 @@
 package org.openlmis.stock.repository.mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.openlmis.stock.domain.Diluent;
 import org.openlmis.stock.domain.FlightArrival;
+import org.openlmis.stock.domain.GeographicZoneArrivalPackage;
 import org.openlmis.stock.domain.Vaccine;
 import org.springframework.stereotype.Repository;
 
@@ -29,4 +28,7 @@ public interface FlightArrivalMapper extends StockMapper<FlightArrival>{
             " time_of_arrival = #{time_of_arrival} " +
             "where id = #{id}")
     void update(FlightArrival flightArrival);
+
+    @Delete("delete from flight_arrival where id = #{id}")
+    void deleteById(@Param("id") Long id,FlightArrival flightArrival);
 }

@@ -28,14 +28,32 @@ public interface DiluentMapper  extends HasVaccineMapper,StockMapper<Diluent>{
     void update(Diluent diluent);
 
     @Select("select * from vaccine_diluents")
+    @Results(value = {
+            @Result(property = "vaccine", javaType = Vaccine.class, column = "vaccine_id",
+                    one = @One(select = "getVaccineById")),
+            @Result(property = "diluent", javaType = Vaccine.class, column = "diluent_id",
+                    one = @One(select = "getVaccineById"))
+    })
     List<Diluent> getAll();
 
     @Select("select * from vaccine_diluents where id = #{id}")
+    @Results(value = {
+            @Result(property = "vaccine", javaType = Vaccine.class, column = "vaccine_id",
+                    one = @One(select = "getVaccineById")),
+            @Result(property = "diluent", javaType = Vaccine.class, column = "diluent_id",
+                    one = @One(select = "getVaccineById"))
+    })
     Diluent getById(@Param("id") Long id);
 
     @Select("delete from vaccine_diluents where id = #{id}")
     void deleteById(@Param("id") Long id);
 
     @SelectProvider(type=ModelProviders.class, method="filterModal")
-    List<Diluent> filter(@Param("filter") String filter,Diluent stockModel);
+    @Results(value = {
+            @Result(property = "vaccine", javaType = Vaccine.class, column = "vaccine_id",
+                    one = @One(select = "getVaccineById")),
+            @Result(property = "diluent", javaType = Vaccine.class, column = "diluent_id",
+                    one = @One(select = "getVaccineById"))
+    })
+    List<Diluent> filter(@Param("filter") String filter,Diluent diluent);
 }
