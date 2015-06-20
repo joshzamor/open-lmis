@@ -13,7 +13,7 @@ CREATE TABLE package_contents (
   level           VARCHAR(50) NULL,
   package_id      VARCHAR(50) NULL,
   number_of_boxes INTEGER,
-  lot_number      VARCHAR(30) NOT NULL,
+  lot_number      VARCHAR(50) NOT NULL,
   delivery_status VARCHAR(50),
   vaccine_id INTEGER REFERENCES vaccines (id)
 );
