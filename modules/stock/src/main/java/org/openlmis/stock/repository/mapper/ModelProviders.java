@@ -23,17 +23,21 @@ public class ModelProviders {
             boolean isSpecified = false;
             for (Map.Entry<String, Object> thisEntry : params.entrySet()) {
                 if (thisEntry.getKey().startsWith("filter")) {
-                    String[] req = ((String) thisEntry.getValue()).split(":");
-                    String request = req[0];
-                    if (req[1].endsWith("eq")) {
-                        request += "=";
-                    } else if (req[1].endsWith("gt")) {
-                        request += ">";
-                    } else if (req[1].endsWith("lt")) {
-                        request += "<";
+                    String[] filters = ((String) thisEntry.getValue()).split(";");
+                    for(String filter:filters){
+                        String[] req = filter.split(":");
+                        String request = req[0];
+                        if (req[1].endsWith("eq")) {
+                            request += "=";
+                        } else if (req[1].endsWith("gt")) {
+                            request += ">";
+                        } else if (req[1].endsWith("lt")) {
+                            request += "<";
+                        }
+                        request += "\'" +req[2]+"\'";
+                        WHERE(request);
                     }
-                    request += "\'" +req[2]+"\'";
-                    WHERE(request);
+
                 }else if(thisEntry.getValue() instanceof StockModel){
                     if(!isSpecified) {
                         StockModel stockModel = (StockModel)thisEntry.getValue();
