@@ -65,5 +65,13 @@ public interface GeographicZoneArrivalPackageMapper extends HasGeographicZone,Ha
     void deleteById(@Param("id") Long id,GeographicZoneArrivalPackage geographicZoneArrivalPackage);
 
     @SelectProvider(type=ModelProviders.class, method="filterModal")
+    @Results(value = {
+            @Result(property = "geographic_zone", javaType = GeographicZone.class, column = "geographic_zone_id",
+                    one = @One(select = "getGeographicZoneById")),
+            @Result(property = "user", javaType = GeographicZone.class, column = "receiving_user",
+                    one = @One(select = "getUserById")),
+            @Result(property = "vaccine_packaging", javaType = VaccinePackaging.class, column = "vaccine_packaging_id",
+                    one = @One(select = "getVaccinePackagingById"))
+    })
     List<GeographicZoneArrivalPackage> filter(@Param("filter") String filter,GeographicZoneArrivalPackage geographicZoneArrivalPackage);
 }

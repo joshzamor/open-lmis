@@ -22,7 +22,7 @@ public class PackageContent  extends StockModel {
     String level;
     Long package_id;
     Integer number_of_boxes;
-    Integer lot_number;
+    String lot_number;
     String delivery_status;
 
     //@JsonIgnore

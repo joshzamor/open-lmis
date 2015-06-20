@@ -45,6 +45,10 @@ public interface ManufacturePackageMapper extends HasVaccinePackaging,StockMappe
     ManufacturePackage getById(@Param("id") Long id);
 
     @SelectProvider(type=ModelProviders.class, method="filterModal")
+    @Results(value = {
+            @Result(property = "vaccine_packaging", javaType = VaccinePackaging.class, column = "vaccine_packaging_id",
+                    one = @One(select = "getVaccinePackagingById"))
+    })
     List<ManufacturePackage> filter(@Param("filter") String filter,ManufacturePackage manufacturePackage);
 
     @Delete("delete from manufacture_package where id = #{id}")
