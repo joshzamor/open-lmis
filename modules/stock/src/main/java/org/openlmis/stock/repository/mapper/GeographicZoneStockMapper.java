@@ -25,8 +25,8 @@ public interface GeographicZoneStockMapper  extends HasVaccineMapper,HasVaccineP
     })
     List<GeographicZoneStock> getAll();
 
-    @Insert("insert into geographic_zone_stocks (expire_date, lot_number, number_of_doses, vaccine_id, geographic_zone_id) values " +
-            "(#{expire_date}, #{lot_number}, #{number_of_doses}, #{vaccine_id}, #{geographic_zone_id})")
+    @Insert("insert into geographic_zone_stocks (expire_date, lot_number, number_of_doses, vaccine_packaging_id, geographic_zone_id) values " +
+            "(#{expire_date}, #{lot_number}, #{number_of_doses}, #{vaccine_packaging_id}, #{geographic_zone_id})")
     @Options(flushCache = true, useGeneratedKeys = true)
     Integer insert(GeographicZoneStock geographicZoneStock);
 
@@ -35,7 +35,7 @@ public interface GeographicZoneStockMapper  extends HasVaccineMapper,HasVaccineP
             " expire_date = #{expire_date}, " +
             " lot_number = #{lot_number}," +
             " number_of_doses = #{number_of_doses}, " +
-            " vaccine_id = #{vaccine_id}, " +
+            " vaccine_packaging_id = #{vaccine_packaging_id}, " +
             " geographic_zone_id = #{geographic_zone_id} " +
             "where id = #{id}")
     void update(GeographicZoneStock geographicZoneStock);
