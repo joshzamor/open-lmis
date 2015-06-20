@@ -36,7 +36,7 @@ public interface ManufacturePackageMapper extends HasVaccineMapper,StockMapper<M
             " delivery_status = #{delivery_status}, " +
             " number_of_doses = #{number_of_doses}, " +
             " purchasing_order_number = #{purchasing_order_number}, " +
-            " vaccine_id = #{vaccine_id}, " +
+            " vaccine_id = #{vaccine_id} " +
             "where id = #{id}")
     void update(ManufacturePackage manufacturePackage);
 
@@ -49,4 +49,7 @@ public interface ManufacturePackageMapper extends HasVaccineMapper,StockMapper<M
 
     @SelectProvider(type=ModelProviders.class, method="filterModal")
     List<ManufacturePackage> filter(@Param("filter") String filter,ManufacturePackage manufacturePackage);
+
+    @Delete("delete from manufacture_package where id = #{id}")
+    void deleteById(@Param("id") Long id,ManufacturePackage manufacturePackage);
 }
