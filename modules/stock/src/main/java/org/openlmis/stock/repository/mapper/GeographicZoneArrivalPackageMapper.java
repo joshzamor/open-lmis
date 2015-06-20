@@ -63,6 +63,7 @@ public interface GeographicZoneArrivalPackageMapper extends HasGeographicZone,Ha
 
     @Delete("delete from geographic_zone_arrival_package where id = #{id}")
     void deleteById(@Param("id") Long id,GeographicZoneArrivalPackage geographicZoneArrivalPackage);
+
     @SelectProvider(type=ModelProviders.class, method="filterModal")
     List<GeographicZoneArrivalPackage> filter(@Param("filter") String filter,GeographicZoneArrivalPackage geographicZoneArrivalPackage);
 }
