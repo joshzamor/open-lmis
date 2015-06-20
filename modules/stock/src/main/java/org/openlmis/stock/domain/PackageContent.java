@@ -1,5 +1,6 @@
 package org.openlmis.stock.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,6 +24,8 @@ public class PackageContent  extends StockModel {
     Integer number_of_boxes;
     Integer lot_number;
     String delivery_status;
+
+    //@JsonIgnore
     Long vaccine_id;
     Vaccine vaccine;
 

@@ -1,5 +1,6 @@
 package org.openlmis.stock.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -47,5 +48,6 @@ public abstract class StockModel extends BaseModel {
         }
         return null;
     }
+    @JsonIgnore
     public abstract String getTableName();
 }

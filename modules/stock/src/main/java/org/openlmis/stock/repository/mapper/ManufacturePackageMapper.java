@@ -1,10 +1,7 @@
 package org.openlmis.stock.repository.mapper;
 
 import org.apache.ibatis.annotations.*;
-import org.openlmis.stock.domain.Diluent;
-import org.openlmis.stock.domain.ManufacturePackage;
-import org.openlmis.stock.domain.Manufacturer;
-import org.openlmis.stock.domain.Vaccine;
+import org.openlmis.stock.domain.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,17 +10,17 @@ import java.util.List;
  * Created by Morley on 6/14/2015.
  */
 @Repository
-public interface ManufacturePackageMapper extends HasVaccineMapper,StockMapper<ManufacturePackage>{
+public interface ManufacturePackageMapper extends HasVaccinePackaging,StockMapper<ManufacturePackage>{
 
     @Select("select * from manufacture_package")
     @Results(value = {
-            @Result(property = "vaccine", javaType = Vaccine.class, column = "vaccine_id",
-                    one = @One(select = "getVaccineById"))
+            @Result(property = "vaccine_packaging", javaType = VaccinePackaging.class, column = "vaccine_packaging_id",
+                    one = @One(select = "getVaccinePackagingById"))
     })
     List<ManufacturePackage> getAll();
 
-    @Insert("insert into manufacture_package (shipment_id, manufacture_date, expire_date, lot_number, number_of_doses,delivery_status,purchasing_order_number, vaccine_id) values " +
-            "(#{shipment_id}, #{manufacture_date}, #{expire_date},#{lot_number},#{number_of_doses},#{delivery_status},#{purchasing_order_number},#{vaccine_id})")
+    @Insert("insert into manufacture_package (shipment_id, manufacture_date, expire_date, lot_number, number_of_doses,delivery_status,purchasing_order_number, vaccine_packaging_id) values " +
+            "(#{shipment_id}, #{manufacture_date}, #{expire_date},#{lot_number},#{number_of_doses},#{delivery_status},#{purchasing_order_number},#{vaccine_packaging_id})")
     @Options(flushCache = true, useGeneratedKeys = true)
     Integer insert(ManufacturePackage manufacturePackage);
 
@@ -36,14 +33,14 @@ public interface ManufacturePackageMapper extends HasVaccineMapper,StockMapper<M
             " delivery_status = #{delivery_status}, " +
             " number_of_doses = #{number_of_doses}, " +
             " purchasing_order_number = #{purchasing_order_number}, " +
-            " vaccine_id = #{vaccine_id} " +
+            " vaccine_packaging_id = #{vaccine_packaging_id} " +
             "where id = #{id}")
     void update(ManufacturePackage manufacturePackage);
 
     @Select("select * from manufacture_package where id = #{id}")
     @Results(value = {
-            @Result(property = "vaccine", javaType = Vaccine.class, column = "vaccine_id",
-                    one = @One(select = "getVaccineById"))
+            @Result(property = "vaccine_packaging", javaType = VaccinePackaging.class, column = "vaccine_packaging_id",
+                    one = @One(select = "getVaccinePackagingById"))
     })
     ManufacturePackage getById(@Param("id") Long id);
 

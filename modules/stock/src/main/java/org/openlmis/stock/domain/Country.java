@@ -9,22 +9,23 @@ import org.openlmis.core.domain.BaseModel;
 import java.util.Date;
 
 /**
- * Created by Morley on 6/16/2015.
+ * Created by Morley on 6/20/2015.
  */
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Manufacturer extends BaseModel {
+public class Country  extends BaseModel {
 
     Long id;
     String name;
-    String website;
-    String primaryphone;
-    String email;
-    String description;
-    String specialization;
-    String geographiccoverage;
-    Date registrationdate;
+    String longname;
+    String isocode2;
+    String isocode3;
+    Integer createdby;
+    Integer createddate;
+    Integer modifiedby;
+    Integer modifieddate;
+
 }

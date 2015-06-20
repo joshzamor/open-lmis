@@ -7,15 +7,9 @@
 -- This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
 -- You should have received a copy of the GNU Affero General Public License along with this program.  If not, see http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org. 
 --
-DROP TABLE IF EXISTS manufacture_package;
-CREATE TABLE manufacture_package (
-  id                SERIAL PRIMARY KEY,
-  shipment_id       VARCHAR(30) ,
-  manufacture_date  DATE,
-  expire_date       DATE,
-  lot_number        INTEGER,
-  number_of_doses   INTEGER,
-  delivery_status   VARCHAR(20),
-  purchasing_order_number VARCHAR(30),
-  vaccine_packaging_id INTEGER REFERENCES vaccine_packaging (id)
-);
+
+DELETE FROM vaccine_packaging;
+
+INSERT INTO vaccine_packaging
+(packaging,gtin,doses_per_vial,vials_per_box,wastage,schedule,status,country_id,manufacturer_id,vaccine_id) values
+('Pack', 'gtin',1,2,'3.0',3,'',(SELECT id FROM countries WHERE id = 1),(SELECT id FROM manufacturers WHERE id = 1),(SELECT id FROM vaccines WHERE id = 1));

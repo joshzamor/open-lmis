@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 public interface FlightArrivalMapper extends StockMapper<FlightArrival>{
 
     @Insert("insert into flight_arrival (awb_number, destination, flight_number,estimate_time_of_arrival,time_of_arrival) values " +
-            "(#{awb_number}, #{destination}, #{flight_number}, #{estimate_time_of_arrival, #{time_of_arrival}})")
+            "(#{awb_number}, #{destination}, #{flight_number}, #{estimate_time_of_arrival}, #{time_of_arrival})")
     @Options(flushCache = true, useGeneratedKeys = true)
     Integer insert(FlightArrival flightArrival);
 
@@ -25,7 +25,7 @@ public interface FlightArrivalMapper extends StockMapper<FlightArrival>{
             " awb_number = #{awb_number}, " +
             " destination = #{destination}, " +
             " flight_number = #{flight_number}, " +
-            " estimate_time_of_arrival = #{estimate_time_of_arrival} " +
+            " estimate_time_of_arrival = #{estimate_time_of_arrival}, " +
             " time_of_arrival = #{time_of_arrival} " +
             "where id = #{id}")
     void update(FlightArrival flightArrival);

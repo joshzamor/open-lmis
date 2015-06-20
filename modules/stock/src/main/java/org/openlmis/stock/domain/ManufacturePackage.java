@@ -1,5 +1,6 @@
 package org.openlmis.stock.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,10 +25,13 @@ public class ManufacturePackage  extends StockModel {
     Integer lot_number;
     Integer number_of_doses;
     String delivery_status;
-    Integer vaccine_id;
+
     String purchasing_order_number;
 
-    Vaccine vaccine;
+    //@JsonIgnore
+    Integer vaccine_packaging_id;
+    VaccinePackaging vaccine_packaging;
+
     @Override
     public String getTableName() {
         return "manufacture_package";
