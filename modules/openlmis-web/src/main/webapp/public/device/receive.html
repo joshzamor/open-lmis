@@ -23,17 +23,62 @@
             <input type="button" value="Scan"  id="scan_sscc"/>
         </fieldset>
     </form>
-    <h4 id="message"></h4>
+    <div class="result"></div>
+    <p id="message"><img src="../images/ajax-loader.gif" alt=""/></p>
 </div>
 <script>
     $(document).ready(function(){
+        alert('ready1');
+        $("#message").hide();
         $("#shipment_id").focus();
-        $( "#shipment_id" ).keyup(function( event ) {
-            $.get("/stock/manufacture/package?filter=sscc:eq:232342",function(data){
-                alert(JSON.stringify(data));
-                console.log(JSON.stringify(data));
-            })
-        }).keydown(function( event ) {
+        $( "#scan_sscc" ).click(function() {
+
+            $("#message").show();
+            $(".result").hide();
+            if($("#shipment_id").val() != ""){
+                alert('ready1');
+                $.ajax({
+                    method: 'GET',
+                    url: '/stock/manufacture/package?filter=shipment_id:eq:'+$("#shipment_id").val(),
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                }).success(function(data) {
+                    if(!data.error){
+                        if(data.manufacture_packages.length == 0){
+                            $(".result").show().html('<h4>There is no package with this package number</h4>');
+                        }else{
+                            $(".result").html("");
+                            var html = "<table border='1' cellpadding='0' cellspacing='0'>";
+                            html +="<tr>";
+                            html +="<th>GTIN</th>";
+                            html +="<th>Item</th>";
+                            html +="<th>Lot Number</th>";
+                            html +="<th>Expiry</th>";
+                            html +="<th>Boxes</th>";
+                            html +="</tr>";
+                            $.each(data.manufacture_packages, function(index, element) {
+                                html +="<tr>";
+                                html +="<td>"+element.vaccine_packaging.gtin+"</td>";
+                                html +="<td>BCG</td>";
+                                html +="<td>"+element.lot_number+"</td>";
+                                html +="<td>"+element.expire_date+"</td>";
+                                html +="<td>"+parseInt(element.number_of_doses/(element.vaccine_packaging.doses_per_vial*element.vaccine_packaging.vials_per_box))+"</td>";
+                                html +="</tr>";
+
+                            });
+                            html +="</table>";
+                            $(".result").show().html(html);
+
+                        }
+
+                    }else{
+                        $("#message").hide();
+                    }
+                    $("#message").hide();
+
+                }).error(function(data){
+                   alert('error');
+                });
+            }
 
         });
 

@@ -1989,6 +1989,7 @@
       <column name="modifieddate" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93" def="bm93KCk=" remarks="TW9kaWZpZWQgb24="/>
       <primary-key name="countries_pkey" columns="id"/>
       <exported-key name="inventory_transactions_origincountryid_fkey" table="inventory_transactions" schema="public" catalog="open_lmis" columns="origincountryid"/>
+      <exported-key name="vaccine_packaging_country_id_fkey" table="vaccine_packaging" schema="public" catalog="open_lmis" columns="country_id"/>
       <index name="uc_countries_lower_name" unique="true" columns="lower((name)::text)"/>
     </table>
     <table name="countries_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
@@ -2212,26 +2213,6 @@
       <column name="productname" sqlType="varchar" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="elmiscode" sqlType="varchar" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="othercode" sqlType="varchar" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
-    </table>
-    <table name="diluent" schema="public" catalog="open_lmis" type="TABLE">
-      <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgnZGlsdWVudF9pZF9zZXEnOjpyZWdjbGFzcyk=" autoIncrement="true"/>
-      <column name="name" sqlType="varchar" precision="50" scale="0" nullable="false" jdbcType="12"/>
-      <column name="unit_per_box" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="vaccine_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <primary-key name="diluent_pkey" columns="id"/>
-      <foreign-key name="diluent_vaccine_id_fkey" columns="vaccine_id" ref-table="vaccines" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
-    </table>
-    <table name="diluent_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
-      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
-      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
-      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
-      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
-      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
-      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
-      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
-      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
-      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
-      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
     </table>
     <table name="distribution_refrigerator_readings_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -3430,10 +3411,10 @@
     <table name="flight_arrival" schema="public" catalog="open_lmis" type="TABLE">
       <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgnZmxpZ2h0X2Fycml2YWxfaWRfc2VxJzo6cmVnY2xhc3Mp" autoIncrement="true"/>
       <column name="awb_number" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
-      <column name="airport_of_destination" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <column name="flight_number" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="estimate_time_of_arrival" sqlType="date" precision="13" scale="0" nullable="false" jdbcType="91"/>
-      <column name="time_of_arrival" sqlType="date" precision="13" scale="0" nullable="false" jdbcType="91"/>
+      <column name="destination" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="flight_number" sqlType="varchar" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="estimate_time_of_arrival" sqlType="timestamp" precision="29" scale="6" nullable="false" jdbcType="93"/>
+      <column name="time_of_arrival" sqlType="timestamp" precision="29" scale="6" nullable="false" jdbcType="93"/>
       <primary-key name="flight_arrival_pkey" columns="id"/>
     </table>
     <table name="flight_arrival_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
@@ -3512,9 +3493,11 @@
       <column name="problems" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="receiving_user" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="geographic_zone_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="vaccine_packaging_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="geographic_zone_arrival_package_pkey" columns="id"/>
       <foreign-key name="geographic_zone_arrival_package_geographic_zone_id_fkey" columns="geographic_zone_id" ref-table="geographic_zones" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="geographic_zone_arrival_package_receiving_user_fkey" columns="receiving_user" ref-table="users" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="geographic_zone_arrival_package_vaccine_packaging_id_fkey" columns="vaccine_packaging_id" ref-table="vaccine_packaging" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
     </table>
     <table name="geographic_zone_arrival_package_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -3559,15 +3542,19 @@
       <column name="date_recieved" sqlType="date" precision="13" scale="0" nullable="true" jdbcType="91"/>
       <column name="comments" sqlType="varchar" precision="200" scale="0" nullable="true" jdbcType="12"/>
       <column name="recieved_status" sqlType="varchar" precision="50" scale="0" nullable="true" jdbcType="12"/>
-      <column name="sending_user" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <column name="receiving_user" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="sending_user_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="receiving_user_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="facility_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <column name="geographic_zone_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="source_geographic_zone_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="destination_geographic_zone_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="vaccine_packaging_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="geographic_zone_package_pkey" columns="id"/>
       <foreign-key name="geographic_zone_package_facility_id_fkey" columns="facility_id" ref-table="facilities" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
-      <foreign-key name="geographic_zone_package_geographic_zone_id_fkey" columns="geographic_zone_id" ref-table="geographic_zones" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
-      <foreign-key name="geographic_zone_package_receiving_user_fkey" columns="receiving_user" ref-table="users" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
-      <foreign-key name="geographic_zone_package_sending_user_fkey" columns="sending_user" ref-table="users" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="geographic_zone_package_destination_geographic_zone_id_fkey" columns="destination_geographic_zone_id" ref-table="geographic_zones" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="geographic_zone_package_source_geographic_zone_id_fkey" columns="source_geographic_zone_id" ref-table="geographic_zones" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="geographic_zone_package_receiving_user_id_fkey" columns="receiving_user_id" ref-table="users" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="geographic_zone_package_sending_user_id_fkey" columns="sending_user_id" ref-table="users" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="geographic_zone_package_vaccine_packaging_id_fkey" columns="vaccine_packaging_id" ref-table="vaccine_packaging" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
     </table>
     <table name="geographic_zone_package_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -3586,11 +3573,11 @@
       <column name="expire_date" sqlType="date" precision="13" scale="0" nullable="true" jdbcType="91"/>
       <column name="lot_number" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="number_of_doses" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <column name="vaccine_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="vaccine_packaging_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="geographic_zone_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="geographic_zone_stocks_pkey" columns="id"/>
       <foreign-key name="geographic_zone_stocks_geographic_zone_id_fkey" columns="geographic_zone_id" ref-table="geographic_zones" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
-      <foreign-key name="geographic_zone_stocks_vaccine_id_fkey" columns="vaccine_id" ref-table="vaccines" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="geographic_zone_stocks_vaccine_packaging_id_fkey" columns="vaccine_packaging_id" ref-table="vaccine_packaging" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
     </table>
     <table name="geographic_zone_stocks_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -3623,7 +3610,8 @@
       <exported-key name="arrival_package_geographic_zone_id_fkey" table="arrival_package" schema="public" catalog="open_lmis" columns="geographic_zone_id"/>
       <exported-key name="facilities_geographiczoneid_fkey" table="facilities" schema="public" catalog="open_lmis" columns="geographiczoneid"/>
       <exported-key name="geographic_zone_arrival_package_geographic_zone_id_fkey" table="geographic_zone_arrival_package" schema="public" catalog="open_lmis" columns="geographic_zone_id"/>
-      <exported-key name="geographic_zone_package_geographic_zone_id_fkey" table="geographic_zone_package" schema="public" catalog="open_lmis" columns="geographic_zone_id"/>
+      <exported-key name="geographic_zone_package_destination_geographic_zone_id_fkey" table="geographic_zone_package" schema="public" catalog="open_lmis" columns="destination_geographic_zone_id"/>
+      <exported-key name="geographic_zone_package_source_geographic_zone_id_fkey" table="geographic_zone_package" schema="public" catalog="open_lmis" columns="source_geographic_zone_id"/>
       <exported-key name="geographic_zone_stocks_geographic_zone_id_fkey" table="geographic_zone_stocks" schema="public" catalog="open_lmis" columns="geographic_zone_id"/>
       <exported-key name="geographic_zones_parentid_fkey" table="geographic_zones" schema="public" catalog="open_lmis" columns="parentid"/>
       <exported-key name="odk_proof_of_delivery_district_id_fkey" table="odk_proof_of_delivery_xform" schema="public" catalog="open_lmis" columns="districtid"/>
@@ -3745,15 +3733,16 @@
     </table>
     <table name="manufacture_package" schema="public" catalog="open_lmis" type="TABLE">
       <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgnbWFudWZhY3R1cmVfcGFja2FnZV9pZF9zZXEnOjpyZWdjbGFzcyk=" autoIncrement="true"/>
-      <column name="sscc" sqlType="varchar" precision="50" scale="0" nullable="true" jdbcType="12"/>
+      <column name="shipment_id" sqlType="varchar" precision="30" scale="0" nullable="true" jdbcType="12"/>
       <column name="manufacture_date" sqlType="date" precision="13" scale="0" nullable="true" jdbcType="91"/>
       <column name="expire_date" sqlType="date" precision="13" scale="0" nullable="true" jdbcType="91"/>
-      <column name="lot_number" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="lot_number" sqlType="varchar" precision="30" scale="0" nullable="false" jdbcType="12"/>
       <column name="number_of_doses" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <column name="delivery_status" sqlType="varchar" precision="200" scale="0" nullable="true" jdbcType="12"/>
-      <column name="vaccine_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="delivery_status" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="purchasing_order_number" sqlType="varchar" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="vaccine_packaging_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="manufacture_package_pkey" columns="id"/>
-      <foreign-key name="manufacture_package_vaccine_id_fkey" columns="vaccine_id" ref-table="vaccines" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="manufacture_package_vaccine_packaging_id_fkey" columns="vaccine_packaging_id" ref-table="vaccine_packaging" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
     </table>
     <table name="manufacture_package_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -3786,7 +3775,7 @@
       <exported-key name="inventory_transactions_manufacturerid_fkey" table="inventory_transactions" schema="public" catalog="open_lmis" columns="manufacturerid"/>
       <exported-key name="product_mapping_manufacturerid_fkey" table="product_mapping" schema="public" catalog="open_lmis" columns="manufacturerid"/>
       <exported-key name="vaccine_distribution_batches_manufacturerid_fkey" table="vaccine_distribution_batches" schema="public" catalog="open_lmis" columns="manufacturerid"/>
-      <exported-key name="vaccines_manufacturer_id_fkey" table="vaccines" schema="public" catalog="open_lmis" columns="manufacturer_id"/>
+      <exported-key name="vaccine_packaging_manufacturer_id_fkey" table="vaccine_packaging" schema="public" catalog="open_lmis" columns="manufacturer_id"/>
       <index name="uc_manufacturers_lower_name" unique="true" columns="lower((name)::text)"/>
     </table>
     <table name="manufacturers_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
@@ -6180,8 +6169,8 @@
       <exported-key name="equipment_service_vendor_users_userid_fkey" table="equipment_service_vendor_users" schema="public" catalog="open_lmis" columns="userid"/>
       <exported-key name="fulfillment_role_assignments_userid_fkey" table="fulfillment_role_assignments" schema="public" catalog="open_lmis" columns="userid"/>
       <exported-key name="geographic_zone_arrival_package_receiving_user_fkey" table="geographic_zone_arrival_package" schema="public" catalog="open_lmis" columns="receiving_user"/>
-      <exported-key name="geographic_zone_package_receiving_user_fkey" table="geographic_zone_package" schema="public" catalog="open_lmis" columns="receiving_user"/>
-      <exported-key name="geographic_zone_package_sending_user_fkey" table="geographic_zone_package" schema="public" catalog="open_lmis" columns="sending_user"/>
+      <exported-key name="geographic_zone_package_receiving_user_id_fkey" table="geographic_zone_package" schema="public" catalog="open_lmis" columns="receiving_user_id"/>
+      <exported-key name="geographic_zone_package_sending_user_id_fkey" table="geographic_zone_package" schema="public" catalog="open_lmis" columns="sending_user_id"/>
       <exported-key name="orders_createdby_fkey" table="orders" schema="public" catalog="open_lmis" columns="createdby"/>
       <exported-key name="orders_modifiedby_fkey" table="orders" schema="public" catalog="open_lmis" columns="modifiedby"/>
       <exported-key name="refrigerators_createdby_fkey" table="refrigerators" schema="public" catalog="open_lmis" columns="createdby"/>
@@ -6312,6 +6301,28 @@
       <index name="vaccine_administration_mode_name_key" unique="true" columns="name"/>
     </table>
     <table name="vaccine_administration_mode_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="vaccine_diluents" schema="public" catalog="open_lmis" type="TABLE">
+      <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgndmFjY2luZV9kaWx1ZW50c19pZF9zZXEnOjpyZWdjbGFzcyk=" autoIncrement="true"/>
+      <column name="vaccine_unit" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="diluent_unit" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="vaccine_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="diluent_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="vaccine_diluents_pkey" columns="id"/>
+      <foreign-key name="vaccine_diluents_diluent_id_fkey" columns="diluent_id" ref-table="vaccines" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="vaccine_diluents_vaccine_id_fkey" columns="vaccine_id" ref-table="vaccines" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="vaccine_diluents_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
       <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
       <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
@@ -6582,6 +6593,39 @@
       <exported-key name="vaccine_program_logistics_columns_mastercolumnid_fkey" table="vaccine_program_logistics_columns" schema="public" catalog="open_lmis" columns="mastercolumnid"/>
     </table>
     <table name="vaccine_logistics_master_columns_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="vaccine_packaging" schema="public" catalog="open_lmis" type="TABLE">
+      <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgndmFjY2luZV9wYWNrYWdpbmdfaWRfc2VxJzo6cmVnY2xhc3Mp" autoIncrement="true"/>
+      <column name="packaging" sqlType="varchar" precision="50" scale="0" nullable="true" jdbcType="12"/>
+      <column name="gtin" sqlType="varchar" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="doses_per_vial" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="vials_per_box" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="wastage" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="schedule" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="status" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="country_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="vaccine_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="manufacturer_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="vaccine_packaging_pkey" columns="id"/>
+      <foreign-key name="vaccine_packaging_country_id_fkey" columns="country_id" ref-table="countries" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="vaccine_packaging_manufacturer_id_fkey" columns="manufacturer_id" ref-table="manufacturers" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="vaccine_packaging_vaccine_id_fkey" columns="vaccine_id" ref-table="vaccines" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="geographic_zone_arrival_package_vaccine_packaging_id_fkey" table="geographic_zone_arrival_package" schema="public" catalog="open_lmis" columns="vaccine_packaging_id"/>
+      <exported-key name="geographic_zone_package_vaccine_packaging_id_fkey" table="geographic_zone_package" schema="public" catalog="open_lmis" columns="vaccine_packaging_id"/>
+      <exported-key name="geographic_zone_stocks_vaccine_packaging_id_fkey" table="geographic_zone_stocks" schema="public" catalog="open_lmis" columns="vaccine_packaging_id"/>
+      <exported-key name="manufacture_package_vaccine_packaging_id_fkey" table="manufacture_package" schema="public" catalog="open_lmis" columns="vaccine_packaging_id"/>
+    </table>
+    <table name="vaccine_packaging_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
       <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
       <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
@@ -7105,23 +7149,14 @@
     <table name="vaccines" schema="public" catalog="open_lmis" type="TABLE">
       <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgndmFjY2luZXNfaWRfc2VxJzo6cmVnY2xhc3Mp" autoIncrement="true"/>
       <column name="name" sqlType="varchar" precision="50" scale="0" nullable="true" jdbcType="12"/>
-      <column name="packaging" sqlType="varchar" precision="50" scale="0" nullable="true" jdbcType="12"/>
-      <column name="gtin" sqlType="varchar" precision="50" scale="0" nullable="false" jdbcType="12"/>
-      <column name="doses_per_vial" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="vials_per_box" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="expire_warning_period" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="type" sqlType="varchar" precision="200" scale="0" nullable="true" jdbcType="12"/>
-      <column name="wastage" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
-      <column name="schedule" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="status" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
-      <column name="country_name" sqlType="varchar" precision="50" scale="0" nullable="false" jdbcType="12"/>
-      <column name="manufacturer_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="vaccines_pkey" columns="id"/>
-      <foreign-key name="vaccines_manufacturer_id_fkey" columns="manufacturer_id" ref-table="manufacturers" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
-      <exported-key name="diluent_vaccine_id_fkey" table="diluent" schema="public" catalog="open_lmis" columns="vaccine_id"/>
-      <exported-key name="geographic_zone_stocks_vaccine_id_fkey" table="geographic_zone_stocks" schema="public" catalog="open_lmis" columns="vaccine_id"/>
-      <exported-key name="manufacture_package_vaccine_id_fkey" table="manufacture_package" schema="public" catalog="open_lmis" columns="vaccine_id"/>
       <exported-key name="package_contents_vaccine_id_fkey" table="package_contents" schema="public" catalog="open_lmis" columns="vaccine_id"/>
+      <exported-key name="vaccine_diluents_diluent_id_fkey" table="vaccine_diluents" schema="public" catalog="open_lmis" columns="diluent_id"/>
+      <exported-key name="vaccine_diluents_vaccine_id_fkey" table="vaccine_diluents" schema="public" catalog="open_lmis" columns="vaccine_id"/>
+      <exported-key name="vaccine_packaging_vaccine_id_fkey" table="vaccine_packaging" schema="public" catalog="open_lmis" columns="vaccine_id"/>
     </table>
     <table name="vaccines_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
