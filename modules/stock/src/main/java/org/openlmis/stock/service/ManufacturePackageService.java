@@ -2,6 +2,7 @@ package org.openlmis.stock.service;
 
 import org.openlmis.stock.domain.ManufacturePackage;
 import org.openlmis.stock.repository.ManufacturePackageRepository;
+import org.openlmis.stock.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +13,12 @@ import java.util.List;
  */
 
 @Service
-public class ManufacturePackageService {
+public class ManufacturePackageService extends StockService<ManufacturePackage>{
 
     @Autowired
     private ManufacturePackageRepository repository;
 
-    public List<ManufacturePackage> getAll(){
+    /*public List<ManufacturePackage> getAll(){
         return repository.getAll();
     }
 
@@ -31,5 +32,10 @@ public class ManufacturePackageService {
 
     public ManufacturePackage getById(Long id){
         return repository.getById(id);
+    }*/
+
+    @Override
+    public StockRepository getRepository() {
+        return repository;
     }
 }

@@ -3,6 +3,7 @@ package org.openlmis.stock.repository;
 import org.openlmis.stock.domain.Diluent;
 import org.openlmis.stock.domain.Vaccine;
 import org.openlmis.stock.repository.mapper.DiluentMapper;
+import org.openlmis.stock.repository.mapper.StockMapper;
 import org.openlmis.stock.repository.mapper.VaccineMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,24 +15,13 @@ import java.util.List;
  */
 
 @Component
-public class DiluentRepository {
+public class DiluentRepository extends StockRepository<Diluent>{
 
     @Autowired
     private DiluentMapper mapper;
 
-    public void update(Diluent diluent){
-        mapper.update(diluent);
-    }
-
-    public void insert(Diluent diluent){
-        mapper.insert(diluent);
-    }
-
-    public List<Diluent> getAll(){
-        return mapper.getAll();
-    }
-
-    public Diluent getById(Long id) {
-        return mapper.getById(id);
+    @Override
+    public StockMapper getStockMapper() {
+        return mapper;
     }
 }

@@ -5,6 +5,7 @@ import org.openlmis.stock.domain.Diluent;
 import org.openlmis.stock.domain.ManufacturePackage;
 import org.openlmis.stock.service.DiluentService;
 import org.openlmis.stock.service.ManufacturePackageService;
+import org.openlmis.stock.service.StockService;
 import org.openlmis.web.response.OpenLmisResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,17 +24,17 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 @RequestMapping(value = "/stock/diluent")
-public class DiluentController {
+public class DiluentController  extends StockBaseController<Diluent>{
 
     @Autowired
     private DiluentService service;
 
-    @RequestMapping(value="{id}", method = GET)
+    /*@RequestMapping(value="{id}", method = GET)
     public ResponseEntity<OpenLmisResponse> get(@PathVariable Long id) {
         return OpenLmisResponse.response("diluent", service.getById(id));
     }
 
-    @RequestMapping(value="all")
+    @RequestMapping(value="")
     public ResponseEntity<OpenLmisResponse> getAll() {
         return OpenLmisResponse.response("diluents", service.getAll());
     }
@@ -46,6 +47,11 @@ public class DiluentController {
             return OpenLmisResponse.error(e, BAD_REQUEST);
         }
         return OpenLmisResponse.response("diluent", service.getById(diluent.getId()));
+    }*/
+
+    @Override
+    public StockService getService() {
+        return service;
     }
 
 }

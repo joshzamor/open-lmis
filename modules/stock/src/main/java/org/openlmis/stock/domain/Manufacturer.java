@@ -9,24 +9,22 @@ import org.openlmis.core.domain.BaseModel;
 import java.util.Date;
 
 /**
- * Created by Morley on 6/14/2015.
+ * Created by Morley on 6/16/2015.
  */
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class GeographicZoneStock  extends StockModel{
+public class Manufacturer  extends BaseModel {
 
     Long id;
-    Date expire_date;
-    Integer lot_number;
-    Integer number_of_doses;
-    Integer vaccine_id;
-    Integer geographic_zone_id;
-
-    @Override
-    public String getTableName() {
-        return "geographic_zone_stock";
-    }
+    String name;
+    String website;
+    String primaryphone;
+    String email;
+    String description;
+    String specialization;
+    String geographiccoverage;
+    Date registrationdate;
 }

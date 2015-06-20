@@ -15,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class PackageContent extends BaseModel {
+public class PackageContent  extends StockModel {
 
     Long id;
     String level;
@@ -24,4 +24,10 @@ public class PackageContent extends BaseModel {
     Integer lot_number;
     String delivery_status;
     Long vaccine_id;
+    Vaccine vaccine;
+
+    @Override
+    public String getTableName() {
+        return "package_contents";
+    }
 }

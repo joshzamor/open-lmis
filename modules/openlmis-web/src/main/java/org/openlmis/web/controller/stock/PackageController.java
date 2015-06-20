@@ -7,6 +7,7 @@ import org.openlmis.stock.domain.PackageContent;
 import org.openlmis.stock.service.GeographicZoneArrivalPackageService;
 import org.openlmis.stock.service.GeographicZonePackageService;
 import org.openlmis.stock.service.PackageContentService;
+import org.openlmis.stock.service.StockService;
 import org.openlmis.web.response.OpenLmisResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,52 +23,33 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
  */
 @Controller
 @RequestMapping(value = "/stock/package")
-public class PackageController {
+public class PackageController extends StockBaseController<GeographicZonePackage>{
     @Autowired
-    private GeographicZonePackageService geographicZonePackageService;
+    private GeographicZonePackageService sevrice;
 
 
-    @RequestMapping(value="get/{id}")
+    /*@RequestMapping(value="get/{id}")
     public ResponseEntity<OpenLmisResponse> get(@PathVariable Long id) {
-        return OpenLmisResponse.response("package", geographicZonePackageService.getById(id));
+        return OpenLmisResponse.response("package", sevrice.getById(id));
     }
 
     @RequestMapping(value="all")
     public ResponseEntity<OpenLmisResponse> getAll() {
-        return OpenLmisResponse.response("packages", geographicZonePackageService.getAll());
+        return OpenLmisResponse.response("packages", sevrice.getAll());
     }
 
     @RequestMapping(value="save")
     public ResponseEntity<OpenLmisResponse> save(@RequestBody GeographicZonePackage geographicZonePackage) {
         try {
-            geographicZonePackageService.save(geographicZonePackage);
+            sevrice.save(geographicZonePackage);
         } catch (DataException e) {
             return OpenLmisResponse.error(e, BAD_REQUEST);
         }
-        return OpenLmisResponse.response("package", geographicZonePackageService.getById(geographicZonePackage.getId()));
-    }
+        return OpenLmisResponse.response("package", sevrice.getById(geographicZonePackage.getId()));
+    }*/
 
-    @Autowired
-    private GeographicZoneArrivalPackageService geographicZoneArrivalPackageService;
-
-
-    @RequestMapping(value="arrival/get/{id}")
-    public ResponseEntity<OpenLmisResponse> getArrival(@PathVariable Long id) {
-        return OpenLmisResponse.response("arrivalPackage", geographicZoneArrivalPackageService.getById(id));
-    }
-
-    @RequestMapping(value="arrival/all")
-    public ResponseEntity<OpenLmisResponse> getAllArrival() {
-        return OpenLmisResponse.response("arrivalPackages", geographicZoneArrivalPackageService.getAll());
-    }
-
-    @RequestMapping(value="arrival/save")
-    public ResponseEntity<OpenLmisResponse> save(@RequestBody GeographicZoneArrivalPackage geographicZoneArrivalPackage) {
-        try {
-            geographicZoneArrivalPackageService.save(geographicZoneArrivalPackage);
-        } catch (DataException e) {
-            return OpenLmisResponse.error(e, BAD_REQUEST);
-        }
-        return OpenLmisResponse.response("arrivalPackage", geographicZoneArrivalPackageService.getById(geographicZoneArrivalPackage.getId()));
+    @Override
+    public StockService getService() {
+        return sevrice;
     }
 }

@@ -4,6 +4,7 @@ import org.openlmis.stock.domain.Diluent;
 import org.openlmis.stock.domain.GeographicZoneArrivalPackage;
 import org.openlmis.stock.repository.mapper.DiluentMapper;
 import org.openlmis.stock.repository.mapper.GeographicZoneArrivalPackageMapper;
+import org.openlmis.stock.repository.mapper.StockMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,24 +15,13 @@ import java.util.List;
  */
 
 @Component
-public class GeographicZoneArrivalPackageRepository {
+public class GeographicZoneArrivalPackageRepository extends StockRepository<GeographicZoneArrivalPackage>{
 
     @Autowired
     private GeographicZoneArrivalPackageMapper mapper;
 
-    public void update(GeographicZoneArrivalPackage geographicZoneArrivalPackage){
-        mapper.update(geographicZoneArrivalPackage);
-    }
-
-    public void insert(GeographicZoneArrivalPackage geographicZoneArrivalPackage){
-        mapper.insert(geographicZoneArrivalPackage);
-    }
-
-    public List<GeographicZoneArrivalPackage> getAll(){
-        return mapper.getAll();
-    }
-
-    public GeographicZoneArrivalPackage getById(Long id) {
-        return mapper.getById(id);
+    @Override
+    public StockMapper getStockMapper() {
+        return mapper;
     }
 }

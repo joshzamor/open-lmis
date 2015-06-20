@@ -16,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class GeographicZoneArrivalPackage  extends BaseModel {
+public class GeographicZoneArrivalPackage extends StockModel{
 
     Long id;
     String sscc ;
@@ -31,4 +31,9 @@ public class GeographicZoneArrivalPackage  extends BaseModel {
     String problems;
     Integer receiving_user;
     Integer geographic_zone_id;
+
+    @Override
+    public String getTableName() {
+        return "geographic_zone_arrival_stock";
+    }
 }

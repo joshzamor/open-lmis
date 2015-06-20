@@ -5,6 +5,7 @@ package org.openlmis.stock.service;
  */
 
 import org.openlmis.stock.domain.Vaccine;
+import org.openlmis.stock.repository.StockRepository;
 import org.openlmis.stock.repository.VaccineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,25 +13,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class VaccineService {
+public class VaccineService extends StockService<Vaccine>{
 
     @Autowired
     private VaccineRepository repository;
 
-    public List<Vaccine> getAll(){
-        return repository.getAll();
-    }
-
-    public void save(Vaccine vaccine){
-        if(vaccine.getId() == null){
-            repository.insert(vaccine);
-        }else {
-            repository.update(vaccine);
-        }
-    }
-
-    public Vaccine getById(Long id){
-        return repository.getById(id);
+    @Override
+    public StockRepository getRepository() {
+        return repository;
     }
 
 }
