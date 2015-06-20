@@ -1,0 +1,171 @@
+<div ng-controller="VaccineModuleController">
+    <section id="package_arrival_1" ng-show="arrival_1">
+
+        <h3>Send package</h3>
+        <table>
+            <tr>
+                <td>
+                    <form >
+                        <table cellpadding="5" cellspacing="5">
+                            <tr>
+                                <td>Select Destination Region</td>
+                                <td>
+                                    <select name="destination" ng-model="destination_choice" ng-change="expectation()">
+                                        <option ng-repeat="destination in destinations">{{destination.name}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </form>
+                </td>
+                <td>
+                    <table cellspacing="10" class="table table-responsive" cellpadding="10" ng-show="sent_to">
+                        <tr>
+                            <th>Target</th>
+                            <th>Expected Births</th>
+                            <th>Expected Pregnancies</th>
+                            <th>Surviving Infants</th>
+                            <th>Enter Lot Number</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="destination in (destinations | filter:{name:destination_choice})">
+                            <td>{{destination.targets}}</td>
+                            <td>{{destination.expected_birth}}</td>
+                            <td>{{destination.expected_pregnancies}}</td>
+                            <td>{{destination.surviving_infants}}</td>
+                            <td><input name="lot_number" ng-model="scanned_package_lot" id="package_lot_number"></td>
+                            <td><input type="button" value="Scan" ng-click="scanningPackage(scanned_package_lot)" /></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr >
+                <table class="table table-responsive" ng-show="description_scanned_package" cellspacing="10" cellpadding="1" >
+                    <tr>
+                        <th>GTN</th>
+                        <th>Item</th>
+                        <th>Lot </th>
+                        <th>Max:{{scannedPackage.max}} boxes</th>
+                        <th>Current Stock</th>
+                        <th>Expire Date</th>
+                        <th>Boxes</th>
+                        <th colspan="2"></th>
+                    </tr>
+
+                    <tr>
+                        <td>{{scannedPackage.gtn}}</td>
+                        <td>{{scannedPackage.item}}</td>
+                        <td>{{scannedPackage.lot_number}}</td>
+                        <td>Min:{{scannedPackage.min}} boxes</td>
+                        <td>{{scannedPackage.current_stock}}</td>
+                        <td>{{scannedPackage.expire_date}}</td>
+                        <td><input name="boxes" id="boxes" ng-model="boxes"></td>
+                        <td><input type="button" ng-click="addingPackage(scannedPackage)" value="Add" /></td>
+                    </tr>
+                </table>
+            </tr>
+            <tr id="voucher_number" >
+                <td colspan="2">
+
+                    <table ng-show="voucher_numbers" cellspacing="10" cellpadding="10">
+
+                        <tr>
+                            <td colspan="3" rowspan="2"><img src="/j_spring_security_check"></td>
+                            <td colspan="3">Name of Store</td>
+                            <td colspan="2">Date</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Arusha Region</td>
+                            <td colspan="2">1 Jun 2010</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr id="description_scanned_item" >
+               <td>
+                   <table class="table table-responsive" ng-show="description_scanned_item" cellspacing="10" cellpadding="10">
+                       <tr>
+                           <th>GTN</th>
+                           <th>Manufacturer</th>
+                           <th>Item</th>
+                           <th>Lot Number</th>
+                           <th>Expiry</th>
+                           <th>Amount Issued(Dosses)</th>
+                           <th>Min Stock</th>
+                           <th>Max Stock</th>
+                           <th>Current Stock</th>
+                           <th>New Stock</th>
+                           <th></th>
+                       </tr>
+                       <tr>
+                           <td>{{selectedPackage.gtn}}</td>
+                           <td>{{selectedPackage.manufacturer}}</td>
+                           <td>{{selectedPackage.item}}</td>
+                           <td>{{selectedPackage.lot_number}}</td>
+                           <td>{{selectedPackage.expire_date}}</td>
+                           <td>{{boxes}}</td>
+                           <td>{{selectedPackage.min}}</td>
+                           <td>{{selectedPackage.max}}</td>
+                           <td>{{selectedPackage.current_stock}}</td>
+                           <td>{{(selectedPackage.new_stock)}}</td>
+                           <td><a >delete</a></td>
+                       </tr>
+                   </table>
+               </td>
+            </tr>
+            <tr >
+                <td><input ng-show="description_scanned_item" type="button" ng-click="cancelSendingPackage(selectedPackage)" value="Cancel" ></td>
+                <td><input ng-show="description_scanned_item" type="button" ng-click="confirmAndSendPackage(selectedPackage)" value="Confirm and Send" ></td>
+
+            </tr>
+        </table>
+        <div ng-if="message">{{message}}</div>
+
+
+    </section>
+    <!--<section id="package_arrival_2" ng-show="arrival_2">-->
+        <!--<h3>Package Arrival</h3>-->
+        <!--<table class="table table-responsive">-->
+            <!--<tr>-->
+                <!--<td>Receiving Package With SSCC:<span id="sscc_number">{{scannedPackage.sscc}}</span></td>-->
+
+                <!--<td><input type="submit" value="cancel"  id="cancel"/></td>-->
+            <!--</tr>-->
+        <!--</table>-->
+
+        <!--<table class="table table-responsive">-->
+            <!--<tr>-->
+                <!--<td>Package sent On: <span id="sent_date"></span></td>-->
+                <!--<td style="text-align: right;">Enter Lot Number  <input type="text" name="" id="lot_number"/></td>-->
+                <!--<td style="text-align: left;"><input type="submit" value="Scan"  id="scan_lotnumber"/></td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td colspan="3">-->
+                    <!--<table class="table table-bordered table-responsive" border="1">-->
+                        <!--<thead>-->
+                        <!--<tr><th>GTN</th><th>Description</th><th>Manufacture</th><th>Lot</th><th>Expiry</th><th>Vials</th><th>Boxes</th><th>Doses</th></tr>-->
+                        <!--</thead>-->
+                        <!--<tbody>-->
+                        <!--<tr>-->
+                            <!--<td>1234454656</td>-->
+                            <!--<td>PVC 13</td>-->
+                            <!--<td>pitfizer</td>-->
+                            <!--<td>j943111</td>-->
+                            <!--<td>2017-02-28</td>-->
+                            <!--<td>608000</td>-->
+                            <!--<td>12160</td>-->
+                            <!--<td>608000</td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                    <!--</table>-->
+                <!--</td>-->
+            <!--</tr>-->
+
+        <!--</table>-->
+
+    <!--</section>-->
+
+
+</div>
