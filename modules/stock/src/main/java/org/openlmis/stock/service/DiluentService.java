@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package org.openlmis.stock.service;
 
 import org.openlmis.stock.domain.Diluent;
@@ -34,3 +35,31 @@ public class DiluentService {
         return repository.getById(id);
     }
 }
+=======
+package org.openlmis.stock.service;
+
+import org.openlmis.stock.domain.Diluent;
+import org.openlmis.stock.domain.ManufacturePackage;
+import org.openlmis.stock.repository.DiluentRepository;
+import org.openlmis.stock.repository.ManufacturePackageRepository;
+import org.openlmis.stock.repository.StockRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * Created by Morley on 6/14/2015.
+ */
+
+@Service
+public class DiluentService extends StockService<Diluent>{
+    @Autowired
+    private DiluentRepository repository;
+
+    @Override
+    public StockRepository getRepository() {
+        return repository;
+    }
+}
+>>>>>>> ab13d65384b55a34d30f8383fc3f8589e803e45d
