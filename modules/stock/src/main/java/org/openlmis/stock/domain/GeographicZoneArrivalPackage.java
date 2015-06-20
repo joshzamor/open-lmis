@@ -19,7 +19,6 @@ import java.util.Date;
 public class GeographicZoneArrivalPackage extends StockModel{
 
     Long id;
-    String sscc ;
     String package_number;
     Integer lot_number;
     Integer number_as_expected;
@@ -31,6 +30,7 @@ public class GeographicZoneArrivalPackage extends StockModel{
     String problems;
     Integer receiving_user;
     Integer geographic_zone_id;
+    Integer vaccine_packaging_id;
 
     @Override
     public String getTableName() {

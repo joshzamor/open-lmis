@@ -17,12 +17,15 @@ import org.openlmis.core.domain.BaseModel;
 public class Diluent extends StockModel{
 
     Long id;
-    String name;
-    Integer unit_per_box;
+    Integer vaccine_unit;
+    Integer diluent_unit;
+    Integer diluent_id;
     Integer vaccine_id;
 
+    Vaccine vaccine;
+    Vaccine diluent;
     @Override
     public String getTableName() {
-        return "diluent";
+        return "vaccine_diluents";
     }
 }

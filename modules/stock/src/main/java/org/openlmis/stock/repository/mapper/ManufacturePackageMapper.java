@@ -22,19 +22,20 @@ public interface ManufacturePackageMapper extends HasVaccineMapper,StockMapper<M
     })
     List<ManufacturePackage> getAll();
 
-    @Insert("insert into manufacture_package (sscc, manufacture_date, expire_date, lot_number, number_of_doses,delivery_status, vaccine_id) values " +
-            "(#{sscc}, #{manufacture_date}, #{expire_date},#{lot_number},#{number_of_doses},#{delivery_status},#{vaccine_id})")
+    @Insert("insert into manufacture_package (shipment_id, manufacture_date, expire_date, lot_number, number_of_doses,delivery_status,purchasing_order_number, vaccine_id) values " +
+            "(#{shipment_id}, #{manufacture_date}, #{expire_date},#{lot_number},#{number_of_doses},#{delivery_status},#{purchasing_order_number},#{vaccine_id})")
     @Options(flushCache = true, useGeneratedKeys = true)
     Integer insert(ManufacturePackage manufacturePackage);
 
     @Update("update manufacture_package " +
             "set " +
-            " sscc = #{sscc}, " +
+            " shipment_id = #{shipment_id}, " +
             " manufacture_date = #{manufacture_date}," +
             " expire_date = #{expire_date}, " +
             " lot_number = #{lot_number}, " +
-            " lot_number = #{lot_number}, " +
+            " delivery_status = #{delivery_status}, " +
             " number_of_doses = #{number_of_doses}, " +
+            " purchasing_order_number = #{purchasing_order_number}, " +
             " vaccine_id = #{vaccine_id}, " +
             "where id = #{id}")
     void update(ManufacturePackage manufacturePackage);
@@ -46,4 +47,6 @@ public interface ManufacturePackageMapper extends HasVaccineMapper,StockMapper<M
     })
     ManufacturePackage getById(@Param("id") Long id);
 
+    @SelectProvider(type=ModelProviders.class, method="filterModal")
+    List<ManufacturePackage> filter(@Param("filter") String filter,ManufacturePackage manufacturePackage);
 }

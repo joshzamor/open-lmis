@@ -23,14 +23,14 @@ public interface GeographicZoneArrivalPackageMapper extends HasGeographicZone,St
     })
     List<GeographicZoneArrivalPackage> getAll();
 
-    @Insert("insert into geographic_zone_arrival_package (sscc, package_number, lot_number, number_as_expected, gtin, number_recieved, number_expected, physical_damage, vvm_status, problems, receiving_user, geographic_zone_id) values " +
-            "(#{sscc}, #{package_number}, #{lot_number}, #{number_as_expected}, #{gtin}, #{number_recieved}, #{number_expected}, #{physical_damage}, #{vvm_status}, #{problems}, #{receiving_user}, #{geographic_zone_id})")
+    @Insert("insert into geographic_zone_arrival_package (vaccine_packaging_id, package_number, lot_number, number_as_expected, gtin, number_recieved, number_expected, physical_damage, vvm_status, problems, receiving_user, geographic_zone_id) values " +
+            "(#{vaccine_packaging_id}, #{package_number}, #{lot_number}, #{number_as_expected}, #{gtin}, #{number_recieved}, #{number_expected}, #{physical_damage}, #{vvm_status}, #{problems}, #{receiving_user}, #{geographic_zone_id})")
     @Options(flushCache = true, useGeneratedKeys = true)
     Integer insert(GeographicZoneArrivalPackage geographicZoneArrivalPackage);
 
     @Update("update geographic_zone_arrival_package " +
             "set " +
-            " sscc = #{sscc}, " +
+            " vaccine_packaging_id = #{vaccine_packaging_id}, " +
             " package_number = #{package_number}," +
             " lot_number = #{lot_number}, " +
             " number_as_expected = #{number_as_expected}, " +

@@ -18,13 +18,14 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 public class ManufacturePackage  extends StockModel {
     Long id;
-    String sscc;
+    String shipment_id;
     Date manufacture_date;
     Date expire_date;
     Integer lot_number;
     Integer number_of_doses;
     String delivery_status;
     Integer vaccine_id;
+    String purchasing_order_number;
 
     Vaccine vaccine;
     @Override

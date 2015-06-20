@@ -29,12 +29,15 @@ public class ModelProviders {
                         String request = req[0];
                         if (req[1].endsWith("eq")) {
                             request += "=";
+                            request += "\'" +req[2]+"\'";
                         } else if (req[1].endsWith("gt")) {
                             request += ">";
+                            request += req[2];
                         } else if (req[1].endsWith("lt")) {
                             request += "<";
+                            request += req[2];
                         }
-                        request += "\'" +req[2]+"\'";
+
                         WHERE(request);
                     }
 
