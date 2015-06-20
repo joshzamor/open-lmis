@@ -5,6 +5,7 @@ import org.openlmis.core.domain.GeographicZone;
 import org.openlmis.stock.domain.GeographicZoneArrivalPackage;
 import org.openlmis.stock.domain.GeographicZoneStock;
 import org.openlmis.stock.domain.Vaccine;
+import org.openlmis.stock.domain.VaccinePackaging;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,11 +15,11 @@ import java.util.List;
  */
 
 @Repository
-public interface GeographicZoneStockMapper  extends HasVaccineMapper,HasGeographicZone,StockMapper<GeographicZoneStock>{
+public interface GeographicZoneStockMapper  extends HasVaccineMapper,HasVaccinePackaging,HasGeographicZone,StockMapper<GeographicZoneStock>{
     @Select("select * from geographic_zone_stocks")
     @Results(value = {
-            @Result(property = "vaccine", javaType = Vaccine.class, column = "vaccine_id",
-                    one = @One(select = "getVaccineById")),
+            @Result(property = "vaccine_packaging", javaType = VaccinePackaging.class, column = "vaccine_packaging_id",
+                one = @One(select = "getVaccinePackagingById")),
             @Result(property = "geographic_zone", javaType = GeographicZone.class, column = "geographic_zone_id",
                     one = @One(select = "getGeographicZoneById"))
     })
@@ -41,8 +42,8 @@ public interface GeographicZoneStockMapper  extends HasVaccineMapper,HasGeograph
 
     @Select("select * from geographic_zone_stocks where id = #{id}")
     @Results(value = {
-            @Result(property = "vaccine", javaType = Vaccine.class, column = "vaccine_id",
-                    one = @One(select = "getVaccineById")),
+            @Result(property = "vaccine_packaging", javaType = VaccinePackaging.class, column = "vaccine_packaging_id",
+                    one = @One(select = "getVaccinePackagingById")),
             @Result(property = "geographic_zone", javaType = GeographicZone.class, column = "geographic_zone_id",
                             one = @One(select = "getGeographicZoneById"))
     })
