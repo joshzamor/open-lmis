@@ -20,4 +20,3 @@
 \i src/main/resources/seed/consistency_reports.sql
 \i src/main/resources/seed/report_rights.sql
 \i src/main/resources/seed/asset_management_lookups.sql
-\i src/main/resources/seed/stock.sql
