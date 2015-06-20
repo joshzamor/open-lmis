@@ -1,0 +1,195 @@
+[
+  {
+    "ssc":"ssc1",
+    "packages":[
+      {
+      "gtn":"345567",
+      "lot":"lot1",
+      "description":"PVC1 7",
+      "boxes":"100"
+    } ,{
+      "gtn":"567823",
+      "lot":"lot2",
+      "description":"PVC2 13",
+      "boxes":"150"
+    } ,{
+      "gtn":"908654",
+      "lot":"lot3",
+      "description":"PVC3 6",
+      "boxes":"130"
+    } ,{
+      "gtn":"134567",
+      "lot":"lot4",
+      "description":"PVC4 1",
+      "boxes":"122"
+    }
+    , {
+      "gtn":"879675",
+      "lot":"lot5",
+      "description":"PVC5 2",
+      "boxes":"300"
+    }, {
+      "gtn":"123457",
+      "lot":"lot6",
+      "description":"PVC5 18",
+      "boxes":"780"
+    }, {
+      "gtn":"845673",
+      "lot":"lot7",
+      "description":"PVC4 16",
+      "boxes":"140"
+    }, {
+      "gtn":"934571",
+      "lot":"lot8",
+      "description":"PVC5 12",
+      "boxes":"450"
+    }
+    ],
+    "manufacture":"pitfizer",
+    "expiry":""
+  },{
+    "ssc":"ssc2",
+    "packages":[
+      {
+      "gtn":"345567",
+      "lot":"lot1",
+      "description":"PVC 7",
+      "boxes":"100"
+    } ,{
+      "gtn":"56574",
+      "lot":"lot2",
+      "description":"PVC 13",
+      "boxes":"150"
+    } ,{
+      "gtn":"34564",
+      "lot":"lot3",
+      "description":"PVC 6",
+      "boxes":"130"
+    } ,{
+      "gtn":"658567",
+      "lot":"lot49",
+      "description":"PVC 1",
+      "boxes":"122"
+    }
+    , {
+      "gtn":"568675",
+      "lot":"lot5",
+      "description":"PVC 2",
+      "boxes":"300"
+    }, {
+      "gtn":"123457",
+      "lot":"lot6",
+      "description":"PVC 18",
+      "boxes":"780"
+    }, {
+      "gtn":"845673",
+      "lot":"lot7",
+      "description":"PVC 16",
+      "boxes":"140"
+    }, {
+      "gtn":"934571",
+      "lot":"lot8",
+      "description":"PVC 12",
+      "boxes":"450"
+    }
+    ],
+    "manufacture":"msd",
+    "expiry":""
+  },{
+    "ssc":"ssc3",
+    "packages":[
+      {
+      "gtn":"345567",
+      "lot":"lot1",
+      "description":"PVC 7",
+      "boxes":"100"
+    } ,{
+      "gtn":"567823",
+      "lot":"lot2",
+      "description":"PVC 13",
+      "boxes":"150"
+    } ,{
+      "gtn":"908654",
+      "lot":"lot3",
+      "description":"PVC 6",
+      "boxes":"130"
+    } ,{
+      "gtn":"134567",
+      "lot":"lot4",
+      "description":"PVC 1",
+      "boxes":"122"
+    }
+    , {
+      "gtn":"879675",
+      "lot":"lot5",
+      "description":"PVC 2",
+      "boxes":"300"
+    }, {
+      "gtn":"123457",
+      "lot":"lot6",
+      "description":"PVC 18",
+      "boxes":"780"
+    }, {
+      "gtn":"845673",
+      "lot":"lot7",
+      "description":"PVC 16",
+      "boxes":"140"
+    }, {
+      "gtn":"934571",
+      "lot":"lot8",
+      "description":"PVC 12",
+      "boxes":"450"
+    }
+    ],
+    "manufacture":"pathtz",
+    "expiry":""
+  },{
+    "ssc":"ssc4",
+    "packages":[
+      {
+      "gtn":"345567",
+      "lot":"lot1",
+      "description":"PVC 7",
+      "boxes":"100"
+    } ,{
+      "gtn":"567823",
+      "lot":"lot2",
+      "description":"PVC 13",
+      "boxes":"150"
+    } ,{
+      "gtn":"908654",
+      "lot":"lot3",
+      "description":"PVC 6",
+      "boxes":"130"
+    } ,{
+      "gtn":"134567",
+      "lot":"lot4",
+      "description":"PVC 1",
+      "boxes":"122"
+    }
+    , {
+      "gtn":"879675",
+      "lot":"lot5",
+      "description":"PVC 2",
+      "boxes":"300"
+    },{
+      "gtn":"123457",
+      "lot":"lot6",
+      "description":"PVC 18",
+      "boxes":"780"
+    },{
+      "gtn":"845673",
+      "lot":"lot7",
+      "description":"PVC 16",
+      "boxes":"140"
+    },{
+      "gtn":"934571",
+      "lot":"lot8",
+      "description":"PVC 12",
+      "boxes":"450"
+    }
+    ],
+    "manufacture":"msd",
+    "expiry":""
+  }
+]
