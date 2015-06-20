@@ -13,6 +13,6 @@ CREATE TABLE geographic_zone_stocks (
   expire_date     DATE,
   lot_number      INTEGER,
   number_of_doses INTEGER,
-  vaccine_id INTEGER REFERENCES vaccines (id),
+  vaccine_packaging_id INTEGER REFERENCES vaccine_packaging (id),
   geographic_zone_id INTEGER REFERENCES geographic_zones (id)
 );

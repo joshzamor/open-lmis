@@ -22,13 +22,13 @@ public class GeographicZoneStock  extends StockModel{
     Date expire_date;
     Integer lot_number;
     Integer number_of_doses;
-    Integer vaccine_id;
+    Integer vaccine_packaging_id;
     Integer geographic_zone_id;
 
-    Vaccine vaccine;
+    VaccinePackaging vaccine_packaging;
 
     @Override
     public String getTableName() {
-        return "geographic_zone_stock";
+        return "geographic_zone_stocks";
     }
 }
