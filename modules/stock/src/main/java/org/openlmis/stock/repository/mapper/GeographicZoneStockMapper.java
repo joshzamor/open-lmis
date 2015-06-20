@@ -2,6 +2,7 @@ package org.openlmis.stock.repository.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.openlmis.core.domain.GeographicZone;
+import org.openlmis.stock.domain.GeographicZoneArrivalPackage;
 import org.openlmis.stock.domain.GeographicZoneStock;
 import org.openlmis.stock.domain.Vaccine;
 import org.springframework.stereotype.Repository;
@@ -45,7 +46,9 @@ public interface GeographicZoneStockMapper  extends HasVaccineMapper,HasGeograph
             @Result(property = "geographic_zone", javaType = GeographicZone.class, column = "geographic_zone_id",
                             one = @One(select = "getGeographicZoneById"))
     })
-
     GeographicZoneStock getById(@Param("id") Long id);
+
+    @SelectProvider(type=ModelProviders.class, method="filterModal")
+    List<GeographicZoneStock> filter(@Param("filter") String filter,GeographicZoneStock geographicZonePackage);
 
 }

@@ -25,6 +25,8 @@ public class GeographicZoneStock  extends StockModel{
     Integer vaccine_id;
     Integer geographic_zone_id;
 
+    Vaccine vaccine;
+
     @Override
     public String getTableName() {
         return "geographic_zone_stock";

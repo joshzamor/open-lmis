@@ -12,8 +12,8 @@ DROP TABLE IF EXISTS flight_arrival CASCADE;
 CREATE TABLE flight_arrival (
   id                  SERIAL PRIMARY KEY,
   awb_number          VARCHAR(20) NULL,
-  airport_of_destination      VARCHAR(255) NULL,
-  flight_number          INTEGER NOT NULL,
-  estimate_time_of_arrival    DATE NOT NULL,
-  time_of_arrival    DATE NOT NULL
+  destination      VARCHAR(255) NULL,
+  flight_number          VARCHAR(20) NOT NULL,
+  estimate_time_of_arrival    TIMESTAMP NOT NULL,
+  time_of_arrival    TIMESTAMP NOT NULL
 );

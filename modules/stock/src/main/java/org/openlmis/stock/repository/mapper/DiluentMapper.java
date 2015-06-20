@@ -13,26 +13,27 @@ import java.util.List;
 @Repository
 public interface DiluentMapper  extends HasVaccineMapper,StockMapper<Diluent>{
 
-    @Insert("insert into diluent (name, unit_per_box, vaccine_id) values " +
-            "(#{name}, #{unit_per_box}, #{vaccine_id})")
+    @Insert("insert into vaccine_diluents (vaccine_unit, diluent_unit, vaccine_id, diluent_id) values " +
+            "(#{vaccine_unit}, #{diluent_unit}, #{vaccine_id}, #{diluent_id})")
     @Options(flushCache = true, useGeneratedKeys = true)
     Integer insert(Diluent diluent);
 
-    @Update("update diluent " +
+    @Update("update vaccine_diluents " +
             "set " +
-            " name = #{name}, " +
-            " unit_per_box = #{unit_per_box}," +
+            " vaccine_unit = #{vaccine_unit}, " +
+            " diluent_unit = #{diluent_unit}," +
             " vaccine_id = #{vaccine_id}, " +
+            " diluent_id = #{diluent_id} " +
             "where id = #{id}")
     void update(Diluent diluent);
 
-    @Select("select * from diluent")
+    @Select("select * from vaccine_diluents")
     List<Diluent> getAll();
 
-    @Select("select * from diluent where id = #{id}")
+    @Select("select * from vaccine_diluents where id = #{id}")
     Diluent getById(@Param("id") Long id);
 
-    @Select("delete from diluent where id = #{id}")
+    @Select("delete from vaccine_diluents where id = #{id}")
     void deleteById(@Param("id") Long id);
 
     @SelectProvider(type=ModelProviders.class, method="filterModal")

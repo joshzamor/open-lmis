@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Repository
 public interface StockMapper<T extends StockModel> {
-    //@SelectProvider(type=ModelProviders.class, method="selectAll")
+    @SelectProvider(type=ModelProviders.class, method="selectAll")
     List<T> getAll(@Param("object") T stockModel);
 
     Integer insert(T model);

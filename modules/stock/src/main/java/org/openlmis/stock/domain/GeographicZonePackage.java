@@ -28,6 +28,7 @@ public class GeographicZonePackage extends StockModel{
     Integer receiving_user;
     Integer facility_id;
     Integer geographic_zone_id;
+    Integer vaccine_packaging_id;
 
     @Override
     public String getTableName() {
