@@ -13,7 +13,7 @@ CREATE TABLE manufacture_package (
   shipment_id       VARCHAR(30) ,
   manufacture_date  DATE,
   expire_date       DATE,
-  lot_number        INTEGER,
+  lot_number        VARCHAR(30) NOT NULL,
   number_of_doses   INTEGER,
   delivery_status   VARCHAR(20),
   purchasing_order_number VARCHAR(30),

@@ -41,6 +41,9 @@ public class GeographicZonePackage extends StockModel{
     Integer source_geographic_zone_id;
     GeographicZone source_geographic_zone;
 
+    Integer destination_geographic_zone_id;
+    GeographicZone destination_geographic_zone;
+
     Integer vaccine_packaging_id;
     VaccinePackaging vaccine_packaging;
     @Override

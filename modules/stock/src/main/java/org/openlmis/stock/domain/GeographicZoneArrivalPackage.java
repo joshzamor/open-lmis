@@ -23,7 +23,7 @@ public class GeographicZoneArrivalPackage extends StockModel{
 
     Long id;
     String package_number;
-    Integer lot_number;
+    String lot_number;
     Integer number_as_expected;
     String gtin;
     Integer number_recieved;

@@ -22,7 +22,7 @@ public class ManufacturePackage  extends StockModel {
     String shipment_id;
     Date manufacture_date;
     Date expire_date;
-    Integer lot_number;
+    String lot_number;
     Integer number_of_doses;
     String delivery_status;
 

@@ -50,6 +50,12 @@ public interface GeographicZoneStockMapper  extends HasVaccineMapper,HasVaccineP
     GeographicZoneStock getById(@Param("id") Long id);
 
     @SelectProvider(type=ModelProviders.class, method="filterModal")
+    @Results(value = {
+            @Result(property = "vaccine_packaging", javaType = VaccinePackaging.class, column = "vaccine_packaging_id",
+                    one = @One(select = "getVaccinePackagingById")),
+            @Result(property = "geographic_zone", javaType = GeographicZone.class, column = "geographic_zone_id",
+                    one = @One(select = "getGeographicZoneById"))
+    })
     List<GeographicZoneStock> filter(@Param("filter") String filter,GeographicZoneStock geographicZonePackage);
 
 }

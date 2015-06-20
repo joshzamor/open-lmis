@@ -12,7 +12,7 @@ CREATE TABLE geographic_zone_arrival_package (
   id                  SERIAL PRIMARY KEY,
   sscc                VARCHAR(255) NULL,
   package_number      VARCHAR(255) NULL,
-  lot_number          INTEGER NOT NULL,
+  lot_number          VARCHAR(30) NOT NULL,
   number_as_expected  INTEGER NOT NULL,
   GTIN                VARCHAR(255) NOT NULL,
   number_recieved     INTEGER NOT NULL,
