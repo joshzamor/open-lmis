@@ -12,15 +12,7 @@ DROP TABLE IF EXISTS vaccines CASCADE;
 CREATE TABLE vaccines (
   id                    SERIAL PRIMARY KEY,
   name                  VARCHAR(50) NULL,
-  packaging             VARCHAR(50) NULL,
-  GTIN                  VARCHAR(50) NOT NULL,
-  doses_per_vial        INTEGER NOT NULL,
-  vials_per_box        INTEGER NOT NULL,
   expire_warning_period INTEGER NOT NULL,
   type                  VARCHAR(200),
-  wastage               VARCHAR(20),
-  schedule              INTEGER NOT NULL,
-  status                VARCHAR(20) NULL,
-  country_name          VARCHAR(50) NOT NULL,
-  manufacturer_id INTEGER REFERENCES manufacturers (id)
+  status                VARCHAR(20) NULL
 );

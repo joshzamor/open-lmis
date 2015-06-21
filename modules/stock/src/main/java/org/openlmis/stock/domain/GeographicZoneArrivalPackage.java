@@ -1,10 +1,13 @@
 package org.openlmis.stock.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.openlmis.core.domain.BaseModel;
+import org.openlmis.core.domain.GeographicZone;
+import org.openlmis.core.domain.User;
 
 import java.util.Date;
 
@@ -19,9 +22,8 @@ import java.util.Date;
 public class GeographicZoneArrivalPackage extends StockModel{
 
     Long id;
-    String sscc ;
     String package_number;
-    Integer lot_number;
+    String lot_number;
     Integer number_as_expected;
     String gtin;
     Integer number_recieved;
@@ -29,11 +31,21 @@ public class GeographicZoneArrivalPackage extends StockModel{
     String physical_damage;
     String vvm_status;
     String problems;
+
+    //@JsonIgnore
     Integer receiving_user;
+    User user;
+
+    //@JsonIgnore
     Integer geographic_zone_id;
+    GeographicZone geographic_zone;
+
+    //@JsonIgnore
+    Integer vaccine_packaging_id;
+    VaccinePackaging vaccine_packaging;
 
     @Override
     public String getTableName() {
-        return "geographic_zone_arrival_stock";
+        return "geographic_zone_arrival_package";
     }
 }

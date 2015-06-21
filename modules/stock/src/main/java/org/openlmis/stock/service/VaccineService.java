@@ -22,5 +22,4 @@ public class VaccineService extends StockService<Vaccine>{
     public StockRepository getRepository() {
         return repository;
     }
-
 }

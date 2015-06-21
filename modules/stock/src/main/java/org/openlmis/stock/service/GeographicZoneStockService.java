@@ -20,22 +20,6 @@ public class GeographicZoneStockService extends StockService<GeographicZoneStock
     @Autowired
     private GeographicZoneStockRepository repository;
 
-    /*public List<GeographicZoneStock> getAll(){
-        return repository.getAll();
-    }
-
-    public void save(GeographicZoneStock geographicZoneStock){
-        if(geographicZoneStock.getId() == null){
-            repository.insert(geographicZoneStock);
-        }else {
-            repository.update(geographicZoneStock);
-        }
-    }
-
-    public GeographicZoneStock getById(Long id){
-        return repository.getById(id);
-    }*/
-
     @Override
     public StockRepository getRepository() {
         return repository;

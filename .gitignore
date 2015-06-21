@@ -4,6 +4,7 @@
 *.ipr
 *.iws
 open-lmis.ids
+vimsvarcode.ids
 elmis.ids
 build/
 out/

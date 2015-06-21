@@ -17,23 +17,6 @@ public class ManufacturePackageService extends StockService<ManufacturePackage>{
 
     @Autowired
     private ManufacturePackageRepository repository;
-
-    /*public List<ManufacturePackage> getAll(){
-        return repository.getAll();
-    }
-
-    public void save(ManufacturePackage manufacturePackage){
-        if(manufacturePackage.getId() == null){
-            repository.insert(manufacturePackage);
-        }else {
-            repository.update(manufacturePackage);
-        }
-    }
-
-    public ManufacturePackage getById(Long id){
-        return repository.getById(id);
-    }*/
-
     @Override
     public StockRepository getRepository() {
         return repository;

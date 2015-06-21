@@ -18,18 +18,9 @@ public class Vaccine extends StockModel{
 
         Long id;
         String name;
-        String packaging;
-        String gtin;
-        Integer doses_per_vial;
-        Integer vials_per_box;
         Integer expire_warning_period;
         String type;
-        String wastage;
-        Integer schedule;
         String status;
-        String country_name;
-        Integer manufacturer_id;
-        Manufacturer manufacturer;
 
         @Override
         public String getTableName() {

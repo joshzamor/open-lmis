@@ -27,27 +27,6 @@ public class StockController extends StockBaseController<GeographicZoneStock>{
     @Autowired
     private GeographicZoneStockService service;
 
-
-    /*@RequestMapping(value="get/{id}")
-    public ResponseEntity<OpenLmisResponse> get(@PathVariable Long id) {
-        return OpenLmisResponse.response("stock", service.getById(id));
-    }
-
-    @RequestMapping(value="")
-    public ResponseEntity<OpenLmisResponse> getAll() {
-        return OpenLmisResponse.response("stocks", service.getAll());
-    }
-
-    @RequestMapping(value="save")
-    public ResponseEntity<OpenLmisResponse> save(@RequestBody GeographicZoneStock geographicZoneStock) {
-        try {
-            service.save(geographicZoneStock);
-        } catch (DataException e) {
-            return OpenLmisResponse.error(e, BAD_REQUEST);
-        }
-        return OpenLmisResponse.response("stock", service.getById(geographicZoneStock.getId()));
-    }*/
-
     @Override
     public StockService getService() {
         return service;

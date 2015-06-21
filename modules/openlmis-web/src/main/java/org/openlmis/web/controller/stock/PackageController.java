@@ -27,27 +27,6 @@ public class PackageController extends StockBaseController<GeographicZonePackage
     @Autowired
     private GeographicZonePackageService sevrice;
 
-
-    /*@RequestMapping(value="get/{id}")
-    public ResponseEntity<OpenLmisResponse> get(@PathVariable Long id) {
-        return OpenLmisResponse.response("package", sevrice.getById(id));
-    }
-
-    @RequestMapping(value="all")
-    public ResponseEntity<OpenLmisResponse> getAll() {
-        return OpenLmisResponse.response("packages", sevrice.getAll());
-    }
-
-    @RequestMapping(value="save")
-    public ResponseEntity<OpenLmisResponse> save(@RequestBody GeographicZonePackage geographicZonePackage) {
-        try {
-            sevrice.save(geographicZonePackage);
-        } catch (DataException e) {
-            return OpenLmisResponse.error(e, BAD_REQUEST);
-        }
-        return OpenLmisResponse.response("package", sevrice.getById(geographicZonePackage.getId()));
-    }*/
-
     @Override
     public StockService getService() {
         return sevrice;

@@ -29,26 +29,6 @@ public class DiluentController  extends StockBaseController<Diluent>{
     @Autowired
     private DiluentService service;
 
-    /*@RequestMapping(value="{id}", method = GET)
-    public ResponseEntity<OpenLmisResponse> get(@PathVariable Long id) {
-        return OpenLmisResponse.response("diluent", service.getById(id));
-    }
-
-    @RequestMapping(value="")
-    public ResponseEntity<OpenLmisResponse> getAll() {
-        return OpenLmisResponse.response("diluents", service.getAll());
-    }
-
-    @RequestMapping(value="save")
-    public ResponseEntity<OpenLmisResponse> save(@RequestBody Diluent diluent) {
-        try {
-            service.save(diluent);
-        } catch (DataException e) {
-            return OpenLmisResponse.error(e, BAD_REQUEST);
-        }
-        return OpenLmisResponse.response("diluent", service.getById(diluent.getId()));
-    }*/
-
     @Override
     public StockService getService() {
         return service;

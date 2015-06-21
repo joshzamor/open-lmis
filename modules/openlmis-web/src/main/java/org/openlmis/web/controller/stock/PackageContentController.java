@@ -30,45 +30,6 @@ public class PackageContentController extends StockBaseController<PackageContent
     @Autowired
     private PackageContentService service;
 
-
-    /*@RequestMapping(value="get/{id}")
-    @Results(value = {
-            @Result(property = "vaccine", javaType = Vaccine.class, column = "vaccine_id",
-                    one = @One(select = "getVaccineById"))
-    })
-    public ResponseEntity<OpenLmisResponse> get(@PathVariable Long id) {
-        return OpenLmisResponse.response("packageContent", service.getById(id));
-    }
-
-    @RequestMapping(value="all")
-    @Results(value = {
-            @Result(property = "vaccine", javaType = Vaccine.class, column = "vaccine_id",
-                    one = @One(select = "getVaccineById"))
-    })
-    public ResponseEntity<OpenLmisResponse> getAll() {
-        return OpenLmisResponse.response("packageContents", service.getAll());
-    }
-
-    @RequestMapping(value="save")
-    public ResponseEntity<OpenLmisResponse> save(@RequestBody PackageContent packageContent) {
-        try {
-            service.save(packageContent);
-        } catch (DataException e) {
-            return OpenLmisResponse.error(e, BAD_REQUEST);
-        }
-        return OpenLmisResponse.response("packageContent", service.getById(packageContent.getId()));
-    }
-
-    @RequestMapping(value="{id}", method = DELETE)
-    public ResponseEntity<OpenLmisResponse> delete(@PathVariable Long id) {
-        try {
-            service.deleteById(id);
-        } catch (DataException e) {
-            return OpenLmisResponse.error(e, BAD_REQUEST);
-        }
-        return OpenLmisResponse.response("status", "success");
-    }*/
-
     @Override
     public StockService getService() {
         return service;

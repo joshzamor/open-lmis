@@ -16,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Manufacturer  extends BaseModel {
+public class Manufacturer extends BaseModel {
 
     Long id;
     String name;

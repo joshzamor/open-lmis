@@ -16,8 +16,10 @@ CREATE TABLE geographic_zone_package (
   date_recieved       DATE,
   comments            VARCHAR(200),
   recieved_status     VARCHAR(50),
-  sending_user      INTEGER REFERENCES users (id),
-  receiving_user      INTEGER REFERENCES users (id),
+  sending_user_id      INTEGER REFERENCES users (id),
+  receiving_user_id      INTEGER REFERENCES users (id),
   facility_id INTEGER REFERENCES facilities (id),
-  geographic_zone_id INTEGER REFERENCES geographic_zones (id)
+  source_geographic_zone_id INTEGER REFERENCES geographic_zones (id),
+  destination_geographic_zone_id INTEGER REFERENCES geographic_zones (id),
+  vaccine_packaging_id INTEGER REFERENCES vaccine_packaging (id)
 );
