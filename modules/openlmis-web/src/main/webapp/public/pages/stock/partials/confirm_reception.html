@@ -8,14 +8,10 @@
                     <label>Confirm Receiving Package With Lot Number: <span>{{lot_number}}</span>&nbsp;&nbsp;<input class="btn btn-danger btn-sm" type="button" value="Cancel" ng-click="cancelConfirmation()"/></label>
                 </div>
             </div>
-            <div class='form-row clearfix' ng-repeat="packageDetails in singlePackage = (packagesJson | filter:{ssc:sscc_number} )">
-
+            <div class='form-row clearfix' >
                 </br>
                 </br>
-                </br>
-                </br>
-                </br>
-                <table class="table-bordered table table-striped ng-scope" ng-repeat="singlePack in singlepacks = (packageDetails.packages | filter:{lot:lot_number})">
+                <table class="table-bordered table table-striped ng-scope" ng-repeat="packageDetails in singlePackage = (packagesJson | filter:{lot_number:lot_number} )">
 
                     <thead>
                     <tr class="gradient-header">
@@ -30,11 +26,11 @@
                     <!--<tr ng-repeat="subPackages in singlePackage">-->
 
                     <tr>
-                        <td>{{singlepacks[0].gtn}}</td>
-                        <td>{{singlepacks[0].description}}</td>
-                        <td>{{singlepacks[0].lot}}</td>
+                        <td>{{packageDetails.gtn}}</td>
+                        <td>{{packageDetails.description}}</td>
+                        <td>{{packageDetails.lot}}</td>
                         <td>{{packageDetails.expiry}}</td>
-                        <td>{{singlepacks[0].boxes}}</td>
+                        <td>{{packageDetails.boxes}}</td>
                     </tr>
                     </tbody>
                 </table>
