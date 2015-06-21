@@ -8,7 +8,7 @@
   ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
   ~ You should have received a copy of the GNU Affero General Public License along with this program.  If not, see http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org. 
   -->
-<html lang="en" ng-app="vaccineStock">
+<html lang="en" ng-app="VaccineModule" xmlns="http://www.w3.org/1999/html">
 <head>
 
   <link rel="icon" href="/public/favicon.ico" type="image/x-icon"/>
@@ -90,15 +90,30 @@
   <link rel="stylesheet" href="/public/css/ie9.css"/>
   <![endif]-->
 
+    <link rel="stylesheet" href="/public/css/stock.css"/>
   <title openlmis-message="app.title"></title>
 </head>
 <body onunload="">
-<div id="wrap">
+<div id="wrap" >
   <ng-include src="'/public/pages/header.html'"></ng-include>
   <ng-include src="'/public/pages/navigation.html'"></ng-include>
-  <div class="content" ng-controller="VaccineModule">
-     <div ng-view></div>
-  </div>
+
+    <div class="content row" ng-controller="StockMenuController">
+    <div class="clearfix"></div>
+    <div class="dashboard-nav" >
+        <ul id="dashboard-sub-tabs" class="clearfix">
+            <li ng-repeat="tab in dashboardTabs" ng-class="{'selected': currentTab == tab.name}">
+                <a ng-href="{{tab.content}}" style="display: inline-block;">
+                    <span openlmis-message="{{tab.header}}"></span>
+                </a>
+                <i ng-if="tab.closable" class="icon-remove-sign" ng-click="closeTab(tab.name)"></i>
+            </li>
+        </ul>
+    </div>
+    <div class="clearfix">
+        <div class="col-md-12" ng-view></div>
+    </div>
+    </div>
 </div>
 </body>
 </html>

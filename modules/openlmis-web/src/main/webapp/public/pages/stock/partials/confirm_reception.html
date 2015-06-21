@@ -1,0 +1,102 @@
+<div class="app-form">
+    <form name="receive_package">
+        <div class='form-group'>
+            <h3 >Confirm receiving Package</h3>
+            <!--SSCC-->
+            <div class='form-row clearfix'>
+                <div class="form-cell">
+                    <label>Confirm Receiving Package With Lot Number: <span>{{lot_number}}</span>&nbsp;&nbsp;<input class="btn btn-danger btn-sm" type="button" value="Cancel" ng-click="cancelConfirmation()"/></label>
+                </div>
+            </div>
+            <div class='form-row clearfix' ng-repeat="packageDetails in singlePackage = (packagesJson | filter:{ssc:sscc_number} )">
+
+                </br>
+                </br>
+                </br>
+                </br>
+                </br>
+                <table class="table-bordered table table-striped ng-scope" ng-repeat="singlePack in singlepacks = (packageDetails.packages | filter:{lot:lot_number})">
+
+                    <thead>
+                    <tr class="gradient-header">
+                        <th  style="text-align: center">GTN</th>
+                        <th  style="text-align: center">Description</th>
+                        <th  style="text-align: center">Lot</th>
+                        <th  style="text-align: center">Expiry</th>
+                        <th  style="text-align: center">Boxes</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--<tr ng-repeat="subPackages in singlePackage">-->
+
+                    <tr>
+                        <td>{{singlepacks[0].gtn}}</td>
+                        <td>{{singlepacks[0].description}}</td>
+                        <td>{{singlepacks[0].lot}}</td>
+                        <td>{{packageDetails.expiry}}</td>
+                        <td>{{singlepacks[0].boxes}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="form-cell horizontalFilters">
+                <label class="labels" >Quantity Okay</label>
+
+                <div class="form-fields">
+                    <select class="input-large ng-pristine ng-valid" >
+                        <option selected="selected" value="">Yes</option>
+                        <option  value="">No</option>
+                        <!-- ngRepeat: value in zones.children -->
+                    </select>
+                </div>
+            </div>
+            <div class="form-cell horizontalFilters">
+                <label class="labels" >Physical Damage</label>
+
+                <div class="form-fields">
+                    <select class="input-large ng-pristine ng-valid" >
+                        <option selected="selected" value="">None</option>
+                        <option  value="">Damaged</option>
+                        <!-- ngRepeat: value in zones.children -->
+                    </select>
+                </div>
+            </div>
+            <div class="form-cell horizontalFilters">
+                <label class="labels" >VVM Status</label>
+
+                <div class="form-fields">
+                    <select class="input-large ng-pristine ng-valid" >
+                        <option selected="selected" value="">Good</option>
+                        <option  value="">Normal</option>
+                        <option  value="">Bad</option>
+                        <!-- ngRepeat: value in zones.children -->
+                    </select>
+                </div>
+            </div>  <div class="form-cell horizontalFilters">
+                <label class="labels" >Temp Monitors</label>
+
+                <div class="form-fields">
+                    <select class="input-large ng-pristine ng-valid" >
+                        <option selected="selected" value="">Good</option>
+                        <option  value="">Normal</option>
+                        <option  value="">Bad</option>
+                        <!-- ngRepeat: value in zones.children -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-cell horizontalFilters">
+                <label>&nbsp;</label>
+                <div class="form-fields">
+                    <input class="btn btn-primary" type="button" value="Confirm" id="confirm_package_button"/>
+                </div>
+            </div>
+
+        </div>
+
+        </div>
+
+    </form>
+</div>

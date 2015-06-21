@@ -65,9 +65,9 @@ openlmis.replication.conn.pool.maxPoolSize = 5
 openlmis.replication.conn.pool.initialPoolSize = 1
 
 jdbc.driverClassName=org.postgresql.Driver
-openlmis.jdbc.url=jdbc:postgresql:op_elmis
+openlmis.jdbc.url=jdbc:postgresql:open_lmis
 openlmis.jdbc.username=postgres
-openlmis.jdbc.password=postgres
+openlmis.jdbc.password=1234
 
 line.items.per.page = 10
 order.page.size = 50
