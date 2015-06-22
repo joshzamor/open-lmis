@@ -8,10 +8,13 @@
                     <label>Confirm Receiving Package With Lot Number: <span>{{lot_number}}</span>&nbsp;&nbsp;<input class="btn btn-danger btn-sm" type="button" value="Cancel" ng-click="cancelConfirmation()"/></label>
                 </div>
             </div>
+            {{packagesJson}}
+            <p ng-repeat="packageDetails in filteredPackage = (packagesJson | filter:{lot_number:lot_number})">{{packageDetails}}</p>
+            </br>
             <div class='form-row clearfix' >
                 </br>
                 </br>
-                <table class="table-bordered table table-striped ng-scope" ng-repeat="packageDetails in singlePackage = (packagesJson | filter:{lot_number:lot_number} )">
+                <table class="table-bordered table table-striped ng-scope" >
 
                     <thead>
                     <tr class="gradient-header">
@@ -25,12 +28,12 @@
                     <tbody>
                     <!--<tr ng-repeat="subPackages in singlePackage">-->
 
-                    <tr>
-                        <td>{{packageDetails.gtn}}</td>
-                        <td>{{packageDetails.description}}</td>
-                        <td>{{packageDetails.lot}}</td>
-                        <td>{{packageDetails.expiry}}</td>
-                        <td>{{packageDetails.boxes}}</td>
+                    <tr ng-repeat="packageDetails in filteredPackage = (packagesJson | filter:{lot_number:lot_number})">
+                        <td>{{packageDetails.vaccine_packaging.gtin}}</td>
+                        <td>{{packageDetails.vaccine_packaging.description}}</td>
+                        <td>{{packageDetails.lot_number}}</td>
+                        <td>{{packageDetails.expire_date}}</td>
+                        <td>{{numberOfBoxes(packageDetails.vaccine_packaging.doses_per_vial,packageDetails.vaccine_packaging.vials_per_box,packageDetails.number_of_doses)}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -41,7 +44,7 @@
                 <label class="labels" >Quantity Okay</label>
 
                 <div class="form-fields">
-                    <select class="input-large ng-pristine ng-valid" >
+                    <select class="input-large ng-pristine ng-valid" ng-model="condition.quantity">
                         <option selected="selected" value="">Yes</option>
                         <option  value="">No</option>
                         <!-- ngRepeat: value in zones.children -->
@@ -52,7 +55,7 @@
                 <label class="labels" >Physical Damage</label>
 
                 <div class="form-fields">
-                    <select class="input-large ng-pristine ng-valid" >
+                    <select class="input-large ng-pristine ng-valid" ng-model="condition.physical_damage">
                         <option selected="selected" value="">None</option>
                         <option  value="">Damaged</option>
                         <!-- ngRepeat: value in zones.children -->
@@ -63,7 +66,7 @@
                 <label class="labels" >VVM Status</label>
 
                 <div class="form-fields">
-                    <select class="input-large ng-pristine ng-valid" >
+                    <select class="input-large ng-pristine ng-valid" ng-model="condition.vvmstatus">
                         <option selected="selected" value="">Good</option>
                         <option  value="">Normal</option>
                         <option  value="">Bad</option>
@@ -74,7 +77,7 @@
                 <label class="labels" >Temp Monitors</label>
 
                 <div class="form-fields">
-                    <select class="input-large ng-pristine ng-valid" >
+                    <select class="input-large ng-pristine ng-valid" ng-model="condition.temp_monitors">
                         <option selected="selected" value="">Good</option>
                         <option  value="">Normal</option>
                         <option  value="">Bad</option>
@@ -86,7 +89,7 @@
             <div class="form-cell horizontalFilters">
                 <label>&nbsp;</label>
                 <div class="form-fields">
-                    <input class="btn btn-primary" type="button" value="Confirm" id="confirm_package_button"/>
+                    <input class="btn btn-primary" type="button" value="Confirm"  id="confirm_package_button"/>
                 </div>
             </div>
 

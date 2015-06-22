@@ -145,7 +145,7 @@ $scope.packageStructure = {
         }
         if(menu=="received"){
             $scope.filtering =true;
-            $scope.status = "received";
+            $scope.status = "pending";
             $scope.all = false;
             $scope.pending = false;
             $scope.received = true;
@@ -187,7 +187,7 @@ $scope.packageStructure = {
     $scope.addPackage = function(data){
 
             var newObject = $scope.packageStructure;
-
+console.log();
             newObject.delivery_status= 'received';
             newObject.expire_date= data.expire_date;
             newObject.lot_number= data.lot_number;
@@ -210,9 +210,8 @@ $scope.packageStructure = {
                 });
         }
 
-
-    //});
     $scope.editPackage = function(id,packageObject){
+        console.log(id);
         $scope.editPackage = {};
         $scope.viewForm = false;
         $scope.editForm = true;
@@ -274,7 +273,6 @@ $scope.packageStructure = {
         $scope.editForm = false;
         $scope.viewTable = true;
     }
-
     // action to scan package
     var add_package_button =angular.element('#add_package_button');
     add_package_button.bind("click", function(){
@@ -284,7 +282,6 @@ $scope.packageStructure = {
         //var link = encodeURI("/public/pages/stock/index.html#/"+"receive?sscc="+shipping_number);
         window.location.href = link;// normal angular function don work
     });
-
 
     //// RECEIVE PACKAGE
     $scope.scan_afresh = true;
@@ -306,9 +303,18 @@ $scope.packageStructure = {
       window.location.href = link;// normal angular function don work
     }
 
+    var confirm_package_button = angular.element("#confirm_package_button");
+    //$scope.condition = {''};
+    $(confirm_package_button).bind("click",function(){
+
+    });
     $scope.cancelConfirmation = function(){
         var link = encodeURI("/public/pages/stock/index.html#/receive");
         window.location.href = link;// normal angular function don work
+    }
+
+    $scope.numberOfBoxes = function(doses_per_vials,vials_per_box,number_of_doses){
+        return number_of_doses/(doses_per_vials*vials_per_box);
     }
 
 
