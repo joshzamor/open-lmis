@@ -145,7 +145,7 @@ $scope.packageStructure = {
         }
         if(menu=="received"){
             $scope.filtering =true;
-            $scope.status = "pending";
+            $scope.status = "received";
             $scope.all = false;
             $scope.pending = false;
             $scope.received = true;
@@ -304,8 +304,16 @@ console.log();
     }
 
     var confirm_package_button = angular.element("#confirm_package_button");
-    //$scope.condition = {''};
+    $scope.condition = {'quantity':null,'physical_damage':null,'vvmstatus':null,'temp_monitors':null};
     $(confirm_package_button).bind("click",function(){
+        $scope.condition;
+        $http.post('/stock/manufacture/package',{}).
+            success(function(data, status, headers, config) {
+
+            }).
+            error(function(data) {
+                console.log("Error:" + data);
+            });
 
     });
     $scope.cancelConfirmation = function(){
