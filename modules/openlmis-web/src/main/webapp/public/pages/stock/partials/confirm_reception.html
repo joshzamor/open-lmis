@@ -8,7 +8,6 @@
                     <label>Confirm Receiving Package With Lot Number: <span>{{lot_number}}</span>&nbsp;&nbsp;<input class="btn btn-danger btn-sm" type="button" value="Cancel" ng-click="cancelConfirmation()"/></label>
                 </div>
             </div>
-            {{packagesJson}}
             <p ng-repeat="packageDetails in filteredPackage = (packagesJson | filter:{lot_number:lot_number})">{{packageDetails}}</p>
             </br>
             <div class='form-row clearfix' >
