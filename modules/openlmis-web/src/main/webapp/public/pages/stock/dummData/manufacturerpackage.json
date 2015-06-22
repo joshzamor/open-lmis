@@ -1,0 +1,112 @@
+{
+  "manufacture_packages": [
+    {
+      "id": 1,
+      "shipment_id": "223GHSD",
+      "manufacture_date": -10800000,
+      "expire_date": 766800000,
+      "lot_number": 10,
+      "number_of_doses": 21,
+      "delivery_status": "awesome",
+      "purchasing_order_number": "her",
+      "vaccine_packaging_id": null,
+      "vaccine_packaging": null,
+      "columns": {
+
+      }
+    },
+    {
+      "id": 2,
+      "shipment_id": "223GHSD",
+      "manufacture_date": -10800000,
+      "expire_date": 766800000,
+      "lot_number": 10,
+      "number_of_doses": 21,
+      "delivery_status": "pending",
+      "purchasing_order_number": "her",
+      "vaccine_packaging_id": null,
+      "vaccine_packaging": null,
+      "columns": {
+
+      }
+    },
+    {
+      "id": 3,
+      "shipment_id": "223GHSD",
+      "manufacture_date": -10800000,
+      "expire_date": 766800000,
+      "lot_number": 10,
+      "number_of_doses": 21,
+      "delivery_status": "pending",
+      "purchasing_order_number": "her",
+      "vaccine_packaging_id": null,
+      "vaccine_packaging": null,
+      "columns": {
+
+      }
+    },
+    {
+      "id": 4,
+      "shipment_id": "fSD",
+      "manufacture_date": -10800000,
+      "expire_date": 766800000,
+      "lot_number": 10,
+      "number_of_doses": 21,
+      "delivery_status": "pending",
+      "purchasing_order_number": "her",
+      "vaccine_packaging_id": null,
+      "vaccine_packaging": null,
+      "columns": {
+
+      }
+    },
+    {
+      "id": 5,
+      "shipment_id": "fSD",
+      "manufacture_date": -10800000,
+      "expire_date": 766800000,
+      "lot_number": 10,
+      "number_of_doses": 21,
+      "delivery_status": "pending",
+      "purchasing_order_number": "her",
+      "vaccine_packaging_id": null,
+      "vaccine_packaging": null,
+      "columns": {
+
+      }
+    },
+    {
+      "id": 6,
+      "shipment_id": "fSD",
+      "manufacture_date": -10800000,
+      "expire_date": 766800000,
+      "lot_number": 10,
+      "number_of_doses": 21,
+      "delivery_status": "received",
+      "purchasing_order_number": "her",
+      "vaccine_packaging_id": null,
+      "vaccine_packaging": {
+        "id": 1,
+        "packaging": "Pack",
+        "gtin": "gtin",
+        "doses_per_vial": 1,
+        "vials_per_box": 2,
+        "wastage": "3.0",
+        "schedule": 3,
+        "status": "",
+        "country_id": 1,
+        "country": null,
+        "manufacturer_id": 1,
+        "manufacturer": null,
+        "vaccine_id": 1,
+        "vaccine": null,
+        "columns": {
+
+        }
+      },
+      "columns": {
+
+      }
+    }
+  ]
+}
