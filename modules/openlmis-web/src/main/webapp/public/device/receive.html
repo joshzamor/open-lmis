@@ -16,9 +16,9 @@
 <body>
 <h1 style="background-color:#E6E6FA;">Electronic Logistics Management Information System( ELMIS )</h1>
 <div class="contents">
-    <form>
+    <form id="shipmentform">
         <fieldset>
-            <legend>Scan the SSCC</legend>
+            <legend>Scan the ShipmentID</legend>
             <input type="text" name="shipment_id" id="shipment_id" /> &nbsp;&nbsp;&nbsp;
             <input type="button" value="Scan"  id="scan_sscc"/>
         </fieldset>
@@ -28,7 +28,6 @@
 </div>
 <script>
     $(document).ready(function(){
-        alert('ready1');
         $("#message").hide();
         $("#shipment_id").focus();
         $( "#scan_sscc" ).click(function() {
@@ -36,7 +35,7 @@
             $("#message").show();
             $(".result").hide();
             if($("#shipment_id").val() != ""){
-                alert('ready1');
+                var shipment_id = $("#shipment_id").val();
                 $.ajax({
                     method: 'GET',
                     url: '/stock/manufacture/package?filter=shipment_id:eq:'+$("#shipment_id").val(),
@@ -47,26 +46,19 @@
                             $(".result").show().html('<h4>There is no package with this package number</h4>');
                         }else{
                             $(".result").html("");
-                            var html = "<table border='1' cellpadding='0' cellspacing='0'>";
-                            html +="<tr>";
-                            html +="<th>GTIN</th>";
-                            html +="<th>Item</th>";
-                            html +="<th>Lot Number</th>";
-                            html +="<th>Expiry</th>";
-                            html +="<th>Boxes</th>";
-                            html +="</tr>";
-                            $.each(data.manufacture_packages, function(index, element) {
-                                html +="<tr>";
-                                html +="<td>"+element.vaccine_packaging.gtin+"</td>";
-                                html +="<td>BCG</td>";
-                                html +="<td>"+element.lot_number+"</td>";
-                                html +="<td>"+element.expire_date+"</td>";
-                                html +="<td>"+parseInt(element.number_of_doses/(element.vaccine_packaging.doses_per_vial*element.vaccine_packaging.vials_per_box))+"</td>";
-                                html +="</tr>";
-
-                            });
-                            html +="</table>";
+                            var html = getShipmentinfo(data.manufacture_packages,shipment_id);
                             $(".result").show().html(html);
+                            $("#shipmentform").hide('slow');
+
+                            //processing package items
+                            $("#lot_number").focus();
+                            $("#scan_lot").click(function(){
+                                if($("#lot_number").val() != "") {
+                                    var lot_number = $("#lot_number").val();
+                                    var html1 = getSpecificLotNumber();
+                                    $(".result").show().html(html1);
+                                }
+                            });
 
                         }
 
@@ -84,6 +76,71 @@
 
 
     });
+
+function getShipmentinfo(shipment,shipment_id){
+    var html = "<table><tr><td colspan='3'>shipment number: "+shipment_id+"</td> </tr>";
+    html += '<tr><td>Scan the Lot Number</td>';
+    html += '<td><input type="text" name="lot_number" id="lot_number" /> </td>';
+    html += '<td><input type="button" value="Scan"  id="scan_lot"/></td></tr></table>';
+    html += "<table border='1' cellpadding='0' cellspacing='0'>";
+    html +="<tr>";
+    html +="<th>GTIN</th>";
+    html +="<th>Item</th>";
+    html +="<th>Lot Number</th>";
+    html +="<th>Expiry</th>";
+    html +="<th>Boxes</th>";
+    html +="</tr>";
+    $.each(shipment, function(index, element) {
+        html +="<tr>";
+        html +="<td>"+element.vaccine_packaging.gtin+"</td>";
+        html +="<td>"+element.vaccine_packaging.vaccine.name+"</td>";
+        html +="<td>"+element.lot_number+"</td>";
+        html +="<td>"+element.expire_date+"</td>";
+        html +="<td>"+parseInt(element.number_of_doses/(element.vaccine_packaging.doses_per_vial*element.vaccine_packaging.vials_per_box))+"</td>";
+        html +="</tr>";
+
+    });
+    html +="</table>";
+    return html;
+}
+
+    function getSpecificLotNumber(){
+        var html = '<table border="1" cellspacing="0" cellpadding="0">';
+        html += ' <thead>';
+        html += '     <tr><th>GTN</th><th>Description</th><th>Lot</th><th>Expiry</th><th>Vials</th><th>Boxes</th></tr>';
+        html += ' </thead>';
+        html += '<tr>';
+        html += '<td>1234454656</td>';
+        html += '<td>PVC 13</td>';
+        html += '<td>j943111</td>';
+        html += '<td>2017-02-28</td>';
+        html += '<td>608000</td>';
+        html += '<td>608000</td>';
+        html += '</tr>';
+        html += '</table>';
+
+        html += '</br>';
+        html += '<table>';
+        html += '<tr><td>Quantity Okay</td><td><select><option>Yes</option><option>No</option></select></td></tr>';
+        html += '<tr><td>Physical Damage</td><td><select><option>None</option><option>Damaged</option></select></td></tr>';
+        html += '<tr><td>VVM Status</td><td><select><option>Good</option><option>Normal</option><option>Bad</option></select></td></tr>';
+        html += '<tr><td>Temp monitors Status</td><td><select><option>Good</option><option>Normal</option><option>Bad</option></select></td></tr>';
+
+        html += '</table>';
+
+        html += '</br>';
+        html += '<table>';
+        html += '<tr>';
+        html += '<td>Comments and Observations</td>';
+        html += '</tr>';
+        html += '<tr>';
+        html += '<td><textarea></textarea></td>';
+        html += '</tr>';
+        html += '</table>';
+        html += '</br>';
+        html += '<table><tr><td><input type="submit"></td></tr></table>';
+        return html;
+    }
 </script>
 
 </body>
