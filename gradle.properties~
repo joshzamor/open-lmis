@@ -16,6 +16,7 @@ dbName = open_lmis
 dbUser = postgres
 dbPassword = p@ssw0rd
 dbSslEnabled = false
+
 atomfeedDbSchema = atomfeed
 baseurl = http://localhost:9091/
 httpport = 9091

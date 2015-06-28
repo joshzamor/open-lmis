@@ -1,0 +1,148 @@
+{
+  "geographic_zone_arrival_packages": [
+    {
+      "id": 1,
+      "package_number": "223GHSD",
+      "lot_number": 323,
+      "number_as_expected": 83,
+      "gtin": "hyr23",
+      "number_recieved": 3,
+      "number_expected": 21,
+      "physical_damage": "",
+      "vvm_status": "",
+      "problems": "",
+      "receiving_user": null,
+      "user": {
+        "id": 1,
+        "userName": "Admin123",
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "John_Doe@openlmis.com",
+        "restrictLogin": false,
+        "verified": true,
+        "active": true
+      },
+      "geographic_zone_id": null,
+      "geographic_zone": null,
+      "vaccine_packaging_id": null,
+      "vaccine_packaging": {
+        "id": 1,
+        "packaging": "Pack",
+        "gtin": "gtin",
+        "doses_per_vial": 1,
+        "vials_per_box": 2,
+        "wastage": "3.0",
+        "schedule": 3,
+        "status": "",
+        "country_id": 1,
+        "country": null,
+        "manufacturer_id": 1,
+        "manufacturer": null,
+        "vaccine_id": 1,
+        "vaccine": null,
+        "columns": {
+
+        }
+      },
+      "columns": {
+
+      }
+    },
+    {
+      "id": 2,
+      "package_number": "223GHSD",
+      "lot_number": 323,
+      "number_as_expected": 83,
+      "gtin": "hyr23",
+      "number_recieved": 3,
+      "number_expected": 21,
+      "physical_damage": "",
+      "vvm_status": "",
+      "problems": "",
+      "receiving_user": null,
+      "user": {
+        "id": 1,
+        "userName": "Admin123",
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "John_Doe@openlmis.com",
+        "restrictLogin": false,
+        "verified": true,
+        "active": true
+      },
+      "geographic_zone_id": null,
+      "geographic_zone": null,
+      "vaccine_packaging_id": null,
+      "vaccine_packaging": {
+        "id": 1,
+        "packaging": "Pack",
+        "gtin": "gtin",
+        "doses_per_vial": 1,
+        "vials_per_box": 2,
+        "wastage": "3.0",
+        "schedule": 3,
+        "status": "",
+        "country_id": 1,
+        "country": null,
+        "manufacturer_id": 1,
+        "manufacturer": null,
+        "vaccine_id": 1,
+        "vaccine": null,
+        "columns": {
+
+        }
+      },
+      "columns": {
+
+      }
+    },
+    {
+      "id": 3,
+      "package_number": "223GHSD",
+      "lot_number": 323,
+      "number_as_expected": 83,
+      "gtin": "hyr23",
+      "number_recieved": 3,
+      "number_expected": 21,
+      "physical_damage": "",
+      "vvm_status": "",
+      "problems": "",
+      "receiving_user": null,
+      "user": {
+        "id": 1,
+        "userName": "Admin123",
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "John_Doe@openlmis.com",
+        "restrictLogin": false,
+        "verified": true,
+        "active": true
+      },
+      "geographic_zone_id": null,
+      "geographic_zone": null,
+      "vaccine_packaging_id": null,
+      "vaccine_packaging": {
+        "id": 1,
+        "packaging": "Pack",
+        "gtin": "gtin",
+        "doses_per_vial": 1,
+        "vials_per_box": 2,
+        "wastage": "3.0",
+        "schedule": 3,
+        "status": "",
+        "country_id": 1,
+        "country": null,
+        "manufacturer_id": 1,
+        "manufacturer": null,
+        "vaccine_id": 1,
+        "vaccine": null,
+        "columns": {
+
+        }
+      },
+      "columns": {
+
+      }
+    }
+  ]
+}
