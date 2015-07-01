@@ -8,14 +8,10 @@
 -- You should have received a copy of the GNU Affero General Public License along with this program.  If not, see http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org. 
 --
 
-DROP TABLE IF EXISTS var_details CASCADE;
-CREATE TABLE var_details (
+DROP TABLE IF EXISTS var_documents CASCADE;
+CREATE TABLE var_documents (
   id                  SERIAL PRIMARY KEY,
-  awb_number          VARCHAR(20) NULL,
-  flight_number          VARCHAR(20) NOT NULL,
-  estimate_time_of_arrival    TIMESTAMP NOT NULL,
-  actual_time_of_arrival    TIMESTAMP NOT NULL,
-  number_of_items_inspected  INTEGER NOT NULL,
-  coolant_type                VARCHAR(20) NOT NULL,
-  temperature_monitor     VARCHAR(20) NOT NULL
+  name          VARCHAR(20) NULL,
+  comments      VARCHAR(255) NULL,
+  var_details_id INTEGER REFERENCES var_details (id)
 );

@@ -8,25 +8,23 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * Created by Morley on 6/20/2015.
+ * Created by Morley on 6/28/2015.
  */
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class FlightArrival extends StockModel{
-    Long id;
-    String awb_number;
-    String flight_number;
-    Date estimate_time_of_arrival;
-    Date actual_time_of_arrival;
-    Integer number_of_items_inspected;
-    String coolant_type;
-    String temperature_monitor;
+public class VarDocument  extends StockModel{
 
+    Long id;
+    String name;
+    String comments;
+    Long var_details_id;
+
+    FlightArrival var_details;
     @Override
     public String getTableName() {
-        return "var_details";
+        return "var_documents";
     }
 }
