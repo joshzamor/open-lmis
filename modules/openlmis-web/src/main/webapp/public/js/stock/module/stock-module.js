@@ -71,7 +71,7 @@ var vaccine = angular.module('VaccineModule', ['openlmis', 'ngTable','ui.bootstr
             });
         };
 });
-vaccine.controller("StockModuleController",function($scope,$http,$location,$routeParams,$resource){
+vaccine.controller("StockModuleController",function($scope,$http,$location,$routeParams,$resource,$filter){
 $scope.packagesJson = null;
 $scope.packageStructure = {
         "delivery_status": null,
@@ -101,7 +101,6 @@ $scope.packageStructure = {
         $http.get('/stock/manufacture/package').
             success(function(data, status, headers, config) {
                 $scope.packagesJson = data.manufacture_packages;
-                console.log($scope.packagesJson);
             }).
             error(function(data) {
                 console.log("Error:" + data);
@@ -163,22 +162,33 @@ $scope.packageStructure = {
             $scope.viewTable = true;
             $scope.editForm = false;
         }
-        console.log(menu);
     }
     $scope.tabToggle('all');
 
     // table between add form and table
-    $scope.viewTable = true;
+    //$scope.viewTable = true;
+    var viewTable   = angular.element("#viewTable");
+    var editForm    = angular.element("#editForm");
+    var viewForm    = angular.element("#viewForm");
+    jQuery(viewTable).show();
+    jQuery(editForm).hide();
+    jQuery(viewForm).hide();
     $scope.toggleFormAndTable = function(tobeSeen){
         if(tobeSeen=="addNew"){
-            $scope.viewForm = true;
-            $scope.viewTable = false;
-            $scope.editForm = false;
+            //$scope.viewForm = true;
+            //$scope.viewTable = false;
+            //$scope.editForm = false;
+            jQuery(viewTable).hide();
+            jQuery(editForm).hide();
+            jQuery(viewForm).show();
         }
         if(tobeSeen=="cancelAdd"){
-            $scope.viewForm = false;
-            $scope.viewTable = true;
-            $scope.editForm = false;
+            //$scope.viewForm = false;
+            //$scope.viewTable = true;
+            //$scope.editForm = false;
+            jQuery(viewTable).show();
+            jQuery(editForm).hide();
+            jQuery(viewForm).hide();
         }
     }
 
@@ -187,7 +197,6 @@ $scope.packageStructure = {
     $scope.addPackage = function(data){
 
             var newObject = $scope.packageStructure;
-console.log();
             newObject.delivery_status= 'received';
             newObject.expire_date= data.expire_date;
             newObject.lot_number= data.lot_number;
@@ -200,9 +209,10 @@ console.log();
 
             $http.post('/stock/manufacture/package',newObject).
                 success(function(data, status, headers, config) {
-
-                    $scope.viewForm = false;
-                    $scope.viewTable = true;
+                    jQuery(viewTable).show();
+                    jQuery(viewForm).hide();
+                    //$scope.viewForm = false;
+                    //$scope.viewTable = true;
                     $scope.fecthPackages();
                 }).
                 error(function(data) {
@@ -213,9 +223,12 @@ console.log();
     $scope.editPackage = function(id,packageObject){
         console.log(id);
         $scope.editPackage = {};
-        $scope.viewForm = false;
-        $scope.editForm = true;
-        $scope.viewTable = false;
+        //$scope.viewForm = false;
+        //$scope.editForm = true;
+        //$scope.viewTable = false;
+        jQuery(viewTable).hide();
+        jQuery(editForm).show();
+        jQuery(viewForm).hide();
         $scope.package = packageObject;
 
         $scope.editPackage.delivery_status= 'pending';
@@ -238,9 +251,13 @@ console.log();
         $http.post(updateUrl,packageObject).
             success(function(data, status, headers, config){
                 $scope.fecthPackages();
-                $scope.viewForm = false;
-                $scope.editForm = false;
-                $scope.viewTable = true;
+                //$scope.viewForm = false;
+                //$scope.editForm = false;
+                //$scope.viewTable = true;
+                jQuery(viewTable).show();
+                jQuery(editForm).hide();
+                jQuery(viewForm).hide();
+
             }).
             error(function(data) {
                 console.log("Error:" + data);
@@ -249,10 +266,13 @@ console.log();
 
     }
     $scope.cancelEditpackage = function(editPackage){
-        $scope.editPackage = null;
-        $scope.viewForm = false;
-        $scope.editForm = false;
-        $scope.viewTable = true;
+        //$scope.editPackage = null;
+        //$scope.viewForm = false;
+        //$scope.editForm = false;
+        //$scope.viewTable = true;
+        jQuery(viewTable).show();
+        jQuery(editForm).hide();
+        jQuery(viewForm).hide();
     }
     $scope.deletePackage = function(id,packageObject){
         var updateUrl =  encodeURI('/stock/manufacture/package/'+id);
@@ -274,14 +294,6 @@ console.log();
         $scope.viewTable = true;
     }
     // action to scan package
-    var add_package_button =angular.element('#add_package_button');
-    add_package_button.bind("click", function(){
-        var object = $(this).attr("object");
-        var id = $(this).attr("object_id");
-        console.log(object);
-        //var link = encodeURI("/public/pages/stock/index.html#/"+"receive?sscc="+shipping_number);
-        window.location.href = link;// normal angular function don work
-    });
 
     //// RECEIVE PACKAGE
     $scope.scan_afresh = true;
@@ -304,17 +316,42 @@ console.log();
     }
 
     var confirm_package_button = angular.element("#confirm_package_button");
-    $scope.condition = {'quantity':null,'physical_damage':null,'vvmstatus':null,'temp_monitors':null};
+    $scope.condition = {'quantity':null,'physical_damage':null,'vvmstatus':null,'temp_monitors':null,'problems':null};
     $(confirm_package_button).bind("click",function(){
-        $scope.condition;
-        $http.post('/stock/manufacture/package',{}).
-            success(function(data, status, headers, config) {
+        var packageDelt = null;
+        angular.forEach($scope.packagesJson,function(value,index){
+            if(value.lot_number==$scope.lot_number){
+                packageDelt = value;
+            }
+        });
 
-            }).
-            error(function(data) {
-                console.log("Error:" + data);
-            });
+         var confirmObject = {
+            package_number: packageDelt.shipment_id,
+            lot_number: packageDelt.lot_number,
+            number_as_expected:$scope.condition.quantity,
+            gtin: 'hyr23',
+            number_recieved: 3,
+            number_expected: 21,
+            physical_damage: $scope.condition.physical_damage,
+            vvm_status: $scope.condition.vvmstatus,
+            problems: $scope.condition.problems,
+            receiving_user:1,
+            user:1,
+            vaccine_packaging_id:2
+        }
 
+        $http({
+            method: 'POST',
+            url: '/stock/package/arrival',
+            data: JSON.stringify(confirmObject),
+            headers: {'Content-Type': 'application/json'},
+            success: function(obj) {
+               console.log(obj);
+            },
+            error:function(data) {
+                        console.log("Error:" + data);
+                    }
+        });
     });
     $scope.cancelConfirmation = function(){
         var link = encodeURI("/public/pages/stock/index.html#/receive");
@@ -322,10 +359,10 @@ console.log();
     }
 
     $scope.numberOfBoxes = function(doses_per_vials,vials_per_box,number_of_doses){
-        return number_of_doses/(doses_per_vials*vials_per_box);
+        $scope.boxes = parseInt(number_of_doses/(doses_per_vials*vials_per_box));
+        var boxes = $scope.boxes;
+        return boxes;
     }
-
-
     if($routeParams.ssc){
         $scope.sscc_number = $routeParams.ssc;
     }

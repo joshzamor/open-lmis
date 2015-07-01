@@ -28,10 +28,10 @@
 
                     <tr ng-repeat="packageDetails in filteredPackage = (packagesJson | filter:{lot_number:lot_number})">
                         <td>{{packageDetails.vaccine_packaging.gtin}}</td>
-                        <td>{{packageDetails.vaccine_packaging.description}}</td>
+                        <td>{{packageDetails.vaccine_packaging.manufacturer.description}}</td>
                         <td>{{packageDetails.lot_number}}</td>
                         <td>{{packageDetails.expire_date}}</td>
-                        <td>{{numberOfBoxes(packageDetails.vaccine_packaging.doses_per_vial,packageDetails.vaccine_packaging.vials_per_box,packageDetails.number_of_doses)}}</td>
+                        <td >{{numberOfBoxes(packageDetails.vaccine_packaging.doses_per_vial,packageDetails.vaccine_packaging.vials_per_box,packageDetails.number_of_doses)}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -84,15 +84,19 @@
                 </div>
             </div>
 
+        </div>
+        <div class='clearfix'>
+            <div class="form-cell horizontalFilters">
+                <label></label>
+                <textarea ng-model="condition.problems"></textarea>
+            </div>
             <div class="form-cell horizontalFilters">
                 <label>&nbsp;</label>
                 <div class="form-fields">
                     <input class="btn btn-primary" type="button" value="Confirm"  id="confirm_package_button"/>
                 </div>
             </div>
-
         </div>
-
         </div>
 
     </form>

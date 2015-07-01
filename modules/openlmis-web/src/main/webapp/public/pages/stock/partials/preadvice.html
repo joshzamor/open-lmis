@@ -31,8 +31,11 @@
                     </h2>
 
                 </div>
+                <!--ng-if="viewForm"-->
+                <!--ng-if="editForm"-->
+                <!--ng-if="viewTable"-->
                 <!--Add More Package form-->
-                <div class='form-row clearfix' ng-if="viewForm" >
+                <div class='form-row clearfix'  id="viewForm" >
                     <form name="international_shipment">
                         <div class='form-group'>
                             <!--<h3 openlmis-message="label.basicInformation">International Shipment</h3>-->
@@ -119,7 +122,7 @@
                     </form>
                 </div>
                 <!--Add More Package form-->
-                <div class='form-row clearfix' ng-if="editForm" >
+                <div class='form-row clearfix'  id="editForm">
                     <form name="international_shipment">
                         <div class='form-group'>
                             <!--<h3 openlmis-message="label.basicInformation">International Shipment</h3>-->
@@ -206,7 +209,7 @@
                     </form>
                 </div>
                 <!--Add More Package form-->
-                <div class='form-row clearfix' ng-if="viewTable">
+                <div class='form-row clearfix'  id="viewTable">
 
                     <table class="table-bordered table table-striped ng-scope" >
                             <thead>
@@ -229,7 +232,7 @@
                                 <td>{{package.shipment_id}}</td>
                                 <td>{{package.vaccine_packaging.gtin}}</td>
                                 <td>{{package.vaccine_packaging.manufacturer.name}}</td>
-                                <td>{{package.vaccine.name}}</td>
+                                <td>{{package.vaccine}}</td>
                                 <td>{{package.lot_number}}</td>
                                 <td>{{package.number_of_doses}}</td>
                                 <td>{{package.expire_date}}</td>

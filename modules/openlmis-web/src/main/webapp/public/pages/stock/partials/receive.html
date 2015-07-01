@@ -120,7 +120,7 @@
     <tbody>
     <tr ng-repeat="packageDetails in singlePackage = (packagesJson | filter:{shipment_id:filtering_shipping_number} )"  >
         <td>{{packageDetails.vaccine_packaging.gtin}}</td>
-        <td>{{packageDetails.description}}</td>
+        <td>{{packageDetails.vaccine_packaging.manufacturer.description}}</td>
         <td>{{packageDetails.lot_number}}</td>
         <td>{{packageDetails.number_of_doses}}</td>
         <td>{{packageDetails.boxes}}</td>
