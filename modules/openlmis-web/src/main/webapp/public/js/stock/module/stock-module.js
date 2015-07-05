@@ -73,6 +73,7 @@ var vaccine = angular.module('VaccineModule', ['openlmis', 'ngTable','ui.bootstr
 });
 vaccine.controller("StockModuleController",function($scope,$http,$location,$routeParams,$resource,$filter){
 $scope.packagesJson = null;
+$scope.regions = null;
 $scope.packageStructure = {
         "delivery_status": null,
         "expire_date":null,
@@ -370,6 +371,60 @@ $scope.packageStructure = {
     $scope.lot_number = $routeParams.lotn;
     }
 
+    var regions = function(){
+        ///stock/partials/localstore/regions.json
+        $http.get('../../js/stock/module/localstore/regions.json').
+            success(function(data, status, headers, config) {
+                $scope.regions = data;
+            }).
+            error(function(data) {
+                console.log("Error:" + data);
+            });
+    }
+    regions();
+
+    // prepare package and send to selected destination
+    $scope.lotScanner =false;
+    $scope.sannNotify =false;
+    $scope.sannedtable =false;
+    $scope.displayErrorAtLot =false;
+    $scope.sendPackage = function(destination){
+        $scope.lotScanner = true;
+        $scope.sannNotify =false;
+        $scope.sannedtable =false;
+        $scope.scanned_lot_number = null;
+
+        $scope.scanItem = function(){
+            if($scope.scanned_lot_number){
+                $scope.displayErrorAtLot =false;
+                if($scope.checkExpiredate()){
+                    $scope.sannNotify=true;
+                }else{
+                    $scope.sannNotify =false;
+                    $scope.sannedtable =true;
+                }
+            }else{
+                $scope.displayErrorAtLot =true;
+            }
+
+        }
+
+        $scope.proceedPreparation = function(){
+            $scope.sannNotify =false;
+            $scope.sannedtable =true;
+        }
+
+        $scope.quitPreparation = function(){
+
+            $scope.sannNotify =false;
+            $scope.sannedtable =false;
+        }
+
+    }
+
+    $scope.checkExpiredate = function(){
+        return true;
+    }
     function formatDate(date) {
         var d = new Date(date),
             month = '' + (d.getMonth() + 1),
@@ -389,9 +444,9 @@ vaccine.controller("StockMenuController",function($scope, $location) {
 
     dashboardMenuService.tabs = [
         {header: 'PreAdvice', content:'/public/pages/stock/index.html#/preadvice', name:'preadvice', closable:false, displayOrder: 0},
-        {header: 'ReceivePackage', content:'/public/pages/stock/index.html#/receive', name:'receive', closable:false, displayOrder: 0},
-        {header: 'PreparePackage', content:'/public/pages/stock/index.html#/prepare', name:'prepare', closable:false, displayOrder: 1},
-        {header: 'StockItems', content:'/public/pages/stock/index.html#/items', name:'items', closable: false, displayOrder: 2}
+        {header: 'ReceivePackage', content:'/public/pages/stock/index.html#/receive', name:'receive', closable:false, displayOrder: 1},
+        {header: 'PreparePackage', content:'/public/pages/stock/index.html#/prepare', name:'prepare', closable:false, displayOrder: 2},
+        {header: 'StockItems', content:'/public/pages/stock/index.html#/items', name:'items', closable: false, displayOrder: 3}
     ];
 
 
