@@ -111,7 +111,7 @@
                         <thead>
                         <tr class="gradient-header">
                             <th  style="text-align: center">GTN</th>
-                            <th  style="text-align: center">Description</th>
+                            <th  style="text-align: center">Item</th>
                             <th  style="text-align: center">Lot</th>
                             <th  style="text-align: center">Expiry</th>
                             <th  style="text-align: center">Boxes</th>
@@ -120,10 +120,10 @@
                         <tbody>
                         <tr ng-repeat="packageDetails in singlePackage = (packagesJson | filter:{shipment_id:filtering_shipping_number} )"  >
                             <td>{{packageDetails.vaccine_packaging.gtin}}</td>
-                            <td>{{packageDetails.vaccine_packaging.manufacturer.description}}</td>
+                            <td>{{packageDetails.vaccine_packaging.vaccine.name}}</td>
                             <td>{{packageDetails.lot_number}}</td>
                             <td>{{packageDetails.expire_date  | date:'yyyy-MM-dd'}}</td>
-                            <td>{{packageDetails.boxes}}</td>
+                            <td>{{ numberOfBoxes(packageDetails.vaccine_packaging.doses_per_vial,packageDetails.vaccine_packaging.vials_per_box,packageDetails.number_of_doses) }}</td>
 
                         </tr>
                         </tbody>

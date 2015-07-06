@@ -23,6 +23,6 @@ INSERT INTO vaccine_packaging (id, gtin, packaging, doses_per_vial, vials_per_bo
 (22, '4365786921350', 'Tetanus, 30 x 30 dose vials', '30', '30', 1, 2, 0.2, 3, 9),
 (23, '1967567432087', 'Tetanus, 10 x 10 dose vials', '10', '10', 1, 6, 0.15, 4, 9),
 (24, '5674321908767', 'Tetanus, 20 x 20 dose vials', '20', '20', 1, 1, 0.3, 4, 9),
-(25, '1234567890388', 'Prenevar-13, 50 single-use vials', '1', '50', 1, 8, 0.05, 3, 10)
-(26, '7812315607329', 'Prenevar-13, 40 single-use vials', '1', '30', 1, 5, 0.15, 2, 10)
+(25, '1234567890388', 'Prenevar-13, 50 single-use vials', '1', '50', 1, 8, 0.05, 3, 10),
+(26, '7812315607329', 'Prenevar-13, 40 single-use vials', '1', '30', 1, 5, 0.15, 2, 10),
 (27, '1357924689745', 'Prenevar-13, 50 single-use vials', '1', '20', 1, 6, 0.2, 4, 10);

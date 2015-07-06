@@ -211,9 +211,9 @@
                 <!--Add More Package form-->
                 <div class='form-row clearfix'  id="viewTable">
 
-                    <table class="table-bordered table table-striped ng-scope" >
+                    <table datatable="" class="table-bordered table table-striped ng-scope" >
                             <thead>
-                            <tr class="gradient-header">
+                            <tr>
                                 <th  style="text-align: center">No.</th>
                                 <th  style="text-align: center">Shipping Number</th>
                                 <th  style="text-align: center">GTN</th>
@@ -232,7 +232,7 @@
                                 <td>{{package.shipment_id}}</td>
                                 <td>{{package.vaccine_packaging.gtin}}</td>
                                 <td>{{package.vaccine_packaging.manufacturer.name}}</td>
-                                <td>{{package.vaccine}}</td>
+                                <td>{{package.vaccine_packaging.vaccine.name }}</td>
                                 <td>{{package.lot_number}}</td>
                                 <td>{{package.number_of_doses}}</td>
                                 <td>{{package.expire_date | date:'yyyy-MM-dd'}}</td>
@@ -252,7 +252,7 @@
                                 <td>{{package.shipment_id}}</td>
                                 <td>{{package.vaccine_packaging.gtin}}</td>
                                 <td>{{package.vaccine_packaging.manufacturer.name}}</td>
-                                <td>{{package.vaccine.name}}</td>
+                                <td>{{package.vaccine_packaging.vaccine.name }}</td>
                                 <td>{{package.lot_number}}</td>
                                 <td>{{package.number_of_doses}}</td>
                                 <td>{{package.expire_date}}</td>
