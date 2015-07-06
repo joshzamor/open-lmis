@@ -8,7 +8,7 @@
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
  * You should have received a copy of the GNU Affero General Public License along with this program.  If not, see http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org. 
  */
-var vaccine = angular.module('VaccineModule', ['openlmis', 'ngTable','ui.bootstrap','nsPopover']).config(['$routeProvider', function ($routeProvider) {
+var vaccine = angular.module('VaccineModule', ['openlmis', 'ngTable','ui.bootstrap','nsPopover','ngTable',"datatables"]).config(['$routeProvider', function ($routeProvider) {
 
     $routeProvider
         // this route is responding to
@@ -56,6 +56,11 @@ var vaccine = angular.module('VaccineModule', ['openlmis', 'ngTable','ui.bootstr
             templateUrl: "/public/pages/stock/partials/preadvice.html",
             controller: "StockModuleController"
         })
+        // this route is responding to pre advice route
+        .when('/package_information', {
+            templateUrl: "/public/pages/stock/partials/package_information.html",
+            controller: "StockModuleController"
+        })
         // this route is responding to scan package route
         .when('/', {
             templateUrl: "/public/pages/stock/partials/scan_package.html",
@@ -71,8 +76,10 @@ var vaccine = angular.module('VaccineModule', ['openlmis', 'ngTable','ui.bootstr
             });
         };
 });
+
 vaccine.controller("StockModuleController",function($scope,$http,$location,$routeParams,$resource,$filter){
-$scope.packagesJson = null;
+
+    $scope.packagesJson = null;
 $scope.regions = null;
 $scope.packageStructure = {
         "delivery_status": null,
@@ -446,7 +453,8 @@ vaccine.controller("StockMenuController",function($scope, $location) {
         {header: 'PreAdvice', content:'/public/pages/stock/index.html#/preadvice', name:'preadvice', closable:false, displayOrder: 0},
         {header: 'ReceivePackage', content:'/public/pages/stock/index.html#/receive', name:'receive', closable:false, displayOrder: 1},
         {header: 'PreparePackage', content:'/public/pages/stock/index.html#/prepare', name:'prepare', closable:false, displayOrder: 2},
-        {header: 'StockItems', content:'/public/pages/stock/index.html#/items', name:'items', closable: false, displayOrder: 3}
+        {header: 'StockItems', content:'/public/pages/stock/index.html#/items', name:'items', closable: false, displayOrder: 3},
+        {header: 'PackagingInformation', content:'/public/pages/stock/index.html#/package_information', name:'items', closable: false, displayOrder: 4}
     ];
 
 
@@ -460,6 +468,108 @@ vaccine.controller("StockMenuController",function($scope, $location) {
     };
 
 });
+
+vaccine.controller("StockPackageController",function($scope,$http,$location,$routeParams,$resource,$filter) {
+    //initialize variables
+    $scope.data = {};
+    $scope.data.vaccines = {};
+    $scope.data.vaccine_packages = {};
+    $scope.data.manufactures = {};
+    $scope.showTable = true;
+    $scope.showEdit = false;
+
+    // load all vaccines
+    $http.get('/stock/vaccine').success(function(data, status, headers, config) {
+            $scope.data.vaccines = data;
+        }).error(function(data) {
+            console.log("Error:" + data);
+        });
+
+
+    // load all vaccines packaging information
+    $scope.pullPackagingInformation = function(){
+        $scope.data.vaccine_packages = {};
+        $http.get('/stock/vaccine/packaging'). success(function(data, status, headers, config) {
+            $scope.data.vaccine_packages = data.vaccine_packagings;
+        }). error(function(data) {
+            console.log("Error:" + data);
+        });
+    }
+    $scope.pullPackagingInformation();
+
+    // load all vaccines packaging information
+    $http.get('/vaccine/manufacturers').success(function(data, status, headers, config) {
+            $scope.data.manufactures = data.manufacturers;
+        }).error(function(data) {
+            console.log("Error:" + data);
+        });
+
+    //display the add table
+    $scope.addNew = function(){
+        $scope.showTable = false;
+        $scope.showEdit = false;
+    }
+
+    //display the edit form
+    $scope.editPackageInfo = function(id,package){
+        $scope.showTable = false;
+        $scope.showEdit = true;
+        $scope.data.package = package;
+        package.vaccine_id = package.vaccine.id;
+        package.manufacturer_id = package.manufacturer.id
+    }
+
+   //display the add table
+    $scope.adding = false;
+    $scope.addNewPackage = function(package){
+        $scope.adding = true;
+        package.status = '';
+        package.country_id = 1;
+        $http.post('/stock/vaccine/packaging',package). success(function(data) {
+            $scope.pullPackagingInformation();
+            $scope.cancelAdd();
+        }). error(function(data) {
+            console.log("Error:" + data);
+        });
+    }
+
+    //hide the add table
+    $scope.cancelAdd = function(){
+        $scope.data.package = {};
+        $scope.showTable = true;
+        $scope.showEdit = false;
+    }
+
+    //update package information
+    $scope.update = function(package){
+        var updateUrl =  '/stock/vaccine/packaging/'+id;
+        //Calling Web API to fetch shopping cart items
+        $http.post(updateUrl,package).success(function(data){
+            //Passing data to deferred's resolve function on successful completion
+            $scope.pullPackagingInformation();
+            $scope.cancelAdd();
+        }).error(function(data){
+            console.log("Error:" + data);
+            //Sending a friendly error message in case of failure
+        });
+    }
+
+
+    //hide the add table
+    $scope.deletePackageInfo = function(id,package){
+        var updateUrl =  '/stock/vaccine/packaging/'+id;
+        //Calling Web API to fetch shopping cart items
+        $http.delete(updateUrl).success(function(data){
+            //Passing data to deferred's resolve function on successful completion
+            $scope.pullPackagingInformation();
+        }).error(function(data){
+            console.log("Error:" + data);
+            //Sending a friendly error message in case of failure
+        });
+    }
+});
+
+
 
 services.factory('StockMenuService',function($rootScope,$location){
     var dashboardMenuService = {};
