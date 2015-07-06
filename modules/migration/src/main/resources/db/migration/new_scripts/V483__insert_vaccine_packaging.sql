@@ -15,7 +15,7 @@ INSERT INTO vaccine_packaging (id, gtin, packaging, doses_per_vial, vials_per_bo
 (14, '7173123095628', 'Polio, 40 x 30 doses (1 drops)', '5', '20', 1, 2, 0.15, 3, 6),
 (15, '1234567890265', 'DTP, HepB, Hib, 50 x 10 dose vials', '10', '50', 1, 5, 0.1, 3, 7),
 (16, '5678334154524', 'DTP, HepB, Hib, 30 x 20 dose vials', '7', '30', 1, 1, 0.13, 2, 7),
-(17, '6371334154524', 'DTP, HepB, Hib, 40 x 30 dose vials', '10', '40', 2, 2, 0.21, 4, 7),
+(17, '6371334154524', 'DTP, HepB, Hib, 40 x 30 dose vials', '10', '40', 1, 2, 0.21, 4, 7),
 (18, '1234567890302', '20 x 1 ml BCG diluent', '20', '20', 1, 3, 0.45, 1, 8),
 (19, '1357924680432', '15 x 1 ml BCG diluent', '30', '30', 1, 4, 0.25, 2, 8),
 (20, '1357924680114', '30 x 1.5 ml BCG diluent', '15', '40', 1, 5, 0.16, 4, 8),
