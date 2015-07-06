@@ -10,8 +10,6 @@
             </div>
             </br>
             <div class='form-row clearfix' >
-                </br>
-                </br>
                 <table class="table-bordered table table-striped ng-scope" >
 
                     <thead>
@@ -30,7 +28,7 @@
                         <td>{{packageDetails.vaccine_packaging.gtin}}</td>
                         <td>{{packageDetails.vaccine_packaging.manufacturer.description}}</td>
                         <td>{{packageDetails.lot_number}}</td>
-                        <td>{{packageDetails.expire_date  | date:'yyyy-MM-dd7654321`}}</td>
+                        <td>{{packageDetails.expire_date  | date:'yyyy-MM-dd'}}</td>
                         <td >{{numberOfBoxes(packageDetails.vaccine_packaging.doses_per_vial,packageDetails.vaccine_packaging.vials_per_box,packageDetails.number_of_doses)}}</td>
                     </tr>
                     </tbody>
