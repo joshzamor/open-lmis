@@ -61,4 +61,7 @@ public interface VaccinePackagingMapper extends HasVaccineMapper,StockMapper<Vac
                     one = @One(select = "getManufacturerById"))
     })
     List<VaccinePackaging> filter(@Param("filter") String filter,VaccinePackaging vaccinePackaging);
+
+    @Delete("delete from vaccine_packaging where id = #{id}")
+    void deleteById(@Param("id") Long id);
 }
