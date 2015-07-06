@@ -37,32 +37,36 @@
         <input type="button" class="btn btn-xs btn-danger" ng-click="quitPreparation()" value="No">
         <input type="button" class="btn btn-xs btn-success" ng-click="proceedPreparation()" value="Yes">
     </div>
-    <div id="table_items" ng-show="sannedtable">
 
+    <div id="table_items" ng-show="sannedtable">
         <table  class=" table " >
             <tr >
                 <th>GTN</th>
                 <th>Item</th>
                 <th>Lot </th>
-                <td>Max:{{scannedPackage.max}} boxes</td>
+                <td><!---Max:{{scannedPackage.max}} boxes--></td>
                 <th>Current Stock</th>
                 <th>Expire Date</th>
                 <th>Boxes</th>
                 <th colspan="2"></th>
             </tr>
-            <tr ng-repeat="package in packagesJson">
-                <td>{{scannedPackage.gtn}}</td>
-                <td>{{scannedPackage.item}}</td>
-                <td>{{scannedPackage.lot_number}}</td>
-                <td>Min:{{scannedPackage.min}} boxes</td>
-                <td>{{scannedPackage.current_stock}}</td>
+            <tr >
+                <td>{{packagesJson[0].vaccine_packaging.gtin}}</td>
+                <td>{{packagesJson[0].vaccine_packaging.packaging}}</td>
+                <td>{{packagesJson[0].lot_number}}</td>
+                <td>
+                    Min:{{packagesJson[0].number_of_doses/packagesJson[0].vaccine_packaging.doses_per_vial/packagesJson[0].vaccine_packaging.vials_per_box}} boxes
+                </br>
+                    Max:{{packagesJson[0].number_of_doses/packagesJson[0].vaccine_packaging.doses_per_vial/packagesJson[0].vaccine_packaging.vials_per_box}} boxes
+                </td>
+                <td>{{packagesJson[0].number_of_doses/packagesJson[0].vaccine_packaging.doses_per_vial/packagesJson[0].vaccine_packaging.vials_per_box}}</td>
                 <td style="background-color: lightgreen">
-                    {{scannedPackage.expire_date}}
+                    {{packagesJson[0].expire_date | date:'yyyy-MM-dd'}}
                     </td>
                     <td>
                     <input name="boxes" type="text" class="form-control" id="boxes" ng-model="boxes"/>
                 </td>
-                <td><input type="button" class="btn btn-success" ng-click="addingPackage(scannedPackage)" value="Add" /></td>
+                <td><input type="button" class="btn btn-success" ng-click="addingPackage(packagesJson[0])" value="Add" /></td>
 
             </tr>
         </table>

@@ -429,6 +429,10 @@ $scope.packageStructure = {
 
     }
 
+    $scope.addingPackage = function(scannedPackage){
+        console.log(scannedPackage);
+    }
+
     $scope.checkExpiredate = function(){
         return true;
     }
