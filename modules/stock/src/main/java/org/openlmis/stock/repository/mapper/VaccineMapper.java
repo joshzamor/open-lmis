@@ -47,6 +47,6 @@ public interface VaccineMapper extends StockMapper<Vaccine>{
     })*/
     Vaccine getById(@Param("id") Long id,Vaccine vaccine);
 
-    @Select("delete from vaccines where id = #{id}")
+    @Delete("delete from vaccines where id = #{id}")
     void deleteById(@Param("id") Long id);
 }
