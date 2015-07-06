@@ -14,6 +14,10 @@ import static org.apache.ibatis.jdbc.SelectBuilder.WHERE;
 import static org.apache.ibatis.jdbc.SqlBuilder.*;
 
 import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 public class ModelProviders {
@@ -25,7 +29,7 @@ public class ModelProviders {
                 if (thisEntry.getKey().startsWith("filter")) {
                     String[] filters = ((String) thisEntry.getValue()).split(";");
                     for(String filter:filters){
-                        String[] req = filter.split(":");
+                        /*String[] req = filter.split(":");
                         String request = req[0];
                         if (req[1].endsWith("eq")) {
                             request += "=";
@@ -36,9 +40,9 @@ public class ModelProviders {
                         } else if (req[1].endsWith("lt")) {
                             request += "<";
                             request += req[2];
-                        }
+                        }*/
 
-                        WHERE(request);
+                        WHERE(evaluateFilter(filter));
                     }
 
                 }else if(thisEntry.getValue() instanceof StockModel){
@@ -123,5 +127,41 @@ public class ModelProviders {
             }
         }
         return SQL();
+    }
+    public String evaluateFilter(String filter) throws ParseException {
+        String[] req = filter.split(":");
+        if (req[2].contains("(")) {
+            if (req[0].equals("lot_number")) {
+                req[2] = getValue("(10)",req[2]);
+            }else if(req[0].equals("gtin")){
+                req[2] = getValue("(01)",req[2]);
+            }else if(req[0].equals("expire_date")){
+                req[2] = "20" + getValue("(17)",req[2]);
+                DateFormat format = new SimpleDateFormat("yyyyMMdd");
+                Date date = format.parse(req[2]);
+                format = new SimpleDateFormat("yyyy-MM-dd");
+                req[2] = format.format(date);
+
+            }
+        }
+        String request = req[0];
+        if (req[1].endsWith("eq")) {
+            request += "=";
+            request += "\'" + req[2] + "\'";
+        } else if (req[1].endsWith("gt")) {
+            request += ">";
+            request += req[2];
+        } else if (req[1].endsWith("lt")) {
+            request += "<";
+            request += req[2];
+        }
+        return request;
+    }
+    private String getValue(String index,String input){
+        input = input.substring(input.indexOf(index) + 4);
+        if(input.contains("(")){
+            input = input.substring(0,input.indexOf("("));
+        }
+        return input;
     }
 }
