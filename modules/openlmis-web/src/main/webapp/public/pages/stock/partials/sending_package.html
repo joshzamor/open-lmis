@@ -60,7 +60,7 @@
                         <td>{{scannedPackage.lot_number}}</td>
                         <td>Min:{{scannedPackage.min}} boxes</td>
                         <td>{{scannedPackage.current_stock}}</td>
-                        <td>{{scannedPackage.expire_date}}</td>
+                        <td>{{scannedPackage.expire_date  | date:'yyyy-MM-dd}}</td>
                         <td><input name="boxes" id="boxes" ng-model="boxes"></td>
                         <td><input type="button" ng-click="addingPackage(scannedPackage)" value="Add" /></td>
                     </tr>
@@ -104,7 +104,7 @@
                            <td>{{selectedPackage.manufacturer}}</td>
                            <td>{{selectedPackage.item}}</td>
                            <td>{{selectedPackage.lot_number}}</td>
-                           <td>{{selectedPackage.expire_date}}</td>
+                           <td>{{selectedPackage.expire_date  | date:'yyyy-MM-dd}}</td>
                            <td>{{boxes}}</td>
                            <td>{{selectedPackage.min}}</td>
                            <td>{{selectedPackage.max}}</td>
