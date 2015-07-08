@@ -15,18 +15,20 @@ import java.util.List;
  */
 
 @Repository
-public interface GeographicZoneStockMapper  extends HasVaccineMapper,HasVaccinePackaging,HasGeographicZone,StockMapper<GeographicZoneStock>{
+public interface GeographicZoneStockMapper  extends HasVaccinePackaging,HasGeographicZone,StockMapper<GeographicZoneStock>{
     @Select("select * from geographic_zone_stocks")
     @Results(value = {
             @Result(property = "vaccine_packaging", javaType = VaccinePackaging.class, column = "vaccine_packaging_id",
-                one = @One(select = "getVaccinePackagingById")),
+                    one = @One(select = "getVaccinePackagingById")),
             @Result(property = "geographic_zone", javaType = GeographicZone.class, column = "geographic_zone_id",
-                    one = @One(select = "getGeographicZoneById"))
+                    one = @One(select = "getGeographicZoneById")),
+            @Result(property = "vaccine", javaType = Vaccine.class, column = "vaccine_id",
+                    one = @One(select = "getVaccineById"))
     })
     List<GeographicZoneStock> getAll();
 
-    @Insert("insert into geographic_zone_stocks (expire_date, lot_number, number_of_doses, vaccine_packaging_id, geographic_zone_id) values " +
-            "(#{expire_date}, #{lot_number}, #{number_of_doses}, #{vaccine_packaging_id}, #{geographic_zone_id})")
+    @Insert("insert into geographic_zone_stocks (expire_date, lot_number, number_of_doses, vaccine_packaging_id, geographic_zone_id,vaccine_id) values " +
+            "(#{expire_date}, #{lot_number}, #{number_of_doses}, #{vaccine_packaging_id}, #{geographic_zone_id}, #{vaccine_id})")
     @Options(flushCache = true, useGeneratedKeys = true)
     Integer insert(GeographicZoneStock geographicZoneStock);
 
@@ -36,7 +38,8 @@ public interface GeographicZoneStockMapper  extends HasVaccineMapper,HasVaccineP
             " lot_number = #{lot_number}," +
             " number_of_doses = #{number_of_doses}, " +
             " vaccine_packaging_id = #{vaccine_packaging_id}, " +
-            " geographic_zone_id = #{geographic_zone_id} " +
+            " geographic_zone_id = #{geographic_zone_id}, " +
+            " vaccine_id = #{vaccine_id} " +
             "where id = #{id}")
     void update(GeographicZoneStock geographicZoneStock);
 
@@ -45,7 +48,9 @@ public interface GeographicZoneStockMapper  extends HasVaccineMapper,HasVaccineP
             @Result(property = "vaccine_packaging", javaType = VaccinePackaging.class, column = "vaccine_packaging_id",
                     one = @One(select = "getVaccinePackagingById")),
             @Result(property = "geographic_zone", javaType = GeographicZone.class, column = "geographic_zone_id",
-                            one = @One(select = "getGeographicZoneById"))
+                            one = @One(select = "getGeographicZoneById")),
+            @Result(property = "vaccine", javaType = Vaccine.class, column = "vaccine_id",
+                    one = @One(select = "getVaccineById"))
     })
     GeographicZoneStock getById(@Param("id") Long id);
 
@@ -54,7 +59,9 @@ public interface GeographicZoneStockMapper  extends HasVaccineMapper,HasVaccineP
             @Result(property = "vaccine_packaging", javaType = VaccinePackaging.class, column = "vaccine_packaging_id",
                     one = @One(select = "getVaccinePackagingById")),
             @Result(property = "geographic_zone", javaType = GeographicZone.class, column = "geographic_zone_id",
-                    one = @One(select = "getGeographicZoneById"))
+                    one = @One(select = "getGeographicZoneById")),
+            @Result(property = "vaccine", javaType = Vaccine.class, column = "vaccine_id",
+                    one = @One(select = "getVaccineById"))
     })
     List<GeographicZoneStock> filter(@Param("filter") String filter,GeographicZoneStock geographicZonePackage);
 

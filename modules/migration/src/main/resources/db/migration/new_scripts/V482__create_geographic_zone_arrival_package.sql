@@ -18,6 +18,7 @@ CREATE TABLE geographic_zone_arrival_package (
   number_recieved     INTEGER NOT NULL,
   number_expected     INTEGER,
   physical_damage     VARCHAR(200),
+  temprature_monitor     VARCHAR(200),
   vvm_status          VARCHAR(255),
   problems            VARCHAR(255),
   receiving_user      INTEGER REFERENCES users (id),
