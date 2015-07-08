@@ -362,8 +362,9 @@ $scope.packageStructure = {
         });
     });
     $scope.cancelConfirmation = function(){
-        var link = encodeURI("/public/pages/stock/index.html#/receive");
-        window.location.href = link;// normal angular function don work
+
+        //var link = encodeURI("/public/pages/stock/index.html#/receive");
+        //window.location.href = link;// normal angular function don work
     }
 
     $scope.numberOfBoxes = function(doses_per_vials,vials_per_box,number_of_doses){

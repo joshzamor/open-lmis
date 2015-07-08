@@ -27,6 +27,7 @@
     <p id="message"><img src="../images/ajax-loader.gif" alt=""/></p>
 </div>
 <script>
+
     $(document).ready(function(){
         $("#message").hide();
         $("#shipment_id").focus();
@@ -55,8 +56,8 @@
                             $("#scan_lot").click(function(){
                                 if($("#lot_number").val() != "") {
                                     var lot_number = $("#lot_number").val();
-                                    var html1 = getSpecificLotNumber();
-                                    $(".result").show().html(html1);
+                                    getSpecificLotNumber(lot_number);
+
                                 }
                             });
 
@@ -104,42 +105,53 @@ function getShipmentinfo(shipment,shipment_id){
     return html;
 }
 
-    function getSpecificLotNumber(){
-        var html = '<table border="1" cellspacing="0" cellpadding="0">';
-        html += ' <thead>';
-        html += '     <tr><th>GTN</th><th>Description</th><th>Lot</th><th>Expiry</th><th>Vials</th><th>Boxes</th></tr>';
-        html += ' </thead>';
-        html += '<tr>';
-        html += '<td>1234454656</td>';
-        html += '<td>PVC 13</td>';
-        html += '<td>j943111</td>';
-        html += '<td>2017-02-28</td>';
-        html += '<td>608000</td>';
-        html += '<td>608000</td>';
-        html += '</tr>';
-        html += '</table>';
+    function getSpecificLotNumber(LotNumber){
+        $.ajax({
+            method: 'GET',
+            url: '/stock/manufacture/package?filter=lot_number:eq:'+LotNumber,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function(data) {
+            var html = '<table border="1" cellspacing="0" cellpadding="0">';
+            html += ' <thead>';
+            html += '     <tr><th>GTN</th><th>Item</th><th>Lot</th><th>Expiry</th><th>Vials</th><th>Boxes</th></tr>';
+            html += ' </thead>';
+            html += '<tr>';
+            html += '<td>'+data.manufacture_packages[0].vaccine_packaging.gtin+'</td>';
+            html += '<td>'+data.manufacture_packages[0].vaccine_packaging.vaccine.name+'</td>';
+            html += '<td>'+data.manufacture_packages[0].lot_number+'</td>';
+            html += '<td>'+data.manufacture_packages[0].expire_date+'</td>';
+            html += '<td>'+parseInt(data.manufacture_packages[0].number_of_doses/data.manufacture_packages[0].vaccine_packaging.doses_per_vial)+'</td>';
+            html += '<td>'+parseInt(data.manufacture_packages[0].number_of_doses/(data.manufacture_packages[0].vaccine_packaging.doses_per_vial*data.manufacture_packages[0].vaccine_packaging.vials_per_box))+'</td>';
+            html += '</tr>';
+            html += '</table>';
 
-        html += '</br>';
-        html += '<table>';
-        html += '<tr><td>Quantity Okay</td><td><select><option>Yes</option><option>No</option></select></td></tr>';
-        html += '<tr><td>Physical Damage</td><td><select><option>None</option><option>Damaged</option></select></td></tr>';
-        html += '<tr><td>VVM Status</td><td><select><option>Good</option><option>Normal</option><option>Bad</option></select></td></tr>';
-        html += '<tr><td>Temp monitors Status</td><td><select><option>Good</option><option>Normal</option><option>Bad</option></select></td></tr>';
+            html += '</br>';
+            html += '<table>';
+            html += '<tr><td>Quantity Okay</td><td><select><option>Yes</option><option>No</option></select></td></tr>';
+            html += '<tr><td>Physical Damage</td><td><select><option>None</option><option>Damaged</option></select></td></tr>';
+            html += '<tr><td>VVM Status</td><td><select><option>Good</option><option>Normal</option><option>Bad</option></select></td></tr>';
+            html += '<tr><td>Temp monitors Status</td><td><select><option>Good</option><option>Normal</option><option>Bad</option></select></td></tr>';
 
-        html += '</table>';
+            html += '</table>';
 
-        html += '</br>';
-        html += '<table>';
-        html += '<tr>';
-        html += '<td>Comments and Observations</td>';
-        html += '</tr>';
-        html += '<tr>';
-        html += '<td><textarea></textarea></td>';
-        html += '</tr>';
-        html += '</table>';
-        html += '</br>';
-        html += '<table><tr><td><input type="submit"></td></tr></table>';
-        return html;
+            html += '</br>';
+            html += '<table>';
+            html += '<tr>';
+            html += '<td>Comments and Observations</td>';
+            html += '</tr>';
+            html += '<tr>';
+            html += '<td><textarea></textarea></td>';
+            html += '</tr>';
+            html += '</table>';
+            html += '</br>';
+            html += '<table><tr><td><input type="submit"></td></tr></table>';
+
+            $(".result").show().html(html);
+        }).error(function(data){
+            alert('error');
+        });
+
+
     }
 </script>
 
