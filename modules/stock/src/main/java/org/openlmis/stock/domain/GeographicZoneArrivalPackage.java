@@ -29,6 +29,7 @@ public class GeographicZoneArrivalPackage extends StockModel{
     Integer number_recieved;
     Integer number_expected;
     String physical_damage;
+    Integer damaged_amount;
     String temprature_monitor;
     String vvm_status;
     String problems;

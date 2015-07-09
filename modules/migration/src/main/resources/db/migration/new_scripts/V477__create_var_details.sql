@@ -17,5 +17,12 @@ CREATE TABLE var_details (
   actual_time_of_arrival    TIMESTAMP NOT NULL,
   number_of_items_inspected  INTEGER NOT NULL,
   coolant_type                VARCHAR(20) NOT NULL,
-  temperature_monitor     VARCHAR(20) NOT NULL
+  temperature_monitor     VARCHAR(20) NOT NULL,
+
+  labels     VARCHAR(200) NOT NULL,
+  comments     VARCHAR(200) NOT NULL,
+  invoice     VARCHAR(200) NOT NULL,
+  packing_list     VARCHAR(200) NOT NULL,
+  release_certificate VARCHAR(200) NOT NULL,
+  airway_bill     VARCHAR(30) NOT NULL
 );

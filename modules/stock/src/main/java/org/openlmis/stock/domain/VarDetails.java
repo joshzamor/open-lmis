@@ -15,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class FlightArrival extends StockModel{
+public class VarDetails extends StockModel{
     Long id;
     String awb_number;
     String flight_number;
@@ -24,6 +24,13 @@ public class FlightArrival extends StockModel{
     Integer number_of_items_inspected;
     String coolant_type;
     String temperature_monitor;
+
+    String labels;
+    String comments;
+    String invoice;
+    String packing_list;
+    String release_certificate;
+    String airway_bill;
 
     @Override
     public String getTableName() {

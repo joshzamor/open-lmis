@@ -2,14 +2,13 @@ package org.openlmis.stock.repository.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.openlmis.core.domain.GeographicZone;
-import org.openlmis.stock.domain.FlightArrival;
+import org.openlmis.stock.domain.VarDetails;
 
 /**
  * Created by Morley on 6/28/2015.
  */
-public interface HasFlightArrival {
+public interface HasVarDetail {
 
     @Select("select * from var_details where id = #{id}")
-    FlightArrival getFlightArrivalById(@Param("id") Long id);
+    VarDetails getVarDetailsById(@Param("id") Long id);
 }

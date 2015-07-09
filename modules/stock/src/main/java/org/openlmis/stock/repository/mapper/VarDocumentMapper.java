@@ -1,8 +1,6 @@
 package org.openlmis.stock.repository.mapper;
 
 import org.apache.ibatis.annotations.*;
-import org.openlmis.stock.domain.FlightArrival;
-import org.openlmis.stock.domain.PackageContent;
 import org.openlmis.stock.domain.Vaccine;
 import org.openlmis.stock.domain.VarDocument;
 import org.springframework.stereotype.Repository;
@@ -14,7 +12,7 @@ import java.util.List;
  */
 
 @Repository
-public interface VarDocumentMapper extends HasFlightArrival,StockMapper<VarDocument>{
+public interface VarDocumentMapper extends HasVarDetail,StockMapper<VarDocument>{
 
     @Insert("insert into var_documents (name, comments, var_details_id) values " +
             "(#{name}, #{comments}, #{var_details_id})")
