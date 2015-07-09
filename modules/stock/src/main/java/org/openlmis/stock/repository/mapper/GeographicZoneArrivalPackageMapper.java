@@ -27,8 +27,8 @@ public interface GeographicZoneArrivalPackageMapper extends HasGeographicZone,Ha
 
 
 
-    @Insert("insert into geographic_zone_arrival_package (vaccine_packaging_id, package_number, lot_number, number_as_expected, gtin, number_recieved, number_expected, physical_damage,temprature_monitor, vvm_status, problems, receiving_user, geographic_zone_id) values " +
-            "(#{vaccine_packaging_id}, #{package_number}, #{lot_number}, #{number_as_expected}, #{gtin}, #{number_recieved}, #{number_expected}, #{physical_damage}, #{temprature_monitor}, #{vvm_status}, #{problems}, #{receiving_user}, #{geographic_zone_id})")
+    @Insert("insert into geographic_zone_arrival_package (vaccine_packaging_id, package_number, lot_number, number_as_expected, gtin, number_recieved, number_expected, physical_damage,damaged_amount,temprature_monitor, vvm_status, problems, receiving_user, geographic_zone_id) values " +
+            "(#{vaccine_packaging_id}, #{package_number}, #{lot_number}, #{number_as_expected}, #{gtin}, #{number_recieved}, #{number_expected}, #{physical_damage}, #{damaged_amount}, #{temprature_monitor}, #{vvm_status}, #{problems}, #{receiving_user}, #{geographic_zone_id})")
     @Options(flushCache = true, useGeneratedKeys = true)
     Integer insert(GeographicZoneArrivalPackage geographicZoneArrivalPackage);
 
@@ -42,6 +42,7 @@ public interface GeographicZoneArrivalPackageMapper extends HasGeographicZone,Ha
             " number_recieved = #{number_recieved}, " +
             " number_expected = #{number_expected}, " +
             " physical_damage = #{physical_damage}, " +
+            " damaged_amount = #{damaged_amount}, " +
             " temprature_monitor = #{temprature_monitor}, " +
             " vvm_status = #{vvm_status} ," +
             " problems = #{problems}, " +

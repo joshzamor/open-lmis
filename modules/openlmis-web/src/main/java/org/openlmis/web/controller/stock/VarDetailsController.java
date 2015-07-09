@@ -1,10 +1,8 @@
 package org.openlmis.web.controller.stock;
 
-import org.openlmis.stock.domain.FlightArrival;
-import org.openlmis.stock.domain.VaccinePackaging;
-import org.openlmis.stock.service.FlightArrivalService;
+import org.openlmis.stock.domain.VarDetails;
+import org.openlmis.stock.service.VarDetailsService;
 import org.openlmis.stock.service.StockService;
-import org.openlmis.stock.service.VaccinePackagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by Morley on 6/20/2015.
  */
 @Controller
-@RequestMapping(value = "/stock/flight/arrival")
-public class FlightArrivalController  extends StockBaseController<FlightArrival> {
+@RequestMapping(value = "/stock/var/details")
+public class VarDetailsController extends StockBaseController<VarDetails> {
     @Autowired
-    private FlightArrivalService service;
+    private VarDetailsService service;
 
     @Override
     public StockService getService() {

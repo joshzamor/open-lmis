@@ -10,12 +10,14 @@ import java.util.List;
  * Created by Morley on 6/14/2015.
  */
 @Repository
-public interface ManufacturePackageMapper extends HasVaccinePackaging,StockMapper<ManufacturePackage>{
+public interface ManufacturePackageMapper extends HasVarDetail,HasVaccinePackaging,StockMapper<ManufacturePackage>{
 
     @Select("select * from manufacture_package")
     @Results(value = {
             @Result(property = "vaccine_packaging", javaType = VaccinePackaging.class, column = "vaccine_packaging_id",
-                    one = @One(select = "getVaccinePackagingById"))
+                    one = @One(select = "getVaccinePackagingById")),
+            @Result(property = "var_details", javaType = VarDetails.class, column = "var_details_id",
+                    one = @One(select = "getVarDetailsById"))
     })
     List<ManufacturePackage> getAll();
 
@@ -40,14 +42,18 @@ public interface ManufacturePackageMapper extends HasVaccinePackaging,StockMappe
     @Select("select * from manufacture_package where id = #{id}")
     @Results(value = {
             @Result(property = "vaccine_packaging", javaType = VaccinePackaging.class, column = "vaccine_packaging_id",
-                    one = @One(select = "getVaccinePackagingById"))
+                    one = @One(select = "getVaccinePackagingById")),
+            @Result(property = "var_details", javaType = VarDetails.class, column = "var_details_id",
+                    one = @One(select = "getVarDetailsById"))
     })
     ManufacturePackage getById(@Param("id") Long id);
 
     @SelectProvider(type=ModelProviders.class, method="filterModal")
     @Results(value = {
             @Result(property = "vaccine_packaging", javaType = VaccinePackaging.class, column = "vaccine_packaging_id",
-                    one = @One(select = "getVaccinePackagingById"))
+                    one = @One(select = "getVaccinePackagingById")),
+            @Result(property = "var_details", javaType = VarDetails.class, column = "var_details_id",
+                    one = @One(select = "getVarDetailsById"))
     })
     List<ManufacturePackage> filter(@Param("filter") String filter,ManufacturePackage manufacturePackage);
 

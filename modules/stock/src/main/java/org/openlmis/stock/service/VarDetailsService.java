@@ -1,8 +1,7 @@
 package org.openlmis.stock.service;
 
-import org.openlmis.stock.domain.FlightArrival;
-import org.openlmis.stock.domain.Vaccine;
-import org.openlmis.stock.repository.FlightArrivalRepository;
+import org.openlmis.stock.domain.VarDetails;
+import org.openlmis.stock.repository.VarDetailRepository;
 import org.openlmis.stock.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +11,10 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class FlightArrivalService extends StockService<FlightArrival>{
+public class VarDetailsService extends StockService<VarDetails>{
 
     @Autowired
-    private FlightArrivalRepository repository;
+    private VarDetailRepository repository;
 
     @Override
     public StockRepository getRepository() {

@@ -1,9 +1,7 @@
 package org.openlmis.stock.repository.mapper;
 
 import org.apache.ibatis.annotations.*;
-import org.openlmis.stock.domain.FlightArrival;
 import org.openlmis.stock.domain.Vaccine;
-import org.openlmis.stock.domain.VarDocument;
 import org.openlmis.stock.domain.VarPackageAlarm;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +12,7 @@ import java.util.List;
  */
 
 @Repository
-public interface VarPackageAlarmMapper extends HasFlightArrival,StockMapper<VarPackageAlarm> {
+public interface VarPackageAlarmMapper extends HasVarDetail,StockMapper<VarPackageAlarm> {
 
     @Insert("insert into var_package_alarms (lot_number, alarm_temperature, cold_chain_monitor,time_of_inspection,var_details_id) values " +
             "(#{lot_number}, #{alarm_temperature}, #{cold_chain_monitor}, #{time_of_inspection}, #{var_details_id})")

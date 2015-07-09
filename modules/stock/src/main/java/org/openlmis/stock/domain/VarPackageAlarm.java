@@ -14,7 +14,7 @@ public class VarPackageAlarm  extends StockModel{
     Date time_of_inspection;
     Long var_details_id;
 
-    FlightArrival var_details;
+    VarDetails var_details;
     @Override
     public String getTableName() {
         return "var_package_alarms";

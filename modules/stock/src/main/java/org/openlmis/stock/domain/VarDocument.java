@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 /**
  * Created by Morley on 6/28/2015.
  */
@@ -22,7 +20,7 @@ public class VarDocument  extends StockModel{
     String comments;
     Long var_details_id;
 
-    FlightArrival var_details;
+    VarDetails var_details;
     @Override
     public String getTableName() {
         return "var_documents";

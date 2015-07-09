@@ -17,5 +17,6 @@ CREATE TABLE manufacture_package (
   number_of_doses   INTEGER,
   delivery_status   VARCHAR(20),
   purchasing_order_number VARCHAR(30),
+  var_details_id INTEGER REFERENCES var_details (id)  ON DELETE CASCADE,
   vaccine_packaging_id INTEGER REFERENCES vaccine_packaging (id) ON DELETE CASCADE
 );
