@@ -1,0 +1,75 @@
+
+    <div class ="form-row clearfix">
+
+        <div class ="form-row clearfix">
+            <h4>DOCUMENTS ACCOMPANYING THE SHIPMENT & STATUS OF SHIPPING INDICATORS</h4>
+
+                <div class='span2'>
+                    <label> Packing list <br>  </label>
+                    <select class="form-control">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class='span2'>
+                    <label> Release certificate<br>  </label>
+                    <select class="form-control">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class='span2'>
+                    <label> Vaccine Arrival Report <br>  </label>
+                    <select class="form-control">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class='span2'>
+                    <label> Coolant type <br>   </label>
+                    <select class="form-control">
+                        <option>Dry ice</option>
+                        <option>Icepacks</option>
+                        <option>No coolant</option>
+                    </select>
+                </div>
+                <div class='span2'>
+                    <label> Temperature monitors <br>  </label>
+                        <select class="form-control">
+                            <option>VVM</option>
+                            <option>Cold-chain card</option>
+                            <option>Electronic device</option>
+                        </select>
+                </div>
+        </div><div class ="form-row clearfix">
+            <h4>FLIGHT DETAILS</h4>
+
+                <div class='span2'>
+                    <label> AWB Number <br>  </label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class='span2'>
+                    <label> Airport of destination <br>  </label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class='span2'>
+                    <label> Flight No <br>  </label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class='span2'>
+                    <label> ETA as per notification<br>  </label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class='span2'>
+                    <label> Actual time of arrival <br>  </label>
+                    <input type="text" class="form-control">
+                </div>
+        </div>
+
+        <div class='span12 form-group text-center'>
+            <input type="submit" class="btn btn-primary" value="save">
+            <input type="submit" class="btn btn-info" value="Preview Report">
+            <button class="btn btn-xs btn-warning" ng-click="cancelPackageProcessing()">Cancel</button>
+        </div>
+
+    </div>

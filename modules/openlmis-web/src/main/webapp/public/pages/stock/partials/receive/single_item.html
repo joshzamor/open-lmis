@@ -1,0 +1,108 @@
+<div class="app-form">
+    <form name="receive_package" novalidate>
+        <div class='form-group' style="margin-bottom: 0px">
+            <h3 >Confirm receiving Package</h3>
+            <!--SSCC-->
+            <div class='form-row clearfix'>
+                <div class="form-cell">
+                    <label>Confirm Receiving Package With Lot Number: <span>{{ data.current_item.lot_number }}</span>&nbsp;&nbsp;
+                        </label>
+                </div>
+            </div>
+            <div class='form-row clearfix' >
+                <table class="table-bordered table table-striped ng-scope" >
+
+                    <thead>
+                    <tr class="gradient-header">
+                        <th  style="text-align: center">GTN</th>
+                        <th  style="text-align: center">Description</th>
+                        <th  style="text-align: center">Lot</th>
+                        <th  style="text-align: center">Expiry</th>
+                        <th  style="text-align: center">Boxes</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--<tr ng-repeat="subPackages in singlePackage">-->
+
+                    <tr>
+                        <td>{{data.current_item.vaccine_packaging.gtin}}</td>
+                        <td>{{data.current_item.vaccine_packaging.manufacturer.description}}</td>
+                        <td>{{data.current_item.lot_number}}</td>
+                        <td>{{data.current_item.expire_date  | date:'yyyy-MM-dd'}}</td>
+                        <td>{{ numberOfBoxes(data.current_item.vaccine_packaging.doses_per_vial,data.current_item.vaccine_packaging.vials_per_box,data.current_item.number_of_doses)}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="form-cell horizontalFilters">
+                <label class="labels" >Quantity Okay</label>
+
+                <div class="form-fields">
+                    <select class="input-large ng-pristine ng-valid" ng-model="condition.number_as_expected" required>
+                        <option selected="selected" value="Yes">Yes</option>
+                        <option  value="No">No</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-cell horizontalFilters">
+                <label class="labels" >Physical Damage</label>
+
+                <div class="form-fields">
+                    <select class="input-large ng-pristine ng-valid" ng-model="condition.physical_damage" required>
+                        <option  value="Yes">Yes</option>
+                        <option  value="No">No</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-cell horizontalFilters">
+                <label class="labels" >VVM Status</label>
+
+                <div class="form-fields">
+                    <select class="input-large ng-pristine ng-valid" ng-model="condition.vvm_status" required>
+                        <option selected="selected" value="I (Okey)">I (Okey)</option>
+                        <option  value="II (Okey)">II (Okey)</option>
+                        <option  value="III( Bad)">III( Bad)</option>
+                        <option  value="IV (Bad)">IV (Bad)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-cell horizontalFilters">
+            <label class="labels" >Temp Monitors</label>
+
+            <div class="form-fields">
+                <select class="input-large ng-pristine ng-valid" ng-model="condition.temp_monitors" required>
+                    <option selected="selected" value="Fine">Fine</option>
+                    <option  value="Not Fine">Not Fine</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-cell horizontalFilters" ng-if="condition.number_as_expected == 'No' || condition.physical_damage == 'Yes'  ">
+            <label class="labels" >Available Amount(Boxes)</label>
+
+            <div class="form-fields">
+                <input type="text" class="form-control" ng-model="condition.number_recieved" >
+            </div>
+        </div>
+
+
+
+        </div>
+        <div class='clearfix'>
+            <div class="form-cell horizontalFilters">
+                <label></label>
+                <textarea ng-model="condition.problems"></textarea>
+            </div>
+            <div class="form-cell horizontalFilters">
+                <label>&nbsp;</label>
+                <div class="form-fields">
+                    <input class="btn btn-primary" type="button" ng-disabled="receive_package.$invalid" value="Confirm"  id="confirm_package_button" ng-click="addSingleItem(condition,data.current_item)"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input class="btn btn-danger btn-sm" type="button" value="Cancel" ng-click="cancelConfirmation()"/>
+                </div>
+            </div>
+        </div>
+</div>
+
+</form>
+</div>
