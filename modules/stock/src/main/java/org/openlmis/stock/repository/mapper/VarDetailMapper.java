@@ -13,8 +13,8 @@ import java.util.List;
 @Repository
 public interface VarDetailMapper extends StockMapper<VarDetails>{
 
-    @Insert("insert into var_details (awb_number, number_of_items_inspected, flight_number,estimate_time_of_arrival,actual_time_of_arrival,coolant_type,temperature_monitor,var_details_id ) values " +
-            "(#{awb_number}, #{number_of_items_inspected}, #{flight_number}, #{estimate_time_of_arrival}, #{actual_time_of_arrival}, #{coolant_type}, #{temperature_monitor}, #{var_details_id})")
+    @Insert("insert into var_details (awb_number, number_of_items_inspected, flight_number,estimate_time_of_arrival,actual_time_of_arrival,coolant_type,temperature_monitor,labels,comments,invoice,packing_list,release_certificate,airway_bill) values " +
+            "(#{awb_number}, #{number_of_items_inspected}, #{flight_number}, #{estimate_time_of_arrival}, #{actual_time_of_arrival}, #{coolant_type}, #{temperature_monitor},#{labels},#{comments},#{invoice},#{packing_list},#{release_certificate},#{airway_bill})")
     @Options(flushCache = true, useGeneratedKeys = true)
     Integer insert(VarDetails varDetails);
 
@@ -27,7 +27,12 @@ public interface VarDetailMapper extends StockMapper<VarDetails>{
             " actual_time_of_arrival = #{actual_time_of_arrival}, " +
             " coolant_type = #{coolant_type}, " +
             " temperature_monitor = #{temperature_monitor}, " +
-            " var_details_id = #{var_details_id} " +
+            " labels = #{labels}, " +
+            " comments = #{comments}, " +
+            " invoice = #{invoice}, " +
+            " packing_list = #{packing_list}, " +
+            " release_certificate = #{release_certificate}, " +
+            " airway_bill = #{airway_bill} " +
             "where id = #{id}")
     void update(VarDetails varDetails);
 
@@ -38,5 +43,5 @@ public interface VarDetailMapper extends StockMapper<VarDetails>{
     List<VarDetails> getAll(VarDetails varDetails);
 
     @Select("select from var_details where id = #{id}")
-    VarDetails getById(@Param("id") Long id,VarDetails varDetails);
+    VarDetails getById(@Param("id") Long id);
 }

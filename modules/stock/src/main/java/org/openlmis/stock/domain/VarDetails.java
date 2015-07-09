@@ -25,6 +25,13 @@ public class VarDetails extends StockModel{
     String coolant_type;
     String temperature_monitor;
 
+    String labels;
+    String comments;
+    String invoice;
+    String packing_list;
+    String release_certificate;
+    String airway_bill;
+
     @Override
     public String getTableName() {
         return "var_details";
