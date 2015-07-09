@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.openlmis.core.domain.BaseModel;
+import org.openlmis.core.domain.GeographicZone;
 
 import java.util.Date;
 
@@ -22,9 +23,14 @@ public class GeographicZoneStock  extends StockModel{
     Date expire_date;
     String lot_number;
     Integer number_of_doses;
-    Integer vaccine_packaging_id;
-    Integer geographic_zone_id;
 
+    Integer geographic_zone_id;
+    GeographicZone geographic_zone;
+
+    Integer vaccine_id;
+    Vaccine vaccine;
+
+    Integer vaccine_packaging_id;
     VaccinePackaging vaccine_packaging;
 
     @Override
