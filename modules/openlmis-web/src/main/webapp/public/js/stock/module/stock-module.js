@@ -44,7 +44,7 @@ var vaccine = angular.module('VaccineModule', ['openlmis', 'ngTable','ui.bootstr
         // this route is responding to receive route
         .when('/receive', {
             templateUrl: "/public/pages/stock/partials/receive.html",
-            controller: "StockModuleController"
+            controller: "StockReceiveController"
         })
         // this route is responding to home route
         .when('/home', {
@@ -63,8 +63,8 @@ var vaccine = angular.module('VaccineModule', ['openlmis', 'ngTable','ui.bootstr
         })
         // this route is responding to scan package route
         .when('/', {
-            templateUrl: "/public/pages/stock/partials/scan_package.html",
-            controller: "StockModuleController"
+            templateUrl: "/public/pages/stock/partials/receive.html",
+            controller: "StockReceiveController"
         })
         // this route is responding to  any link other than registered
         .otherwise({redirectTo: '/'});
@@ -295,11 +295,14 @@ $scope.packageStructure = {
         });
     }
     // cancell package adding
-    $scope.cancelAddpackage = function(data){
+    $scope.cancelAddPackage = function(data){
         $scope.package = null;
         $scope.viewForm = false;
         $scope.editForm = false;
         $scope.viewTable = true;
+        jQuery(viewTable).show();
+        jQuery(editForm).hide();
+        jQuery(viewForm).hide();
     }
     // action to scan package
 

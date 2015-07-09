@@ -66,7 +66,7 @@
                                     <label>GTIN</label>
                                     <div class="form-field">
                                         <select  class="form-control" ng-model="package.vaccine_packaging_id" >
-                                            <option ng-repeat="vaccine in packaging.vaccine_packagings"  value="{{vaccine.id}}">{{vaccine.gtin}}</option>
+                                            <option ng-repeat="vaccine in packaging.vaccine_packagings"  value="{{vaccine.id}}">{{ vaccine.gtin }}( {{ vaccine.packaging }} )</option>
                                         </select>
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@
                         <div class="form-cell horizontalFilters">
                             <label>&nbsp;</label>
                             <div class="form-fields">
-                                <input class="btn btn-danger" type="button" value="Cancel" ng-click="cancelAddpackage(package)" id="cancel_package_package"/>
+                                <input class="btn btn-danger" type="button" value="Cancel" ng-click="cancelAddPackage(package)" id="cancel_package_package"/>
                             </div>
                         </div><div class="form-cell horizontalFilters">
                         <label>&nbsp;</label>
@@ -153,7 +153,7 @@
                                     <label>GTIN</label>
                                     <div class="form-field">
                                         <select  class="form-control" ng-model="editPackage.vaccine_packaging_id" >
-                                            <option ng-repeat="vaccine in packaging.vaccine_packagings"  value="{{vaccine.id}}">{{vaccine.gtin}}</option>
+                                            <option ng-repeat="vaccine in packaging.vaccine_packagings"  value="{{vaccine.id}}">{{ vaccine.gtin }}( {{ vaccine.packaging }} )</option>
                                         </select>
                                     </div>
                                 </div>
@@ -211,7 +211,7 @@
                 <!--Add More Package form-->
                 <div class='form-row clearfix'  id="viewTable">
 
-                    <table datatable="" class="table-bordered table table-striped ng-scope" >
+                    <table datatable="ng" class="table table-bordered" >
                             <thead>
                             <tr>
                                 <th  style="text-align: center">No.</th>
