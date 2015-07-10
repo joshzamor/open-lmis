@@ -75,10 +75,48 @@ vaccine.controller("StockReceiveController",function($scope,$http,$location,$rou
          if(lot_number == value.lot_number){
             item = value;
             $scope.condition = {}
-            $scope.condition.number_recieved = $scope.numberOfBoxes(value.vaccine_packaging.doses_per_vial,value.vaccine_packaging.vials_per_box,value.number_of_doses)
+            //$scope.condition.number_recieved = $scope.numberOfBoxes(value.vaccine_packaging.doses_per_vial,value.vaccine_packaging.vials_per_box,value.number_of_doses)
+            $scope.condition.partials = "No";
+            $scope.condition.vvm_status = "I (Okey)";
+            $scope.condition.damaged_amount = 0;
+            $scope.condition.physical_damage = "No";
+            $scope.condition.number_recieved = 0;
+            $scope.condition.number_as_expected = "Yes";
+            $scope.condition.partials = "No";
+            $scope.condition.number_of_partials = 0;
+            $scope.condition.boxes_with_problems = 0;
          }
       });
       return item;
+   }
+
+   $scope.createParials = function(){
+      $scope.condition.parials_boxes = [];
+      for(var i = 0;i<$scope.condition.number_of_partials;i++){
+         $scope.condition.parials_boxes.push({'lot_number':$scope. data.current_item.lot_number,'box_number':'','available_amount':''})
+      }
+      //return $scope.condition.parials_boxes;
+   }
+
+   $scope.createVVMS = function(){
+      $scope.condition.problem_boxes = [];
+      for(var i = 0;i<$scope.condition.boxes_with_problems;i++){
+         $scope.condition.problem_boxes.push({'lot_number':$scope. data.current_item.lot_number,'box_number':'','alarm':'','cold_chain':''})
+      }
+      //return $scope.condition.problem_boxes;
+   }
+
+   $scope.getVVMStatus = function(){
+      if($scope.condition.vvm_status == 'III( Bad)' || $scope.condition.vvm_status == 'IV( Bad)'){
+         if($scope.condition.boxes_with_problems != 0){
+            return true;
+         }else{
+            return false;
+         }
+
+      }else{
+         return false;
+      }
    }
 
    //rollback completely
