@@ -13,7 +13,7 @@
     <script src="js/jquery-1.11.3.min.js"></script>
     <!--<script src="js/queryScript.js"></script>-->
 </head>
-<body>
+<body style="width: 300px">
 <h1 style="background-color:#E6E6FA;">Electronic Logistics Management Information System( ELMIS )</h1>
 <div class="contents">
     <form id="shipmentform">
@@ -151,10 +151,10 @@
                 html += '</br>';
                 html += '<table>';
                 html += '<tr><td>Quantity Okay</td><td><select id="quantity"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>';
+                html += '<tr id="amount"><td>Amount Available(boxes)</td><td><input type="text" id="available_boxes"> </td></tr>';
                 html += '<tr><td>Physical Damage</td><td><select id="physical_damage"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>';
                 html += '<tr><td>VVM Status</td><td><select id="vvm_status"><option value="I (Okey)">I (Okey)</option><option value="II (Okey)">II (Okey)</option><option value="III (Bad)">III (Bad)</option><option  value="IV (Bad)">IV (Bad)</option></select></td></tr>';
                 html += '<tr><td>Temp monitors Status</td><td><select id="temp_monitor"><option>Good</option><option>Normal</option><option>Bad</option></select></td></tr>';
-                html += '<tr><td>Amount Available(boxes)</td><td><input type="text" id="available_boxes" value="'+boxes+'" > </td></tr>';
 
                 html += '</table>';
                 html += '</br>';
