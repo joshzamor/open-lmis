@@ -55,7 +55,7 @@ public class ModelProviders {
             }
         return SQL();
     }
-    public String selectAll(Map<String, Object> params) throws Exception{
+    /*public String selectAll(Map<String, Object> params) throws Exception{
         BEGIN();
         SELECT("*");
         //FROM("vaccines");
@@ -127,7 +127,7 @@ public class ModelProviders {
             }
         }
         return SQL();
-    }
+    }*/
     public String evaluateFilter(String filter) throws ParseException {
         String[] req = filter.split(":");
         if (req[2].contains("(")) {
