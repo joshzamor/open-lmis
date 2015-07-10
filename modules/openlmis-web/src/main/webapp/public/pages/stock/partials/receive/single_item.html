@@ -126,8 +126,22 @@
              <tr ng-repeat="items in condition.problem_boxes">
                  <td>{{ items.lot_number }}</td>
                  <td><input type="number" class="form-control input-sm" ng-model="items.box_number" ></td>
-                 <td><input type="number" class="form-control input-sm" ng-model="items.alarm" ></td>
-                 <td><input type="number" class="form-control input-sm" ng-model="items.cold_chain" ></td>
+                 <td>
+                     <select>
+                         <option value=">= 45">>= 45&#8451;</option>
+                         <option value=">= 30">>= 30&#8451;</option>
+                         <option value=">= 10">>= 10&#8451;</option>
+                         <option value="< -0.5">< -0.5&#8451;</option>
+                     </select>
+                 </td>
+                 <td>
+                     <select>
+                         <option value="A">A</option>
+                         <option value="B">B</option>
+                         <option value="C">C</option>
+                         <option value="D">D</option>
+                     </select>
+                 </td>
              </tr>
          </table>
 

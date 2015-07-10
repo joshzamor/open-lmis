@@ -175,4 +175,12 @@ vaccine.controller("StockReceiveController",function($scope,$http,$location,$rou
        $scope.process_package = true;
    }
 
+   $scope.showReport = false;
+   $scope.displaySummary = function(){
+      $scope.showReport = true;
+   }
+   $scope.hideSummary = function(){
+      $scope.showReport = false;
+   }
+
 });

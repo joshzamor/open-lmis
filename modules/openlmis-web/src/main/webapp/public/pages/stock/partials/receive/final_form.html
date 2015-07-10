@@ -61,9 +61,10 @@
                 </div>
         </div>
 
-        <div class='span12 form-group text-center' ng-if="">
+        <div class='span12 form-group text-center'>
             <input type="submit" class="btn btn-primary" value="save">
-            <input type="submit" class="btn btn-info" value="Preview Report">
+            <input type="submit" class="btn btn-info" value="Preview Report" ng-click="displaySummary()" ng-if="!showReport">
+            <input type="submit" class="btn btn-info" value="Hide Report" ng-click="hideSummary()" ng-if="showReport">
             <button class="btn btn-xs btn-warning" ng-click="cancelPackageProcessing()">Cancel</button>
         </div>
 
