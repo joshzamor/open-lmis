@@ -6,6 +6,7 @@
 
         <div ng-include="'partials/receive/final_form.html'" ng-if="allChecked()"></div>
 
+        <div ng-include="'partials/receive/var.html'" ng-if="showReport"></div>
 
         <div class='form-row clearfix' ng-if="!allChecked()">
             <div class="form-cell horizontalFilters">

@@ -46,6 +46,12 @@
                     </select>
                 </div>
             </div>
+            <div class="form-cell horizontalFilters" ng-if="condition.number_as_expected == 'No'">
+                <label class="labels" >Available Amount(Boxes)</label>
+                <div class="form-fields">
+                    <input type="number" class="form-control" ng-model="condition.number_recieved" >
+                </div>
+            </div>
             <div class="form-cell horizontalFilters">
                 <label class="labels" >Physical Damage</label>
 
@@ -54,6 +60,12 @@
                         <option  value="Yes">Yes</option>
                         <option  value="No">No</option>
                     </select>
+                </div>
+            </div>
+            <div class="form-cell horizontalFilters" ng-if="condition.physical_damage == 'Yes'  ">
+                <label class="labels" >Damaged_amount(Boxes)</label>
+                <div class="form-fields">
+                    <input type="number" class="form-control" ng-model="condition.damaged_amount" >
                 </div>
             </div>
             <div class="form-cell horizontalFilters">
@@ -68,30 +80,77 @@
                     </select>
                 </div>
             </div>
+            <div class="form-cell horizontalFilters" ng-if="condition.vvm_status == 'III( Bad)' || condition.vvm_status == 'IV( Bad)'">
+                <label class="labels" >Boxes With Problems</label>
+                <div class="form-fields">
+                    <input type="number" class="form-control" ng-model="condition.boxes_with_problems" ng-change="createVVMS()" >
+                </div>
+            </div>
             <div class="form-cell horizontalFilters">
-            <label class="labels" >Temp Monitors</label>
+            <label class="labels" >Partial Boxes</label>
 
             <div class="form-fields">
-                <select class="input-large ng-pristine ng-valid" ng-model="condition.temp_monitors" required>
-                    <option selected="selected" value="Fine">Fine</option>
-                    <option  value="Not Fine">Not Fine</option>
+                <select class="input-large ng-pristine ng-valid" ng-model="condition.partials" required>
+                    <option selected="selected" value="No">No</option>
+                    <option  value="Yes">Yes</option>
                 </select>
             </div>
         </div>
-        <div class="form-cell horizontalFilters" ng-if="condition.number_as_expected == 'No' || condition.physical_damage == 'Yes'  ">
-            <label class="labels" >Available Amount(Boxes)</label>
-
-            <div class="form-fields">
-                <input type="text" class="form-control" ng-model="condition.number_recieved" >
+            <div class="form-cell horizontalFilters" ng-if="condition.partials == 'Yes'  ">
+                <label class="labels" >Number of Partials(Boxes)</label>
+                <div class="form-fields">
+                    <input type="number" class="form-control" ng-model="condition.number_of_partials" ng-change="createParials()">
+                </div>
             </div>
-        </div>
+         <table class="table table-bordered table-condensed" ng-if="condition.partials == 'Yes' && condition.number_of_partials != 0">
+             <tr><th colspan="3">Fill Details Of Partial Boxes</tr>
+             <tr>
+                 <th>Lot Number</th>
+                 <th>Box Number</th>
+                 <th>Available Amount</th>
+             </tr>
+             <tr ng-repeat="items in condition.parials_boxes">
+                 <td>{{ items.lot_number }}</td>
+                 <td><input type="number" class="form-control input-sm" ng-model="items.box_number" ></td>
+                 <td><input type="number" class="form-control input-sm" ng-model="items.available_amount" ></td>
+             </tr>
+         </table>
+            <table class="table table-bordered table-condensed" ng-if="getVVMStatus()">
+                <tr><th colspan="4"> Fill the Details for Boxes With Problems</tr>
+             <tr >
+                 <th>Lot Number</th>
+                 <th>Box Number</th>
+                 <th>Alarm in Electronic Device</th>
+                 <th>Cold Chain Monitor</th>
+             </tr>
+             <tr ng-repeat="items in condition.problem_boxes">
+                 <td>{{ items.lot_number }}</td>
+                 <td><input type="number" class="form-control input-sm" ng-model="items.box_number" ></td>
+                 <td>
+                     <select>
+                         <option value=">= 45">>= 45&#8451;</option>
+                         <option value=">= 30">>= 30&#8451;</option>
+                         <option value=">= 10">>= 10&#8451;</option>
+                         <option value="< -0.5">< -0.5&#8451;</option>
+                     </select>
+                 </td>
+                 <td>
+                     <select>
+                         <option value="A">A</option>
+                         <option value="B">B</option>
+                         <option value="C">C</option>
+                         <option value="D">D</option>
+                     </select>
+                 </td>
+             </tr>
+         </table>
 
 
 
         </div>
         <div class='clearfix'>
             <div class="form-cell horizontalFilters">
-                <label></label>
+                <label>Additional Comments</label>
                 <textarea ng-model="condition.problems"></textarea>
             </div>
             <div class="form-cell horizontalFilters">
@@ -102,7 +161,6 @@
                 </div>
             </div>
         </div>
-</div>
 
 </form>
 </div>
