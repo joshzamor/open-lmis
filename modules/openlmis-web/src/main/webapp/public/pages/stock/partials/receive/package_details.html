@@ -12,7 +12,7 @@
             <div class="form-cell horizontalFilters">
                 <!--<label openlmis-message="label.stock.lotnumber">Scan Lot Number</label>-->
                 <span><b>Receiving Package With Shipment Number:</b> {{ data.shipping_number }}</span>
-                <button class="btn btn-xs btn-warning pull-right" ng-click="cancelPackageProcessing()">Cancel</button>
+                <button class="btn btn-xs btn-warning pull-right" ng-click="cancelPackageProcessing()" type="button">Cancel</button>
 
 
             </div>
@@ -23,7 +23,7 @@
                         <input type="text" class="form-control" ng-model="lot_number" id="lot_number_filed" >
                     </div>
                     <div class="span3">
-                        <input class="btn btn-primary" type="submit" value="Scan" ng-click="scanLotNumber(lot_number)" id="scan_lot_number_button"/>
+                        <input type="submit" class="btn btn-primary" type="submit" value="Scan" ng-click="scanLotNumber(lot_number)" id="scan_lot_number_button"/>
                     </div>
                 </div>
             </div>

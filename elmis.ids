@@ -3408,27 +3408,6 @@
       <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
       <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
     </table>
-    <table name="flight_arrival" schema="public" catalog="open_lmis" type="TABLE">
-      <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgnZmxpZ2h0X2Fycml2YWxfaWRfc2VxJzo6cmVnY2xhc3Mp" autoIncrement="true"/>
-      <column name="awb_number" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
-      <column name="destination" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <column name="flight_number" sqlType="varchar" precision="20" scale="0" nullable="false" jdbcType="12"/>
-      <column name="estimate_time_of_arrival" sqlType="timestamp" precision="29" scale="6" nullable="false" jdbcType="93"/>
-      <column name="time_of_arrival" sqlType="timestamp" precision="29" scale="6" nullable="false" jdbcType="93"/>
-      <primary-key name="flight_arrival_pkey" columns="id"/>
-    </table>
-    <table name="flight_arrival_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
-      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
-      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
-      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
-      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
-      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
-      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
-      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
-      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
-      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
-      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
-    </table>
     <table name="fulfillment_role_assignments" schema="public" catalog="open_lmis" type="TABLE">
       <column name="userid" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="roleid" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
@@ -3489,6 +3468,8 @@
       <column name="number_recieved" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="number_expected" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="physical_damage" sqlType="varchar" precision="200" scale="0" nullable="true" jdbcType="12"/>
+      <column name="damaged_amount" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="temprature_monitor" sqlType="varchar" precision="200" scale="0" nullable="true" jdbcType="12"/>
       <column name="vvm_status" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="problems" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="receiving_user" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
@@ -3573,11 +3554,13 @@
       <column name="expire_date" sqlType="date" precision="13" scale="0" nullable="true" jdbcType="91"/>
       <column name="lot_number" sqlType="varchar" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <column name="number_of_doses" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="vaccine_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="vaccine_packaging_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="geographic_zone_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="geographic_zone_stocks_pkey" columns="id"/>
       <foreign-key name="geographic_zone_stocks_geographic_zone_id_fkey" columns="geographic_zone_id" ref-table="geographic_zones" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="geographic_zone_stocks_vaccine_packaging_id_fkey" columns="vaccine_packaging_id" ref-table="vaccine_packaging" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="geographic_zone_stocks_vaccine_id_fkey" columns="vaccine_id" ref-table="vaccines" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
     </table>
     <table name="geographic_zone_stocks_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -3740,9 +3723,11 @@
       <column name="number_of_doses" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="delivery_status" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
       <column name="purchasing_order_number" sqlType="varchar" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="var_details_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="vaccine_packaging_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="manufacture_package_pkey" columns="id"/>
-      <foreign-key name="manufacture_package_vaccine_packaging_id_fkey" columns="vaccine_packaging_id" ref-table="vaccine_packaging" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="manufacture_package_vaccine_packaging_id_fkey" columns="vaccine_packaging_id" ref-table="vaccine_packaging" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="manufacture_package_var_details_id_fkey" columns="var_details_id" ref-table="var_details" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
     </table>
     <table name="manufacture_package_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -7153,12 +7138,87 @@
       <column name="type" sqlType="varchar" precision="200" scale="0" nullable="true" jdbcType="12"/>
       <column name="status" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="vaccines_pkey" columns="id"/>
+      <exported-key name="geographic_zone_stocks_vaccine_id_fkey" table="geographic_zone_stocks" schema="public" catalog="open_lmis" columns="vaccine_id"/>
       <exported-key name="package_contents_vaccine_id_fkey" table="package_contents" schema="public" catalog="open_lmis" columns="vaccine_id"/>
       <exported-key name="vaccine_diluents_diluent_id_fkey" table="vaccine_diluents" schema="public" catalog="open_lmis" columns="diluent_id"/>
       <exported-key name="vaccine_diluents_vaccine_id_fkey" table="vaccine_diluents" schema="public" catalog="open_lmis" columns="vaccine_id"/>
       <exported-key name="vaccine_packaging_vaccine_id_fkey" table="vaccine_packaging" schema="public" catalog="open_lmis" columns="vaccine_id"/>
     </table>
     <table name="vaccines_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="var_details" schema="public" catalog="open_lmis" type="TABLE">
+      <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgndmFyX2RldGFpbHNfaWRfc2VxJzo6cmVnY2xhc3Mp" autoIncrement="true"/>
+      <column name="awb_number" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="flight_number" sqlType="varchar" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="estimate_time_of_arrival" sqlType="timestamp" precision="29" scale="6" nullable="false" jdbcType="93"/>
+      <column name="actual_time_of_arrival" sqlType="timestamp" precision="29" scale="6" nullable="false" jdbcType="93"/>
+      <column name="number_of_items_inspected" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="coolant_type" sqlType="varchar" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="temperature_monitor" sqlType="varchar" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="labels" sqlType="varchar" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="comments" sqlType="varchar" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="invoice" sqlType="varchar" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="packing_list" sqlType="varchar" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="release_certificate" sqlType="varchar" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="airway_bill" sqlType="varchar" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="var_details_pkey" columns="id"/>
+      <exported-key name="manufacture_package_var_details_id_fkey" table="manufacture_package" schema="public" catalog="open_lmis" columns="var_details_id"/>
+      <exported-key name="var_documents_var_details_id_fkey" table="var_documents" schema="public" catalog="open_lmis" columns="var_details_id"/>
+      <exported-key name="var_package_alarms_var_details_id_fkey" table="var_package_alarms" schema="public" catalog="open_lmis" columns="var_details_id"/>
+    </table>
+    <table name="var_details_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="var_documents" schema="public" catalog="open_lmis" type="TABLE">
+      <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgndmFyX2RvY3VtZW50c19pZF9zZXEnOjpyZWdjbGFzcyk=" autoIncrement="true"/>
+      <column name="name" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="comments" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="var_details_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="var_documents_pkey" columns="id"/>
+      <foreign-key name="var_documents_var_details_id_fkey" columns="var_details_id" ref-table="var_details" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="var_documents_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="var_package_alarms" schema="public" catalog="open_lmis" type="TABLE">
+      <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgndmFyX3BhY2thZ2VfYWxhcm1zX2lkX3NlcSc6OnJlZ2NsYXNzKQ==" autoIncrement="true"/>
+      <column name="lot_number" sqlType="varchar" precision="40" scale="0" nullable="false" jdbcType="12"/>
+      <column name="alarm_temperature" sqlType="varchar" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="cold_chain_monitor" sqlType="varchar" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="time_of_inspection" sqlType="timestamp" precision="29" scale="6" nullable="false" jdbcType="93"/>
+      <column name="var_details_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="var_package_alarms_pkey" columns="id"/>
+      <foreign-key name="var_package_alarms_var_details_id_fkey" columns="var_details_id" ref-table="var_details" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="var_package_alarms_id_seq" schema="public" catalog="open_lmis" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
       <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
       <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>

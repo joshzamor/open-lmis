@@ -152,9 +152,11 @@
                 html += '<table>';
                 html += '<tr><td>Quantity Okay</td><td><select id="quantity"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>';
                 html += '<tr id="amount"><td>Amount Available(boxes)</td><td><input type="text" id="available_boxes"> </td></tr>';
-                html += '<tr><td>Physical Damage</td><td><select id="physical_damage"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>';
+                html += '<tr><td>Physical Damage</td><td><select id="physical_damage"><option value="No">No</option><option value="Yes">Yes</option></select></td></tr>';
+                html += '<tr id="damage"><td>Damaged Amount(boxes)</td><td><input type="text" id="damaged_boxes"> </td></tr>';
                 html += '<tr><td>VVM Status</td><td><select id="vvm_status"><option value="I (Okey)">I (Okey)</option><option value="II (Okey)">II (Okey)</option><option value="III (Bad)">III (Bad)</option><option  value="IV (Bad)">IV (Bad)</option></select></td></tr>';
-                html += '<tr><td>Temp monitors Status</td><td><select id="temp_monitor"><option>Good</option><option>Normal</option><option>Bad</option></select></td></tr>';
+                html += '<tr><td>Partial Boxes</td><td><select id="partial_boxes"><option>No</option><option>Yes</option></select></td></tr>';
+                html += '<tr id="partial"><td>Number of Vials in Partial Boxes</td><td><input type="text" id="parial_boxes"> </td></tr>';
 
                 html += '</table>';
                 html += '</br>';
@@ -163,13 +165,37 @@
                 html += '<td>Comments and Observations</td>';
                 html += '</tr>';
                 html += '<tr>';
-                html += '<td><textarea></textarea></td>';
+                html += '<td><textarea id="commentss"></textarea></td>';
                 html += '</tr>';
                 html += '</table>';
                 html += '</br>';
                 html += '<table><tr><td><input type="button" value="Save" id="saveChanges"></td></tr></table>';
 
                 $(".result").show().html(html);
+                $("#amount").hide();
+                $("#damage").hide();
+                $("#partial").hide();
+                $("#quantity").change(function(){
+                    if($(this).val() == "No"){
+                        $("#amount").show("slow");
+                    }else{
+                        $("#amount").hide("slow");
+                    }
+                });
+                $("#physical_damage").change(function(){
+                    if($(this).val() == "Yes"){
+                        $("#damage").show("slow");
+                    }else{
+                        $("#damage").hide("slow");
+                    }
+                });
+                $("#partial_boxes").change(function(){
+                    if($(this).val() == "Yes"){
+                        $("#partial").show("slow");
+                    }else{
+                        $("#partial").hide("slow");
+                    }
+                });
                 saveOneItem();
             }
             $("#message").hide();
@@ -200,7 +226,14 @@
         $("#scan_lot").click(function(){
             if($("#lot_number").val() != "") {
                 var lot_number = $("#lot_number").val();
-                PACKAGE.current_lot_number = lot_number;
+                if(lot_number.length >= 24){
+                    var n = lot_number.lastIndexOf("21");
+//                console.log(lot_number.substring(27,n));
+                    PACKAGE.current_lot_number = lot_number.substring(29,n);
+                }else{
+                    PACKAGE.current_lot_number = lot_number;
+                }
+
                 getSpecificLotNumber();
             }
         });
@@ -220,13 +253,13 @@
         if(count == num){
             html += '</br>';
             html += '<table>';
-            html += '<tr><td>Packing list </td><td><select id="quantity"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>';
-            html += '<tr><td>Release certificate</td><td><select id="physical_damage"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>';
-            html += '<tr><td>Invoice</td><td><select id="vvm_status"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>';
-            html += '<tr><td>Airway Bill</td><td><select id="vvm_status"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>';
-            html += '<tr><td>Coolant type </td><td><select id="temp_monitor"><option>Good</option><option value="Dry Ice">Dry Ice</option><option value="Ice Packs">Ice Packs</option><option value="No Coolant">No Coolant</option></select></td></tr>';
-            html += '<tr><td>Temperature monitors</td><td><select><option value="VVM">VVM</option><option value="Cold-chain card">Cold-chain card</option><option value="Elecronic Device">Elecronic Device</option></select></td></tr>';
-            html += '<tr><td>Comments</td><td><textarea></textarea></td></tr>';
+            html += '<tr><td>Packing list </td><td><select id="packaging"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>';
+            html += '<tr><td>Release certificate</td><td><select id="release"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>';
+            html += '<tr><td>Invoice</td><td><select id="invoice"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>';
+            html += '<tr><td>Airway Bill</td><td><select id="airway_bill"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>';
+            html += '<tr><td>Coolant type </td><td><select id="coolant"><option>Good</option><option value="Dry Ice">Dry Ice</option><option value="Ice Packs">Ice Packs</option><option value="No Coolant">No Coolant</option></select></td></tr>';
+            html += '<tr><td>Temperature monitors</td><td><select><option value="temprature">VVM</option><option value="Cold-chain card">Cold-chain card</option><option value="Elecronic Device">Elecronic Device</option></select></td></tr>';
+            html += '<tr><td>Comments</td><td><textarea id="general_comments"></textarea></td></tr>';
 
             html += '</table>';
             html += '<br><table><tr><td><input type="button" value="Save" id="saveAllChanges"></td></tr></table>';
@@ -248,7 +281,9 @@
                 "number_expected":      boxes,
                 "physical_damage":      $("#physical_damage").val(),
                 "vvm_status":           $("#vvm_status").val(),
-                "problems":             $("#").val(),
+                "damaged_amount":       $("#damaged_boxes").val(),
+                "temprature_monitor":   '',
+                "problems":             $("#commentss").val(),
                 "receiveing_user":      PACKAGE.current_user.userId,
                 "geographic_zone_id":   PACKAGE.current_user.preferences.DEFAULT_FACILITY,
                 "vaccine_packaging_id": PACKAGE.single_item.vaccine_packaging.id
@@ -268,29 +303,47 @@
     function saveAllChanges(){
         $("#saveAllChanges").click(function(){
            var var_details = {
-               "awb_number"   : '',
+               "awb_number"   : PACKAGE.current_shipment_no,
                "flight_number" : '',
                "estimate_time_of_arrival" : '',
                "actual_time_of_arrival" : '',
-               "number_of_items_inspected" : '',
-               "coolant_type" : '',
-               "temprature_monitor" : ''
+               "number_of_items_inspected" : PACKAGE.items.length,
+               "coolant_type" : $("#coolant").val(),
+               "temprature_monitor" : $("#temprature").val(),
+               "comments" : $("#general_comments").val(),
+               "invoice" : $("#invoice").val(),
+               "packing_list" : $("#packaging").val(),
+               "release_certificate" : $("#release").val(),
+               "airway_bill" : $("#airway_bill").val()
            }
 
-            var packing_list = {
-                "name" : 'Packing List',
-                "comments" : ''
-            }
+            $.each(PACKAGE.items, function(index, element) {
+                console.log(JSON.stringify(element.arrival_item));
+                element.delivery_status = "Received";
+                $.ajax({
+                    method: 'POST',
+                    data: element.arrival_item,
+                    url: '/stock/package/arrival',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                }).success(function(data) {
 
-            var release_certificate = {
-                "name" : 'Release Certificate',
-                "comments" : ''
-            }
+                }).error(function(){
+                    alert('error')
+                })
+            });
+            $.ajax({
+                method: 'POST',
+                data: var_details,
+                url: '/stock/var/details',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).success(function(data) {
 
-            var vaccine_arrival_report = {
-                "name" : 'Vaccine Arrival Report',
-                "comments" : ''
-            }
+            }).error(function(){
+                alert('error')
+            })
 
         });
     }
