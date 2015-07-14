@@ -257,8 +257,8 @@
             html += '<tr><td>Release certificate</td><td><select id="release"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>';
             html += '<tr><td>Invoice</td><td><select id="invoice"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>';
             html += '<tr><td>Airway Bill</td><td><select id="airway_bill"><option value="Yes">Yes</option><option value="No">No</option></select></td></tr>';
-            html += '<tr><td>Coolant type </td><td><select id="coolant"><option>Good</option><option value="Dry Ice">Dry Ice</option><option value="Ice Packs">Ice Packs</option><option value="No Coolant">No Coolant</option></select></td></tr>';
-            html += '<tr><td>Temperature monitors</td><td><select><option value="temprature">VVM</option><option value="Cold-chain card">Cold-chain card</option><option value="Elecronic Device">Elecronic Device</option></select></td></tr>';
+            html += '<tr><td>Coolant type </td><td><select id="coolant"><option value="Dry Ice">Dry Ice</option><option value="Ice Packs">Ice Packs</option><option value="No Coolant">No Coolant</option></select></td></tr>';
+            html += '<tr><td>Temperature monitors</td><td><select id="temprature"><option value="VVM">VVM</option><option value="Cold-chain card">Cold-chain card</option><option value="Elecronic Device">Elecronic Device</option></select></td></tr>';
             html += '<tr><td>Comments</td><td><textarea id="general_comments"></textarea></td></tr>';
 
             html += '</table>';
@@ -271,19 +271,18 @@
         $("#saveChanges").click(function(){
 
             var boxes = parseInt(PACKAGE.single_item.number_of_doses/(PACKAGE.single_item.vaccine_packaging.doses_per_vial*PACKAGE.single_item.vaccine_packaging.vials_per_box));
+
             var arrival = {
-                "sscc":                 PACKAGE.single_item.shipment_id,
-                "package_number":       PACKAGE.single_item.shipment_id,
-                "number_as_expected":   $("#quantity").val(),
-                "lot_number":           PACKAGE.single_item.lot_number,
-                "gtin":                 PACKAGE.single_item.vaccine_packaging.gtin,
-                "number_received":      $("#available_boxes").val(),
-                "number_expected":      boxes,
-                "physical_damage":      $("#physical_damage").val(),
-                "vvm_status":           $("#vvm_status").val(),
-                "damaged_amount":       $("#damaged_boxes").val(),
-                "temprature_monitor":   '',
-                "problems":             $("#commentss").val(),
+                "package_number": PACKAGE.single_item.shipment_id,
+                "gtin": PACKAGE.single_item.vaccine_packaging.gtin,
+                "number_as_expected": boxes,
+                "number_recieved": ($("#available_boxes").val() != "")?$("#available_boxes").val() : 0,
+                "lot_number": PACKAGE.single_item.lot_number,
+                "physical_damage": $("#physical_damage").val(),
+                "damaged_amount":($("#damaged_boxes").val() != "")?$("#vvm_status").val() : 0,
+                "temprature_monitor": "",
+                "vvm_status": ($("#vvm_status").val() != "")?$("#vvm_status").val() : 0,
+                "problems": $("#commentss").val(),
                 "receiveing_user":      PACKAGE.current_user.userId,
                 "geographic_zone_id":   PACKAGE.current_user.preferences.DEFAULT_FACILITY,
                 "vaccine_packaging_id": PACKAGE.single_item.vaccine_packaging.id
@@ -305,44 +304,66 @@
            var var_details = {
                "awb_number"   : PACKAGE.current_shipment_no,
                "flight_number" : '',
-               "estimate_time_of_arrival" : '',
-               "actual_time_of_arrival" : '',
+               "estimate_time_of_arrival" : '2015-07-14',
+               "actual_time_of_arrival" : '2015-07-14',
                "number_of_items_inspected" : PACKAGE.items.length,
                "coolant_type" : $("#coolant").val(),
-               "temprature_monitor" : $("#temprature").val(),
+               "temperature_monitor" : $("#temprature").val(),
+               "labels" : "Yes",
                "comments" : $("#general_comments").val(),
                "invoice" : $("#invoice").val(),
                "packing_list" : $("#packaging").val(),
                "release_certificate" : $("#release").val(),
                "airway_bill" : $("#airway_bill").val()
            }
-
+            var check = PACKAGE.items.length + 1;
+            var check1 = 0;
+            var successMessage = "<h3 style='color: green'>Request Submited Successfuly</h3>";
+            successMessage += "<button id='refreshpage'>Receive Another Package</button>";
             $.each(PACKAGE.items, function(index, element) {
-                console.log(JSON.stringify(element.arrival_item));
                 element.delivery_status = "Received";
                 $.ajax({
                     method: 'POST',
-                    data: element.arrival_item,
+                    data: JSON.stringify(element.arrival_item),
                     url: '/stock/package/arrival',
                     headers: {
-                        'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     }
                 }).success(function(data) {
-
+                   check1++;
+                    if(check == check1){
+                        $(".result").show().html(successMessage);
+                       $("#refreshpage").click(function(){
+                           location.reload();
+                       });
+                    }
                 }).error(function(){
-                    alert('error')
+//                    alert('error')
                 })
             });
             $.ajax({
                 method: 'POST',
-                data: var_details,
+                data: JSON.stringify(var_details),
                 url: '/stock/var/details',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             }).success(function(data) {
-
+                check1++;
+                if(check == check1){
+                    $(".result").show().html(successMessage);
+                    $("#refreshpage").click(function(){
+                        location.reload();
+                    });
+                }
             }).error(function(){
-                alert('error')
+                check1++;
+                if(check == check1){
+                    $(".result").show().html(successMessage);
+                    $("#refreshpage").click(function(){
+                        location.reload();
+                    });
+                }
             })
 
         });

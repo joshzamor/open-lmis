@@ -1,75 +1,25 @@
-<div class="app-form" ng-controller="StockModuleController">
-    <div >
-    <form name="prepare_package" >
-        <div class='form-group'>
+<div>
+    <section id="package_arrival_1" >
 
-        <h3 >Send Package <span style="color:#C9C9C9;font-size:12px;  ">Prepare and send package to region</span></h3>
+        <h3>Vaccine Arrival</h3>
 
-        <div class="clearfix">
-            <div class="form-cell horizontalFilters">
-                <label class="labels" >Select Destination region</label>
-                <div class="form-fields">
-                <select type="text" class="form-control" ng-model="destination" id="destination" ng-change="sendPackage(destination)">
-                     <option  ng-repeat="region in regions">{{region.name}}</option>
-                </select>
-                </div>
-            </div>
-            <div class="form-cell horizontalFilters">
-                <div ng-show="lotScanner">
-                    <label class="labels" >Enter Lot Number</label>
-
-                    <div class="form-fields">
-                        <input type="text" class="input-large ng-pristine ng-valid" ng-model="scanned_lot_number"/>
-                        <input type="button" ng-click="scanItem()" class="btn btn-primary" value="Scan" style="margin-top: -6px;">
-                    </div>
-                    <span class="field-error" ng-show="displayErrorAtLot"  openlmis-message="missing.value">Please fill this value</span>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-        </form>
-</div>
-    <div ng-show="sannNotify">
-        <span><i class="fa fa-file"></i></span>
-        <span>Item with lot number <b>{{scanned_lot_number}}</b> in stock expires soon.Do you wish to proceed</span>
-        <input type="button" class="btn btn-xs btn-danger" ng-click="quitPreparation()" value="No">
-        <input type="button" class="btn btn-xs btn-success" ng-click="proceedPreparation()" value="Yes">
-    </div>
-
-    <div id="table_items" ng-show="sannedtable">
-        <table  class=" table " >
-            <tr >
-                <th>GTN</th>
-                <th>Item</th>
-                <th>Lot </th>
-                <td><!---Max:{{scannedPackage.max}} boxes--></td>
-                <th>Current Stock</th>
-                <th>Expire Date</th>
-                <th>Boxes</th>
-                <th colspan="2"></th>
+        <table cellspacing="10" class="table table-responsive" cellpadding="10">
+            <tr>
+                <th>#</th>
+                <th>Report Date</th>
+                <th>Shipment Number</th>
+                <th></th>
             </tr>
-            <tr >
-                <td>{{packagesJson[0].vaccine_packaging.gtin}}</td>
-                <td>{{packagesJson[0].vaccine_packaging.packaging}}</td>
-                <td>{{packagesJson[0].lot_number}}</td>
-                <td>
-                    Min:{{packagesJson[0].number_of_doses/packagesJson[0].vaccine_packaging.doses_per_vial/packagesJson[0].vaccine_packaging.vials_per_box}} boxes
-                </br>
-                    Max:{{packagesJson[0].number_of_doses/packagesJson[0].vaccine_packaging.doses_per_vial/packagesJson[0].vaccine_packaging.vials_per_box}} boxes
-                </td>
-                <td>{{packagesJson[0].number_of_doses/packagesJson[0].vaccine_packaging.doses_per_vial/packagesJson[0].vaccine_packaging.vials_per_box}}</td>
-                <td style="background-color: lightgreen">
-                    {{packagesJson[0].expire_date | date:'yyyy-MM-dd'}}
-                    </td>
-                    <td>
-                    <input name="boxes" type="text" class="form-control" id="boxes" ng-model="boxes"/>
-                </td>
-                <td><input type="button" class="btn btn-success" ng-click="addingPackage(packagesJson[0])" value="Add" /></td>
-
+            <tr ng-repeat="reports in data.reports ">
+                <td>{{reports.estimate_time_of_arrival}}</td>
+                <td>{{reports.awb_number}}</td>
+                <td><input type="button" value="View Report" ng-click="viewReport(reports.awb_number)" /></td>
             </tr>
         </table>
 
-    </div>
+        <div ng-if="message">{{message}}</div>
+
+
+    </section>
+
 </div>

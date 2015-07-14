@@ -80,6 +80,7 @@ var vaccine = angular.module('VaccineModule', ['openlmis', 'ngTable','ui.bootstr
 vaccine.controller("StockModuleController",function($scope,$http,$location,$routeParams,$resource,$filter){
 
     $scope.packagesJson = null;
+    $scope.data = {};
 $scope.regions = null;
 $scope.packageStructure = {
         "delivery_status": null,
@@ -102,6 +103,15 @@ $scope.packageStructure = {
         $scope.showProductsFilter = true;
 
     }
+
+    //getting var reports
+    $http.get('/stock/var/details').
+        success(function(data) {
+            $scope.data.reports = data.var_details;
+        }).
+        error(function(data) {
+            console.log("Error:" + data);
+        });
 
     // temporary api call to pull packages
     //$http.get('/public/pages/stock/dummData/manufacturerpackage.json').
@@ -460,7 +470,7 @@ vaccine.controller("StockMenuController",function($scope, $location) {
     dashboardMenuService.tabs = [
         {header: 'PreAdvice', content:'/public/pages/stock/index.html#/preadvice', name:'preadvice', closable:false, displayOrder: 0},
         {header: 'ReceivePackage', content:'/public/pages/stock/index.html#/receive', name:'receive', closable:false, displayOrder: 1},
-        {header: 'PreparePackage', content:'/public/pages/stock/index.html#/prepare', name:'prepare', closable:false, displayOrder: 2},
+        {header: 'VAR', content:'/public/pages/stock/index.html#/prepare', name:'prepare', closable:false, displayOrder: 2},
         {header: 'StockItems', content:'/public/pages/stock/index.html#/items', name:'items', closable: false, displayOrder: 3},
         {header: 'PackagingInformation', content:'/public/pages/stock/index.html#/package_information', name:'items', closable: false, displayOrder: 4}
     ];
